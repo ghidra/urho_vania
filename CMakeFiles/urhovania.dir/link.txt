@@ -1,1 +1,0 @@
-/usr/bin/c++    -Wno-invalid-offsetof -ffast-math -m64 -O3 -DNDEBUG    CMakeFiles/urhovania.dir/src/HelloWorld.cpp.o CMakeFiles/urhovania.dir/src/ApplicationHandler.cpp.o  -o bin/urhovania -rdynamic /home/jimmy/Documents/projects/urho/Urho_DYN/lib/libUrho3D.so -ldl -lpthread -lrt -lpthread -lpthread -lGL -lrt -lGL -Wl,-rpath,/home/jimmy/Documents/projects/urho/Urho_DYN/lib 
