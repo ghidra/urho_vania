@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wno-invalid-offsetof -ffast-math -m64 -O3 -DNDEBUG    CMakeFiles/test_project.dir/src/HelloWorld.cpp.o CMakeFiles/test_project.dir/src/ApplicationHandler.cpp.o  -o bin/test_project -rdynamic 
