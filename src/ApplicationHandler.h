@@ -52,11 +52,21 @@ protected:
     /// Initialize touch input on mobile platform.
     void InitTouchInput();
     /// Control logo visibility.
-    void SetLogoVisible(bool enable);
-
+    //void SetLogoVisible(bool enable);
     /// Logo sprite.
-    SharedPtr<Sprite> logoSprite_;
+    //SharedPtr<Sprite> logoSprite_;
     /// Scene.
+    void CreateScene();
+    /// Construct an instruction text to the UI.
+    void SetupViewport();
+    /// Subscribe to application-wide logic update and post-render update events.
+    void SubscribeToEvents();
+
+    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    /// Handle the post-render update event.
+    void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
+    
+
     SharedPtr<Scene> scene_;
     /// Camera scene node.
     SharedPtr<Node> cameraNode_;
@@ -69,7 +79,7 @@ protected:
 
 //private:
     /// Create logo.
-    void CreateLogo();
+    //void CreateLogo();
     /// Set custom window Title & Icon
     void SetWindowTitleAndIcon();
     /// Create console and debug HUD.
@@ -87,6 +97,8 @@ protected:
     unsigned screenJoystickSettingsIndex_;
     /// Pause flag.
     bool paused_;
+    /// Flag for drawing debug geometry.
+    bool drawDebug_;
 };
 
 //#include "Sample.inl"
