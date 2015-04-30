@@ -35,6 +35,7 @@
 #include <Urho3D/Graphics/Zone.h>
 
 #include "ApplicationHandler.h"
+#include "core/CameraLogic.h"
 
 ApplicationHandler::ApplicationHandler(Context* context) :
     Application(context),
@@ -423,6 +424,9 @@ void ApplicationHandler::CreateScene()
 
     // Set an initial position for the camera scene node above the plane
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
+
+    //give the camera the logic I want
+    CameraLogic* cameralogic = cameraNode_->CreateComponent<CameraLogic>();
 }
 void ApplicationHandler::SetupViewport()
 {
