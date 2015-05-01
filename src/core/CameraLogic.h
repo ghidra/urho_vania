@@ -19,8 +19,13 @@ public:
     virtual void Update(float timeStep);
     
     /// Return forward movement speed.
-    void Move(float timeStep);
+    //void Move(float timeStep);
 
 private:
-    SharedPtr<Node> cameraNode_;
+
+    //SharedPtr<Node> cameraNode_;
+    /// Camera yaw angle.
+    float yaw_;
+    /// Camera pitch angle.
+    float pitch_;
 };

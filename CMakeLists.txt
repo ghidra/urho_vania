@@ -24,8 +24,12 @@ find_package (Urho3D REQUIRED)
 include_directories (${URHO3D_INCLUDE_DIRS})
 # Define target name
 set (TARGET_NAME urhovania)
+
 # Define source files
-define_source_files (GLOB_CPP_PATTERNS src/*.cpp src/*.cc GLOB_H_PATTERNS src/*.h)
+#define_source_files (GLOB_CPP_PATTERNS src/*.cpp src/*.cc GLOB_H_PATTERNS src/*.h)
+
+define_source_files (GLOB_CPP_PATTERNS src/*.c* GLOB_H_PATTERNS src/*.h* RECURSE GROUP )
+
 # Setup target with resource copying
 setup_main_executable ()
 

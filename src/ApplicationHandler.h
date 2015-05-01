@@ -70,10 +70,7 @@ protected:
     SharedPtr<Scene> scene_;
     /// Camera scene node.
     SharedPtr<Node> cameraNode_;
-    /// Camera yaw angle.
-    float yaw_;
-    /// Camera pitch angle.
-    float pitch_;
+    
     /// Flag to indicate whether touch input has been enabled.
     bool touchEnabled_;
 

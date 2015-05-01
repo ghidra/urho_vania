@@ -34,13 +34,13 @@
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Graphics/Zone.h>
 
-#include "ApplicationHandler.h"
 #include "core/CameraLogic.h"
+#include "ApplicationHandler.h"
 
 ApplicationHandler::ApplicationHandler(Context* context) :
     Application(context),
-    yaw_(0.0f),
-    pitch_(0.0f),
+    //yaw_(0.0f),
+    //pitch_(0.0f),
     touchEnabled_(false),
     screenJoystickIndex_(M_MAX_UNSIGNED),
     screenJoystickSettingsIndex_(M_MAX_UNSIGNED),
@@ -319,11 +319,11 @@ void ApplicationHandler::HandleSceneUpdate(StringHash eventType, VariantMap& eve
                         return;
 
                     Graphics* graphics = GetSubsystem<Graphics>();
-                    yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
-                    pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
+                    //yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
+                    //pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
 
                     // Construct new orientation for the camera scene node from yaw and pitch; roll is fixed to zero
-                    cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
+                    //cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
                 }
                 else
                 {
