@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "ApplicationHandler.h"
+#include "core/ApplicationHandler.h"
 
 class HelloWorld : public ApplicationHandler
 {

@@ -48,9 +48,9 @@ public:
 
 protected:
     /// Return XML patch instructions for screen joystick layout for a specific sample app, if any.
-    virtual String GetScreenJoystickPatchString() const { return String::EMPTY; }
+    //virtual String GetScreenJoystickPatchString() const { return String::EMPTY; }
     /// Initialize touch input on mobile platform.
-    void InitTouchInput();
+    //void InitTouchInput();
     /// Control logo visibility.
     //void SetLogoVisible(bool enable);
     /// Logo sprite.

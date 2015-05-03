@@ -34,7 +34,7 @@
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Graphics/Zone.h>
 
-#include "core/CameraLogic.h"
+#include "CameraLogic.h"
 #include "ApplicationHandler.h"
 
 ApplicationHandler::ApplicationHandler(Context* context) :
@@ -59,13 +59,13 @@ void ApplicationHandler::Setup()
 
 void ApplicationHandler::Start()
 {
-    if (GetPlatform() == "Android" || GetPlatform() == "iOS")
+    /*if (GetPlatform() == "Android" || GetPlatform() == "iOS")
         // On mobile platform, enable touch by adding a screen joystick
         InitTouchInput();
     else if (GetSubsystem<Input>()->GetNumJoysticks() == 0)
         // On desktop platform, do not detect touch when we already got a joystick
         SubscribeToEvent(E_TOUCHBEGIN, HANDLER(ApplicationHandler, HandleTouchBegin));
-
+    */
     // Create logo
     //CreateLogo();
 
@@ -96,7 +96,7 @@ void ApplicationHandler::Stop()
     engine_->DumpResources(true);
 }
 
-void ApplicationHandler::InitTouchInput()
+/*void ApplicationHandler::InitTouchInput()
 {
     touchEnabled_ = true;
 
@@ -113,7 +113,7 @@ void ApplicationHandler::InitTouchInput()
     }
     screenJoystickIndex_ = input->AddScreenJoystick(layout, cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
     input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, true);
-}
+}*/
 
 /*void ApplicationHandler::SetLogoVisible(bool enable)
 {
@@ -200,7 +200,7 @@ void ApplicationHandler::HandleKeyDown(StringHash eventType, VariantMap& eventDa
     }
 
     // Toggle console with F1
-    else if (key == KEY_F1)
+    /*else if (key == KEY_F1)
         GetSubsystem<Console>()->Toggle();
     
     // Toggle debug HUD with F2
@@ -298,7 +298,7 @@ void ApplicationHandler::HandleKeyDown(StringHash eventType, VariantMap& eventDa
             screenshot.SavePNG(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Screenshot_" +
                 Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
         }
-    }
+    }*/
 }
 
 void ApplicationHandler::HandleSceneUpdate(StringHash eventType, VariantMap& eventData)
@@ -337,12 +337,12 @@ void ApplicationHandler::HandleSceneUpdate(StringHash eventType, VariantMap& eve
     }
 }
 
-void ApplicationHandler::HandleTouchBegin(StringHash eventType, VariantMap& eventData)
+/*void ApplicationHandler::HandleTouchBegin(StringHash eventType, VariantMap& eventData)
 {
     // On some platforms like Windows the presence of touch input can only be detected dynamically
     InitTouchInput();
     UnsubscribeFromEvent("TouchBegin");
-}
+}*/
 
 ///--------------
 
