@@ -29,6 +29,7 @@
 //#include <Urho3D/Core/Variant.h>
 
 #include "ApplicationInput.h"
+#include "ApplicationHandler.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -53,9 +54,10 @@ ApplicationInput::ApplicationInput(Context* context):
     //SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationInput, HandleSceneUpdate));
 }
 
-void ApplicationInput::SetParameters(SharedPtr<Engine>& engine)
+void ApplicationInput::SetParameters(SharedPtr<Engine>& engine, ApplicationHandler& applicationHandler)
 {
     engine_ = engine;
+    applicationHandler_ = applicationHandler;
 }
 
 void ApplicationInput::InitTouchInput()

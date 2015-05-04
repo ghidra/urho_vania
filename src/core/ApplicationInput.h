@@ -30,7 +30,7 @@ public:
 private:
     /// Construct a new Text instance, containing the 'Hello World' String, and add it to the UI root element.
     //void CreateText();
-    void SetParameters(SharedPtr<Engine>& engine);
+    void SetParameters(SharedPtr<Engine>& engine, ApplicationHandler& applicationHandler);
     /// Subscribe to application-wide logic update events.
     void InitTouchInput();
     /// Handle the logic update event.
@@ -61,7 +61,7 @@ private:
     bool useGyroscope_;
 
     SharedPtr<Engine> engine_;
-    ApplicationHandler* applicationHandler_;
+    ApplicationHandler * applicationHandler_;
 
 
 };
