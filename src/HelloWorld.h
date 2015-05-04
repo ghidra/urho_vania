@@ -4,7 +4,7 @@
 #pragma once
 
 #include "core/ApplicationHandler.h"
-#include "core/ApplicationInput.h"
+//#include "core/ApplicationInput.h"
 
 class HelloWorld : public ApplicationHandler
 {
@@ -23,8 +23,6 @@ private:
     void SubscribeToEvents();
     /// Handle the logic update event.
     void HandleUpdate(StringHash eventType, VariantMap& eventData);
-
-    ApplicationInput * applicationInput_;
 
 };
 #endif

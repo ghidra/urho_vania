@@ -5,6 +5,7 @@
 #pragma once
 
 #include <Urho3D/Engine/Application.h>
+#include "ApplicationInput.h"
 
 namespace Urho3D
 {
@@ -55,6 +56,7 @@ protected:
     //void SetLogoVisible(bool enable);
     /// Logo sprite.
     //SharedPtr<Sprite> logoSprite_;
+    void SetApplicationInput(ApplicationInput* applicationInput);
     /// Scene.
     void CreateScene();
     /// Construct an instruction text to the UI.
@@ -82,7 +84,7 @@ protected:
     /// Create console and debug HUD.
     void CreateConsoleAndDebugHud();
     /// Handle key down event to process key controls common to all samples.
-    void HandleKeyDown(StringHash eventType, VariantMap& eventData);
+    //void HandleKeyDown(StringHash eventType, VariantMap& eventData);
     /// Handle scene update event to control camera's pitch and yaw for all samples.
     void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle touch begin event to initialize touch input on desktop platform.
@@ -96,6 +98,8 @@ protected:
     bool paused_;
     /// Flag for drawing debug geometry.
     bool drawDebug_;
+
+    ApplicationInput * applicationInput_ = NULL;
 };
 
 //#include "Sample.inl"

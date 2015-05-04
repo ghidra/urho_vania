@@ -31,7 +31,7 @@
 //#include <Urho3D/UI/UI.h>
 
 #include "HelloWorld.h"
-#include "core/ApplicationInput.h"
+//#include "core/ApplicationInput.h"
 
 
 #include <Urho3D/DebugNew.h>

@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Urho3D/Core/Object.h>
-#include "ApplicationHandler.h"
+//#include "ApplicationHandler.h"
 
 using namespace Urho3D;
 
@@ -27,10 +27,12 @@ public:
     /// Construct.
     ApplicationInput(Context* context);
 
+    bool GetQuit(){return quit_;};
+
 private:
     /// Construct a new Text instance, containing the 'Hello World' String, and add it to the UI root element.
     //void CreateText();
-    void SetParameters(SharedPtr<Engine>& engine, ApplicationHandler& applicationHandler);
+    //void SetParameters(SharedPtr<Engine>& engine, ApplicationHandler* applicationHandler);
     /// Subscribe to application-wide logic update events.
     void InitTouchInput();
     /// Handle the logic update event.
@@ -47,6 +49,7 @@ private:
     unsigned screenJoystickSettingsIndex_;
 
     bool paused_;
+    bool quit_;
 
     /// Touch sensitivity.
     float touchSensitivity_;
@@ -60,8 +63,8 @@ private:
     /// Gyroscope on/off flag.
     bool useGyroscope_;
 
-    SharedPtr<Engine> engine_;
-    ApplicationHandler * applicationHandler_;
+    //SharedPtr<Engine> engine_;
+    //ApplicationHandler * applicationHandler_;
 
 
 };

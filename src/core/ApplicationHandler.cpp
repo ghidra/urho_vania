@@ -35,6 +35,7 @@
 #include <Urho3D/Graphics/Zone.h>
 
 #include "CameraLogic.h"
+#include "ApplicationInput.h"
 #include "ApplicationHandler.h"
 
 ApplicationHandler::ApplicationHandler(Context* context) :
@@ -88,7 +89,7 @@ void ApplicationHandler::Start()
     // Subscribe key down event
     //SubscribeToEvent(E_KEYDOWN, HANDLER(ApplicationHandler, HandleKeyDown));
     // Subscribe scene update event
-    SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationHandler, HandleSceneUpdate));
+    //SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationHandler, HandleSceneUpdate));
 }
 
 void ApplicationHandler::Stop()
@@ -96,6 +97,10 @@ void ApplicationHandler::Stop()
     engine_->DumpResources(true);
 }
 
+void ApplicationHandler::SetApplicationInput(ApplicationInput* applicationInput)
+{
+    applicationInput_ = applicationInput;
+}
 /*void ApplicationHandler::InitTouchInput()
 {
     touchEnabled_ = true;
@@ -183,7 +188,7 @@ void ApplicationHandler::CreateConsoleAndDebugHud()
     debugHud->SetDefaultStyle(xmlFile);
 }
 
-void ApplicationHandler::HandleKeyDown(StringHash eventType, VariantMap& eventData)
+/*void ApplicationHandler::HandleKeyDown(StringHash eventType, VariantMap& eventData)
 {
     using namespace KeyDown;
 
@@ -199,107 +204,7 @@ void ApplicationHandler::HandleKeyDown(StringHash eventType, VariantMap& eventDa
             engine_->Exit();
     }
 
-    // Toggle console with F1
-    /*else if (key == KEY_F1)
-        GetSubsystem<Console>()->Toggle();
-    
-    // Toggle debug HUD with F2
-    else if (key == KEY_F2)
-        GetSubsystem<DebugHud>()->ToggleAll();
-    
-    // Common rendering quality controls, only when UI has no focused element
-    else if (!GetSubsystem<UI>()->GetFocusElement())
-    {
-        Renderer* renderer = GetSubsystem<Renderer>();
-        
-        // Preferences / Pause
-        if (key == KEY_SELECT && touchEnabled_)
-        {
-            paused_ = !paused_;
-
-            Input* input = GetSubsystem<Input>();
-            if (screenJoystickSettingsIndex_ == M_MAX_UNSIGNED)
-            {
-                // Lazy initialization
-                ResourceCache* cache = GetSubsystem<ResourceCache>();
-                screenJoystickSettingsIndex_ = input->AddScreenJoystick(cache->GetResource<XMLFile>("UI/ScreenJoystickSettings_Samples.xml"), cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
-            }
-            else
-                input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, paused_);
-        }
-
-        // Texture quality
-        else if (key == '1')
-        {
-            int quality = renderer->GetTextureQuality();
-            ++quality;
-            if (quality > QUALITY_HIGH)
-                quality = QUALITY_LOW;
-            renderer->SetTextureQuality(quality);
-        }
-        
-        // Material quality
-        else if (key == '2')
-        {
-            int quality = renderer->GetMaterialQuality();
-            ++quality;
-            if (quality > QUALITY_HIGH)
-                quality = QUALITY_LOW;
-            renderer->SetMaterialQuality(quality);
-        }
-        
-        // Specular lighting
-        else if (key == '3')
-            renderer->SetSpecularLighting(!renderer->GetSpecularLighting());
-        
-        // Shadow rendering
-        else if (key == '4')
-            renderer->SetDrawShadows(!renderer->GetDrawShadows());
-        
-        // Shadow map resolution
-        else if (key == '5')
-        {
-            int shadowMapSize = renderer->GetShadowMapSize();
-            shadowMapSize *= 2;
-            if (shadowMapSize > 2048)
-                shadowMapSize = 512;
-            renderer->SetShadowMapSize(shadowMapSize);
-        }
-        
-        // Shadow depth and filtering quality
-        else if (key == '6')
-        {
-            int quality = renderer->GetShadowQuality();
-            ++quality;
-            if (quality > SHADOWQUALITY_HIGH_24BIT)
-                quality = SHADOWQUALITY_LOW_16BIT;
-            renderer->SetShadowQuality(quality);
-        }
-        
-        // Occlusion culling
-        else if (key == '7')
-        {
-            bool occlusion = renderer->GetMaxOccluderTriangles() > 0;
-            occlusion = !occlusion;
-            renderer->SetMaxOccluderTriangles(occlusion ? 5000 : 0);
-        }
-        
-        // Instancing
-        else if (key == '8')
-            renderer->SetDynamicInstancing(!renderer->GetDynamicInstancing());
-        
-        // Take screenshot
-        else if (key == '9')
-        {
-            Graphics* graphics = GetSubsystem<Graphics>();
-            Image screenshot(context_);
-            graphics->TakeScreenShot(screenshot);
-            // Here we save in the Data folder with date and time appended
-            screenshot.SavePNG(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Screenshot_" +
-                Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
-        }
-    }*/
-}
+}*/
 
 void ApplicationHandler::HandleSceneUpdate(StringHash eventType, VariantMap& eventData)
 {
@@ -439,13 +344,10 @@ void ApplicationHandler::SetupViewport()
 
 void ApplicationHandler::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
     SubscribeToEvent(E_UPDATE, HANDLER(ApplicationHandler, HandleUpdate));
-
-    // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, sent after Renderer subsystem is
-    // done with defining the draw calls for the viewports (but before actually executing them.) We will request debug geometry
-    // rendering during that event
     SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(ApplicationHandler, HandlePostRenderUpdate));
+    SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationHandler, HandleSceneUpdate));
+
 }
 void ApplicationHandler::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
@@ -453,6 +355,19 @@ void ApplicationHandler::HandleUpdate(StringHash eventType, VariantMap& eventDat
 
     // Take the frame time step, which is stored as a float
     float timeStep = eventData[P_TIMESTEP].GetFloat();
+
+    //check if we have an input object
+    if(applicationInput_)
+    {
+        if (applicationInput_->GetQuit())
+        {
+            Console* console = GetSubsystem<Console>();
+            if (console->IsVisible())
+                console->SetVisible(false);
+            else
+                engine_->Exit();
+        }
+    }
 
     // Move the camera, scale movement with time step
     //MoveCamera(timeStep);

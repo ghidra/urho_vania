@@ -6,3 +6,4 @@ bin/Data
 bin/urhovania
 CMake
 CMakeFiles/
+launch.sh

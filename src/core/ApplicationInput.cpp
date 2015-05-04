@@ -29,7 +29,7 @@
 //#include <Urho3D/Core/Variant.h>
 
 #include "ApplicationInput.h"
-#include "ApplicationHandler.h"
+//#include "ApplicationHandler.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -39,7 +39,9 @@ ApplicationInput::ApplicationInput(Context* context):
     cameraDistanceMin_(1.0f),
     cameraDistanceMax_(5.0f),
     cameraDistanceIni_(20.0f),
-    touchSensitivity_(2.0f)
+    touchSensitivity_(2.0f),
+    paused_(false),
+    quit_(false)
 {
     if (GetPlatform() == "Android" || GetPlatform() == "iOS")
         // On mobile platform, enable touch by adding a screen joystick
@@ -54,11 +56,10 @@ ApplicationInput::ApplicationInput(Context* context):
     //SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationInput, HandleSceneUpdate));
 }
 
-void ApplicationInput::SetParameters(SharedPtr<Engine>& engine, ApplicationHandler& applicationHandler)
-{
-    engine_ = engine;
-    applicationHandler_ = applicationHandler;
-}
+//void ApplicationInput::SetParameters(ApplicationHandler * applicationHandler)
+//{
+//    applicationHandler_ = applicationHandler;
+//}
 
 void ApplicationInput::InitTouchInput()
 {
@@ -91,8 +92,9 @@ void ApplicationInput::HandleKeyDown(StringHash eventType, VariantMap& eventData
         Console* console = GetSubsystem<Console>();
         if (console->IsVisible())
             console->SetVisible(false);
-        //else
+        else
             //engine_->Exit();
+            quit_=true;
     }
 
     // Toggle console with F1
