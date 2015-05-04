@@ -31,6 +31,7 @@
 //#include <Urho3D/UI/UI.h>
 
 #include "HelloWorld.h"
+#include "core/ApplicationInput.h"
 
 
 #include <Urho3D/DebugNew.h>
@@ -58,6 +59,8 @@ void HelloWorld::Start()
 {
     // Execute base class startup
     ApplicationHandler::Start();
+
+    applicationInput_ = new ApplicationInput(context_);
 
     // Create "Hello World" Text
     CreateText();

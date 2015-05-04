@@ -86,7 +86,7 @@ void ApplicationHandler::Start()
     //-------
 
     // Subscribe key down event
-    SubscribeToEvent(E_KEYDOWN, HANDLER(ApplicationHandler, HandleKeyDown));
+    //SubscribeToEvent(E_KEYDOWN, HANDLER(ApplicationHandler, HandleKeyDown));
     // Subscribe scene update event
     SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationHandler, HandleSceneUpdate));
 }

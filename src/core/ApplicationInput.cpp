@@ -34,7 +34,11 @@
 #include <Urho3D/IO/Log.h>
 
 ApplicationInput::ApplicationInput(Context* context):
-    Object(context)
+    Object(context),
+    cameraDistanceMin_(1.0f),
+    cameraDistanceMax_(5.0f),
+    cameraDistanceIni_(20.0f),
+    touchSensitivity_(2.0f)
 {
     if (GetPlatform() == "Android" || GetPlatform() == "iOS")
         // On mobile platform, enable touch by adding a screen joystick
@@ -47,6 +51,11 @@ ApplicationInput::ApplicationInput(Context* context):
     SubscribeToEvent(E_KEYDOWN, HANDLER(ApplicationInput, HandleKeyDown));
     // Subscribe scene update event
     //SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationInput, HandleSceneUpdate));
+}
+
+void ApplicationInput::SetParameters(SharedPtr<Engine>& engine)
+{
+    engine_ = engine;
 }
 
 void ApplicationInput::InitTouchInput()
