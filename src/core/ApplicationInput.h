@@ -12,12 +12,9 @@ namespace Urho3D
 {
     class Controls;
     class Engine;
+    class Node;
 }
 
-//const float CAMERA_MIN_DIST = 1.0f;
-//const float CAMERA_INITIAL_DIST = 5.0f;
-//const float CAMERA_MAX_DIST = 20.0f;
-//const float TOUCH_SENSITIVITY = 2.0f;
 
 class ApplicationInput : public Object
 {
@@ -29,6 +26,7 @@ public:
 
     bool GetQuit(){return quit_;};
 
+    void SetCameraNode(SharedPtr<Node> camerNode);
 private:
     /// Construct a new Text instance, containing the 'Hello World' String, and add it to the UI root element.
     //void CreateText();
@@ -51,6 +49,8 @@ private:
     bool paused_;
     bool quit_;
 
+    SharedPtr<Node> cameraNode_;
+
     /// Touch sensitivity.
     float touchSensitivity_;
     /// Current camera zoom distance.
@@ -62,9 +62,6 @@ private:
     bool zoom_;
     /// Gyroscope on/off flag.
     bool useGyroscope_;
-
-    //SharedPtr<Engine> engine_;
-    //ApplicationHandler * applicationHandler_;
 
 
 };

@@ -60,6 +60,10 @@ ApplicationInput::ApplicationInput(Context* context):
 //{
 //    applicationHandler_ = applicationHandler;
 //}
+void ApplicationInput::SetCameraNode(SharedPtr<Node> cameraNode)
+{
+    cameraNode_ = cameraNode;
+}
 
 void ApplicationInput::InitTouchInput()
 {

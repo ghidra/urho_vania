@@ -19,8 +19,6 @@ class Sprite;
 // All Urho3D classes reside in namespace Urho3D
 using namespace Urho3D;
 
-const float TOUCH_SENSITIVITY = 2.0f;
-
 /// Sample class, as framework for all samples.
 ///    - Initialization of the Urho3D engine (in Application class)
 ///    - Modify engine parameters for windowed mode and to show the class name as title
@@ -47,6 +45,10 @@ public:
     /// Cleanup after the main loop. Called by Application.
     virtual void Stop();
 
+    SharedPtr<Scene> scene_;
+    /// Camera scene node.
+    SharedPtr<Node> cameraNode_;
+
 protected:
     /// Return XML patch instructions for screen joystick layout for a specific sample app, if any.
     //virtual String GetScreenJoystickPatchString() const { return String::EMPTY; }
@@ -68,10 +70,6 @@ protected:
     /// Handle the post-render update event.
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
     
-
-    SharedPtr<Scene> scene_;
-    /// Camera scene node.
-    SharedPtr<Node> cameraNode_;
     
     /// Flag to indicate whether touch input has been enabled.
     bool touchEnabled_;

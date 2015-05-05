@@ -61,6 +61,7 @@ void HelloWorld::Start()
     ApplicationHandler::Start();
 
     applicationInput_ = new ApplicationInput(context_);
+    SetApplicationInput(applicationInput_);
 
     // Create "Hello World" Text
     CreateText();

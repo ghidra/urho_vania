@@ -24,5 +24,7 @@ private:
     /// Handle the logic update event.
     void HandleUpdate(StringHash eventType, VariantMap& eventData);
 
+    ApplicationInput * applicationInput_ = NULL;
+
 };
 #endif

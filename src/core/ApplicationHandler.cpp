@@ -38,6 +38,8 @@
 #include "ApplicationInput.h"
 #include "ApplicationHandler.h"
 
+#include <Urho3D/IO/Log.h>
+
 ApplicationHandler::ApplicationHandler(Context* context) :
     Application(context),
     //yaw_(0.0f),
@@ -100,6 +102,7 @@ void ApplicationHandler::Stop()
 void ApplicationHandler::SetApplicationInput(ApplicationInput* applicationInput)
 {
     applicationInput_ = applicationInput;
+    applicationInput_->SetCameraNode(cameraNode_);
 }
 /*void ApplicationHandler::InitTouchInput()
 {
@@ -357,6 +360,9 @@ void ApplicationHandler::HandleUpdate(StringHash eventType, VariantMap& eventDat
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     //check if we have an input object
+    ////LOGDEBUG("something");
+    //LOGERROR("something errors");
+    //LOGINFO("something info");
     if(applicationInput_)
     {
         if (applicationInput_->GetQuit())
