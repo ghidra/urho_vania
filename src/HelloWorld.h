@@ -4,6 +4,7 @@
 #pragma once
 
 #include "core/ApplicationHandler.h"
+#include "Stage1.h"
 //#include "core/ApplicationInput.h"
 
 class HelloWorld : public ApplicationHandler
@@ -25,6 +26,7 @@ private:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);
 
     ApplicationInput * applicationInput_ = NULL;
+    Stage1 * stage_ = NULL;
 
 };
 #endif

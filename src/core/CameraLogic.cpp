@@ -58,5 +58,6 @@ void CameraLogic::Update(float timeStep)
     // Toggle debug geometry with space
     //if (input->GetKeyPress(KEY_SPACE))
     //    drawDebug_ = !drawDebug_;
-    //LOGDEBUG("updating i guess");
+    
+    //LOGINFO("updating i guess");
 }
