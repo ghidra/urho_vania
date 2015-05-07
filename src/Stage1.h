@@ -3,6 +3,7 @@
 
 #pragma once
 
+//#include <string>
 #include <Urho3D/Core/Object.h>
 
 using namespace Urho3D;
@@ -32,6 +33,9 @@ protected:
 
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
+
+    const String states_[];
+    const Vector3 positions_[];
     
 };
 #endif

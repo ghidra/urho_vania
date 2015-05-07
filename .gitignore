@@ -7,3 +7,4 @@ bin/urhovania
 CMake
 CMakeFiles/
 launch.sh
+bin/Resources/Models/States/*
