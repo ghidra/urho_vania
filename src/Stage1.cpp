@@ -220,7 +220,7 @@ void Stage1::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
     Node* stateNode = scene_->CreateChild("state");
     stateNode->SetPosition(positions_[0]);
     StaticModel* stateModel = stateNode->CreateComponent<StaticModel>();
-    stateModel->SetModel( cache->GetResource<Model>("Models/States/"+states_[0]) );
+    stateModel->SetModel( cache->GetResource<Model>(String("Models/States/")+states_[0]) );
 
     // Create the camera. Limit far clip distance to match the fog
     //cameraNode_ = scene_->CreateChild("Camera");
