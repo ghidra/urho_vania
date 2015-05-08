@@ -34,8 +34,8 @@ protected:
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
 
-    const String states_[];
-    const Vector3 positions_[];
+    const String states_[50];
+    const Vector3 positions_[50];
     
 };
 #endif

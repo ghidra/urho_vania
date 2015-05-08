@@ -32,60 +32,66 @@
 Stage1::Stage1(Context* context) :
     Object(context)
 {
+}
+
+//-------------------
+//-------------------
+void Stage1::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
+{
+
     const String states_[50]=
     {
-        "state_1.001.mdl",
-        "state_2.001.mdl",
-        "state_3.001.mdl",
-        "state_4.001.mdl",
-        "state_5.001.mdl",
-        "state_6.001.mdl",
-        "state_7.001.mdl",
-        "state_8.001.mdl",
-        "state_9.001.mdl",
-        "state_10.001.mdl",
-        "state_11.001.mdl",
-        "state_12.001.mdl",
-        "state_13.001.mdl",
-        "state_14.001.mdl",
-        "state_15.001.mdl",
-        "state_16.001.mdl",
-        "state_17.001.mdl",
-        "state_18.001.mdl",
-        "state_19.001.mdl",
-        "state_20.001.mdl",
-        "state_21.001.mdl",
-        "state_22.001.mdl",
-        "state_23.001.mdl",
-        "state_24.001.mdl",
-        "state_25.001.mdl",
-        "state_26.001.mdl",
-        "state_27.001.mdl",
-        "state_28.001.mdl",
-        "state_29.001.mdl",
-        "state_30.001.mdl",
-        "state_31.001.mdl",
-        "state_32.001.mdl",
-        "state_33.001.mdl",
-        "state_34.001.mdl",
-        "state_35.001.mdl",
-        "state_36.001.mdl",
-        "state_37.001.mdl",
-        "state_38.001.mdl",
-        "state_39.001.mdl",
-        "state_40.001.mdl",
-        "state_41.001.mdl",
-        "state_42.001.mdl",
-        "state_43.001.mdl",
-        "state_44.001.mdl",
-        "state_45.001.mdl",
-        "state_46.001.mdl",
-        "state_47.001.mdl",
-        "state_48.001.mdl",
-        "state_49.001.mdl",
-        "state_50.001.mdl"
+        String("state_1.001.mdl"),
+        String("state_2.001.mdl"),
+        String("state_3.001.mdl"),
+        String("state_4.001.mdl"),
+        String("state_5.001.mdl"),
+        String("state_6.001.mdl"),
+        String("state_7.001.mdl"),
+        String("state_8.001.mdl"),
+        String("state_9.001.mdl"),
+        String("state_10.001.mdl"),
+        String("state_11.001.mdl"),
+        String("state_12.001.mdl"),
+        String("state_13.001.mdl"),
+        String("state_14.001.mdl"),
+        String("state_15.001.mdl"),
+        String("state_16.001.mdl"),
+        String("state_17.001.mdl"),
+        String("state_18.001.mdl"),
+        String("state_19.001.mdl"),
+        String("state_20.001.mdl"),
+        String("state_21.001.mdl"),
+        String("state_22.001.mdl"),
+        String("state_23.001.mdl"),
+        String("state_24.001.mdl"),
+        String("state_25.001.mdl"),
+        String("state_26.001.mdl"),
+        String("state_27.001.mdl"),
+        String("state_28.001.mdl"),
+        String("state_29.001.mdl"),
+        String("state_30.001.mdl"),
+        String("state_31.001.mdl"),
+        String("state_32.001.mdl"),
+        String("state_33.001.mdl"),
+        String("state_34.001.mdl"),
+        String("state_35.001.mdl"),
+        String("state_36.001.mdl"),
+        String("state_37.001.mdl"),
+        String("state_38.001.mdl"),
+        String("state_39.001.mdl"),
+        String("state_40.001.mdl"),
+        String("state_41.001.mdl"),
+        String("state_42.001.mdl"),
+        String("state_43.001.mdl"),
+        String("state_44.001.mdl"),
+        String("state_45.001.mdl"),
+        String("state_46.001.mdl"),
+        String("state_47.001.mdl"),
+        String("state_48.001.mdl"),
+        String("state_49.001.mdl"),
+        String("state_50.001.mdl")
     };
-
     const Vector3 positions_[50]=
     {
         Vector3(0.21888011694,0.0156500004232,2.09723997116),
@@ -139,12 +145,7 @@ Stage1::Stage1(Context* context) :
         Vector3(2.32092523575,-0.0052499989979,1.23307991028),
         Vector3(2.81634521484,-0.00429999921471,1.25435996056)
     };
-}
 
-//-------------------
-//-------------------
-void Stage1::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
-{
 	scene_ = scene;
 	cameraNode_ = cameraNode;
 
@@ -210,17 +211,17 @@ void Stage1::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
         //mover->SetParameters(MODEL_MOVE_SPEED, MODEL_ROTATE_SPEED, bounds);
     }
 
-    /*for (unsigned j=0; j<50; ++j)
+    for (unsigned j=0; j<50; ++j)
     {
         Node* stateNode = scene_->CreateChild("state");
         stateNode->SetPosition(positions_[j]);
         StaticModel* stateModel = stateNode->CreateComponent<StaticModel>();
-        stateModel->SetModel( cache->GetResource<Model>("Models/States/"+states_[j]) );
-    }*/
-    Node* stateNode = scene_->CreateChild("state");
+        stateModel->SetModel( cache->GetResource<Model>(String("Models/States/")+states_[j]) );
+    }
+    /*Node* stateNode = scene_->CreateChild("state");
     stateNode->SetPosition(positions_[0]);
     StaticModel* stateModel = stateNode->CreateComponent<StaticModel>();
-    stateModel->SetModel( cache->GetResource<Model>(String("Models/States/")+states_[0]) );
+    stateModel->SetModel( cache->GetResource<Model>(String("Models/States/")+states_[0]) );*/
 
     // Create the camera. Limit far clip distance to match the fog
     //cameraNode_ = scene_->CreateChild("Camera");
