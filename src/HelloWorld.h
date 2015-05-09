@@ -4,7 +4,7 @@
 #pragma once
 
 #include "core/ApplicationHandler.h"
-#include "Stage1.h"
+#include "stages/Stage1.h"
 //#include "core/ApplicationInput.h"
 
 class HelloWorld : public ApplicationHandler
