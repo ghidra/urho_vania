@@ -31,7 +31,7 @@
 //#include <Urho3D/UI/UI.h>
 
 #include "HelloWorld.h"
-#include "stages/Stage1.h"
+#include "stages/Stage2.h"
 //#include "core/ApplicationInput.h"
 
 
@@ -65,9 +65,9 @@ void HelloWorld::Start()
     SetApplicationInput(applicationInput_);
 
     // Create "Hello World" Text
-    CreateText();
+    //CreateText();
 
-    stage_ = new Stage1(context_);
+    stage_ = new Stage2(context_);
     stage_->Setup(scene_, cameraNode_);
 
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
@@ -78,7 +78,7 @@ void HelloWorld::Start()
 
 
 
-void HelloWorld::CreateText()
+/*void HelloWorld::CreateText()
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
@@ -102,7 +102,7 @@ void HelloWorld::CreateText()
     //LOGDEBUG(helloText->GetText());
 
     GetSubsystem<UI>()->GetRoot()->AddChild(helloText);
-}
+}*/
 
 void HelloWorld::SubscribeToEvents()
 {

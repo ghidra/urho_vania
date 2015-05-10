@@ -21,6 +21,8 @@
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Resource/XMLFile.h>
 
+#include <Urho3D/Physics/PhysicsWorld.h>
+
 #include <Urho3D/Graphics/Animation.h>
 #include <Urho3D/Graphics/AnimatedModel.h>
 #include <Urho3D/Graphics/AnimationState.h>
@@ -179,6 +181,7 @@ void ApplicationHandler::CreateScene()
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
     scene_->CreateComponent<Octree>();
+    scene_->CreateComponent<PhysicsWorld>();
     scene_->CreateComponent<DebugRenderer>();
 
     // Create the camera. Limit far clip distance to match the fog
