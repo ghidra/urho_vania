@@ -1,3 +1,6 @@
+#ifndef CAMERALOGIC_H
+#define CAMERALOGIC_H
+
 #pragma once
 
 #include <Urho3D/Scene/LogicComponent.h>
@@ -12,14 +15,9 @@ class CameraLogic : public LogicComponent
 public:
     /// Construct.
     CameraLogic(Context* context);
-    
-    /// Set motion parameters: forward movement speed, rotation speed, and movement boundaries.
-    //void SetParameters(float moveSpeed, float rotateSpeed, const BoundingBox& bounds);
-    /// Handle scene update. Called by LogicComponent base class.
-    virtual void Update(float timeStep);
-    
-    /// Return forward movement speed.
-    //void Move(float timeStep);
+
+    static void RegisterObject(Context* context);
+    virtual void FixedUpdate(float timeStep);
 
 private:
 
@@ -29,3 +27,5 @@ private:
     /// Camera pitch angle.
     float pitch_;
 };
+
+#endif

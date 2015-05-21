@@ -36,7 +36,7 @@
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Graphics/Zone.h>
 
-#include "CameraLogic.h"
+//#include "CameraLogic.h"
 #include "ApplicationInput.h"
 #include "ApplicationHandler.h"
 
@@ -51,7 +51,8 @@ ApplicationHandler::ApplicationHandler(Context* context) :
     screenJoystickSettingsIndex_(M_MAX_UNSIGNED),
     paused_(false)
 {
-    context->RegisterFactory<CameraLogic>();
+    //CameraLogic::RegisterObject(context);
+    //context->RegisterFactory<CameraLogic>();
 }
 
 void ApplicationHandler::Setup()

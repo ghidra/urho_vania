@@ -30,8 +30,9 @@
 #include <Urho3D/UI/Text.h>
 //#include <Urho3D/UI/UI.h>
 
-#include "HelloWorld.h"
-#include "stages/Stage2.h"
+#include "Main.h"
+#include "core/CameraLogic.h" 
+#include "stages/VaniaDebugEnv.h"
 //#include "core/ApplicationInput.h"
 
 
@@ -41,9 +42,9 @@
 #include <iostream>
 
 // Expands to this example's entry-point
-//DEFINE_APPLICATION_MAIN(HelloWorld)
+DEFINE_APPLICATION_MAIN(Main)
 
-HelloWorld::HelloWorld(Context* context) :
+Main::Main(Context* context) :
     ApplicationHandler(context)
     //yaw_(0.0f),
     //pitch_(0.0f),
@@ -52,11 +53,12 @@ HelloWorld::HelloWorld(Context* context) :
     //screenJoystickSettingsIndex_(M_MAX_UNSIGNED),
     //paused_(false)
 {
+    CameraLogic::RegisterObject(context);
 }
 
 //-------------------
 //-------------------
-void HelloWorld::Start()
+void Main::Start()
 {
     // Execute base class startup
     ApplicationHandler::Start();
@@ -67,7 +69,7 @@ void HelloWorld::Start()
     // Create "Hello World" Text
     //CreateText();
 
-    stage_ = new Stage2(context_);
+    stage_ = new VaniaDebugEnv(context_);
     stage_->Setup(scene_, cameraNode_);
 
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
@@ -104,13 +106,13 @@ void HelloWorld::Start()
     GetSubsystem<UI>()->GetRoot()->AddChild(helloText);
 }*/
 
-void HelloWorld::SubscribeToEvents()
+void Main::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, HANDLER(HelloWorld, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, HANDLER(Main, HandleUpdate));
 }
 
-void HelloWorld::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Main::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
     // Do nothing for now, could be extended to eg. animate the display
 }

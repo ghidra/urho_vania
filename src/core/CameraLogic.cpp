@@ -1,5 +1,7 @@
 #include <Urho3D/Urho3D.h>
 
+#include <Urho3D/Core/Context.h>
+
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Input/Input.h>
 
@@ -15,15 +17,16 @@ CameraLogic::CameraLogic(Context* context) :
     LogicComponent(context)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
-    SetUpdateEventMask(USE_UPDATE);
+    SetUpdateEventMask(USE_FIXEDUPDATE);
 }
 
-//void CameraLogic::Update(float timeStep)
-//{
-//	Move(timeStep);
-//}
+void CameraLogic::RegisterObject(Context* context)
+{
+    context->RegisterFactory<CameraLogic>();
 
-void CameraLogic::Update(float timeStep)
+}
+
+void CameraLogic::FixedUpdate(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (GetSubsystem<UI>()->GetFocusElement())
