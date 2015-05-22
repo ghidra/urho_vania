@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <Urho3D/Input/Controls.h>
 //#include <string>
 #include "Actor.h"
 
@@ -12,7 +13,7 @@ namespace Urho3D
 {
 
 class Node;
-//class Scene;
+class Scene;
 
 }
 
@@ -27,13 +28,16 @@ public:
 
     Character(Context* context);
 
+    //static void RegisterObject(Context* context);
+
     virtual void Start();
     virtual void Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode);
+    virtual void FixedUpdate(float timeStep);
 
 protected:
 
-    SharedPtr<Scene> scene_;
-    SharedPtr<Node> cameraNode_;
+    //SharedPtr<Scene> scene_;
+    //SharedPtr<Node> cameraNode_;
    
 };
 #endif

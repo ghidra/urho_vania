@@ -37,6 +37,7 @@ private:
 
     ApplicationInput * applicationInput_ = NULL;
     VaniaDebugEnv * stage_ = NULL;
+    Character * character_ = NULL;
 
 };
 #endif

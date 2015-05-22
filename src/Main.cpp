@@ -32,6 +32,7 @@
 
 #include "Main.h"
 #include "core/CameraLogic.h" 
+#include "core/Character.h"
 #include "stages/VaniaDebugEnv.h"
 //#include "core/ApplicationInput.h"
 
@@ -54,6 +55,7 @@ Main::Main(Context* context) :
     //paused_(false)
 {
     CameraLogic::RegisterObject(context);
+    Character::RegisterObject(context);
 }
 
 //-------------------
@@ -71,6 +73,9 @@ void Main::Start()
 
     stage_ = new VaniaDebugEnv(context_);
     stage_->Setup(scene_, cameraNode_);
+
+    character_ = new Character(context_);
+    character_->Setup(scene_, cameraNode_);
 
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
     // like the ScreenMode event sent by the Graphics subsystem when opening the application window. To catch those as well we
