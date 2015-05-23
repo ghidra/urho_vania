@@ -35,7 +35,7 @@ protected:
     SharedPtr<Scene> scene_;
     SharedPtr<Node> cameraNode_;
 
-    Character * character_;
+    SharedPtr<Character> character_;
    
 };
 #endif

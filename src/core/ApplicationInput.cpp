@@ -54,6 +54,7 @@ ApplicationInput::ApplicationInput(Context* context):
     SubscribeToEvent(E_KEYDOWN, HANDLER(ApplicationInput, HandleKeyDown));
     // Subscribe scene update event
     //SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationInput, HandleSceneUpdate));
+    //update is called from the class using this class to ahndle input, main.cpp
 }
 
 //void ApplicationInput::SetParameters(ApplicationHandler * applicationHandler)
@@ -63,6 +64,11 @@ ApplicationInput::ApplicationInput(Context* context):
 void ApplicationInput::SetCameraNode(SharedPtr<Node> cameraNode)
 {
     cameraNode_ = cameraNode;
+}
+
+void ApplicationInput::Possess(Actor* actor)
+{
+    actor_ = actor;
 }
 
 void ApplicationInput::InitTouchInput()
@@ -82,6 +88,127 @@ void ApplicationInput::InitTouchInput()
     }
     screenJoystickIndex_ = input->AddScreenJoystick(layout, cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
     input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, true);
+}
+
+void ApplicationInput::HandleUpdate(StringHash eventType, VariantMap& eventData)
+{
+    using namespace Update;
+
+    Input* input = GetSubsystem<Input>();
+
+    controls_.Set(CTRL_UP | CTRL_DOWN | CTRL_LEFT | CTRL_RIGHT | CTRL_FIRE |CTRL_JUMP, false);
+
+    //LOGINFO("hi");
+
+    //if(actor_)
+    //{
+        /*this is from character demo for touch controls, which might be worth using here
+        // Update controls using touch utility class
+        if (touch_)
+            touch_->UpdateTouches(character_->controls_);
+        */
+    UI* ui = GetSubsystem<UI>();
+    if (!ui->GetFocusElement())
+    {
+        //if (!touch_ || !touch_->useGyroscope_)
+        //{
+        controls_.Set(CTRL_UP, input->GetKeyDown('W'));
+        controls_.Set(CTRL_DOWN, input->GetKeyDown('S'));
+        controls_.Set(CTRL_LEFT, input->GetKeyDown('A'));
+        controls_.Set(CTRL_RIGHT, input->GetKeyDown('D'));
+        //}
+        if(input->GetKeyDown(KEY_LCTRL) || input->GetKeyPress(KEY_LCTRL) || input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT) )
+        {
+            controls_.Set(CTRL_FIRE, true);
+        }
+        controls_.Set(CTRL_JUMP, input->GetKeyDown(KEY_SPACE));
+
+    
+    }
+    //now if we have possessed something, we can send it commands
+    if(actor_)
+    {
+        actor_->Control(&controls_);
+    }
+    //}
+
+    /*if (actor_)
+    {
+        // Clear previous controls
+        character_->controls_.Set(CTRL_FORWARD | CTRL_BACK | CTRL_LEFT | CTRL_RIGHT | CTRL_JUMP, false);
+
+        // Update controls using touch utility class
+        if (touch_)
+            touch_->UpdateTouches(character_->controls_);
+
+        // Update controls using keys
+        UI* ui = GetSubsystem<UI>();
+        if (!ui->GetFocusElement())
+        {
+            if (!touch_ || !touch_->useGyroscope_)
+            {
+                character_->controls_.Set(CTRL_FORWARD, input->GetKeyDown('W'));
+                character_->controls_.Set(CTRL_BACK, input->GetKeyDown('S'));
+                character_->controls_.Set(CTRL_LEFT, input->GetKeyDown('A'));
+                character_->controls_.Set(CTRL_RIGHT, input->GetKeyDown('D'));
+            }
+            character_->controls_.Set(CTRL_JUMP, input->GetKeyDown(KEY_SPACE));
+
+            // Add character yaw & pitch from the mouse motion or touch input
+            if (touchEnabled_)
+            {
+                for (unsigned i = 0; i < input->GetNumTouches(); ++i)
+                {
+                    TouchState* state = input->GetTouch(i);
+                    if (!state->touchedElement_)    // Touch on empty space
+                    {
+                        Camera* camera = cameraNode_->GetComponent<Camera>();
+                        if (!camera)
+                            return;
+
+                        Graphics* graphics = GetSubsystem<Graphics>();
+                        character_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
+                        character_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
+                    }
+                }
+            }
+            else
+            {
+                character_->controls_.yaw_ += (float)input->GetMouseMoveX() * YAW_SENSITIVITY;
+                character_->controls_.pitch_ += (float)input->GetMouseMoveY() * YAW_SENSITIVITY;
+            }
+            // Limit pitch
+            character_->controls_.pitch_ = Clamp(character_->controls_.pitch_, -80.0f, 80.0f);
+
+            // Switch between 1st and 3rd person
+            if (input->GetKeyPress('F'))
+                firstPerson_ = !firstPerson_;
+
+            // Turn on/off gyroscope on mobile platform
+            if (touch_ && input->GetKeyPress('G'))
+                touch_->useGyroscope_ = !touch_->useGyroscope_;
+
+            // Check for loading / saving the scene
+            if (input->GetKeyPress(KEY_F5))
+            {
+                File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_WRITE);
+                scene_->SaveXML(saveFile);
+            }
+            if (input->GetKeyPress(KEY_F7))
+            {
+                File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_READ);
+                scene_->LoadXML(loadFile);
+                // After loading we have to reacquire the weak pointer to the Character component, as it has been recreated
+                // Simply find the character's scene node by name as there's only one of them
+                Node* characterNode = scene_->GetChild("Jack", true);
+                if (characterNode)
+                    character_ = characterNode->GetComponent<Character>();
+            }
+        }
+
+        // Set rotation already here so that it's updated every rendering frame instead of every physics frame
+        character_->GetNode()->SetRotation(Quaternion(character_->controls_.yaw_, Vector3::UP));
+    }*/
 }
 
 void ApplicationInput::HandleKeyDown(StringHash eventType, VariantMap& eventData)

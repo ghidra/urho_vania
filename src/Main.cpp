@@ -77,6 +77,8 @@ void Main::Start()
     character_ = new Character(context_);
     character_->Setup(scene_, cameraNode_);
 
+    applicationInput_->Possess(character_);
+
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
     // like the ScreenMode event sent by the Graphics subsystem when opening the application window. To catch those as well we
     // could subscribe in the constructor instead.
@@ -111,13 +113,14 @@ void Main::Start()
     GetSubsystem<UI>()->GetRoot()->AddChild(helloText);
 }*/
 
-void Main::SubscribeToEvents()
+/*void Main::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
     SubscribeToEvent(E_UPDATE, HANDLER(Main, HandleUpdate));
-}
+}*/
 
-void Main::HandleUpdate(StringHash eventType, VariantMap& eventData)
+/*void Main::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
+    //applicationInput_->HandleUpdate(eventType, eventData);
     // Do nothing for now, could be extended to eg. animate the display
-}
+}*/

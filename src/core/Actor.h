@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Urho3D/Scene/LogicComponent.h>
+//#include <Urho3D/Input/Controls.h>
 
 using namespace Urho3D;
 
@@ -11,16 +12,9 @@ const int SIDE_NEUTRAL = 0;
 const int SIDE_PLAYER = 1;
 const int SIDE_ENEMY = 2;
 
-const int CTRL_UP = 1;
+//these need to match what is in applicationinput
+/*const int CTRL_UP = 1;
 const int CTRL_DOWN = 2;
-const int CTRL_LEFT = 4;
-const int CTRL_RIGHT = 8;
-const int CTRL_FIRE = 16;
-const int CTRL_JUMP = 32;
-const int CTRL_ALL = 63;
-
-/*const int CTRL_FORWARD = 1;
-const int CTRL_BACK = 2;
 const int CTRL_LEFT = 4;
 const int CTRL_RIGHT = 8;
 const int CTRL_JUMP = 16;
@@ -44,14 +38,18 @@ public:
 
     //virtual void Start();
     virtual void FixedUpdate(float timeStep);
+    virtual void Control(Controls* controls);
     
 protected:
 
+    
     //virtual bool Damage(Actor * origin, float amount);
     //virtual bool Heal(float amount);
     //virtual void PlaySound(const String& soundName);
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
     //virtual void WorldCollision(VariantMap& eventData);
+
+    //Controls* controls_ = NULL;
 
     String mesh_;
     String mesh_convex_;

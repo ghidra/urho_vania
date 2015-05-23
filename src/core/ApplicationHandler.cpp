@@ -205,6 +205,7 @@ void ApplicationHandler::SubscribeToEvents()
     SubscribeToEvent(E_UPDATE, HANDLER(ApplicationHandler, HandleUpdate));
     SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(ApplicationHandler, HandlePostRenderUpdate));
     SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationHandler, HandleSceneUpdate));
+    //SubscribeToEvent(E_FIXEDUPDATE, HANDLER(ApplicationHandler, HandleFixedUpdate));
 
 }
 void ApplicationHandler::HandleUpdate(StringHash eventType, VariantMap& eventData)
@@ -228,6 +229,9 @@ void ApplicationHandler::HandleUpdate(StringHash eventType, VariantMap& eventDat
             else
                 engine_->Exit();
         }
+
+        //-----
+        applicationInput_->HandleUpdate(eventType, eventData);
     }
 
     // Move the camera, scale movement with time step

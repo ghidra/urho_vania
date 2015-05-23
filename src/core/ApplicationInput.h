@@ -3,7 +3,10 @@
 
 #pragma once
 
+#include <Urho3D/Input/Controls.h>
 #include <Urho3D/Core/Object.h>
+
+#include "Actor.h"
 //#include "ApplicationHandler.h"
 
 using namespace Urho3D;
@@ -14,6 +17,14 @@ namespace Urho3D
     class Engine;
     class Node;
 }
+
+const int CTRL_UP = 1;
+const int CTRL_DOWN = 2;
+const int CTRL_LEFT = 4;
+const int CTRL_RIGHT = 8;
+const int CTRL_FIRE = 16;
+const int CTRL_JUMP = 32;
+const int CTRL_ALL = 63;
 
 
 class ApplicationInput : public Object
@@ -26,7 +37,11 @@ public:
 
     bool GetQuit(){return quit_;};
 
-    void SetCameraNode(SharedPtr<Node> camerNode);
+    void SetCameraNode(SharedPtr<Node> cameraNode);
+
+    void Possess(Actor* actor);
+
+    void HandleUpdate(StringHash eventType, VariantMap& eventData);//this is called from outside this class
 private:
     /// Construct a new Text instance, containing the 'Hello World' String, and add it to the UI root element.
     //void CreateText();
@@ -35,10 +50,16 @@ private:
     void InitTouchInput();
     /// Handle the logic update event.
     void HandleKeyDown(StringHash eventType, VariantMap& eventData);
+
     //
     void HandleTouchBegin(StringHash eventType, VariantMap& eventData);
 
     virtual String GetScreenJoystickPatchString() const { return String::EMPTY; }
+
+    /// Movement controls. Assigned by the main program each frame.
+    Controls controls_;
+
+    SharedPtr<Actor> actor_;
 
     bool touchEnabled_;
     /// Screen joystick index for navigational controls (mobile platforms only).

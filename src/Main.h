@@ -31,13 +31,13 @@ private:
     /// Construct a new Text instance, containing the 'Hello World' String, and add it to the UI root element.
     //void CreateText();
     /// Subscribe to application-wide logic update events.
-    void SubscribeToEvents();
+    //void SubscribeToEvents();
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    //void HandleUpdate(StringHash eventType, VariantMap& eventData);
 
-    ApplicationInput * applicationInput_ = NULL;
-    VaniaDebugEnv * stage_ = NULL;
-    Character * character_ = NULL;
+    //ApplicationInput * applicationInput_ = NULL;
+    VaniaDebugEnv* stage_ = NULL;
+    Character* character_;
 
 };
 #endif

@@ -1,5 +1,5 @@
 #include <Urho3D/Urho3D.h>
-
+//#include <Urho3D/Core/Context.h>
 //#include <Urho3D/Scene/Scene.h>
 
 #include <Urho3D/Graphics/AnimatedModel.h>
@@ -27,6 +27,7 @@
 #include <Urho3D/Scene/SceneEvents.h>
 
 #include "Character.h"
+#include "ApplicationInput.h"//i need this for the control constants
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -69,13 +70,13 @@ void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
 
     // Create the rendering component + animation controller
     AnimatedModel* object = objectNode->CreateComponent<AnimatedModel>();
-    object->SetModel(cache->GetResource<Model>("Models/Jack.mdl"));
-    object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
+    object->SetModel(cache->GetResource<Model>("Models/Man/MAN.mdl"));
+    //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
     object->SetCastShadows(true);
-    //objectNode->CreateComponent<AnimationController>();
+    objectNode->CreateComponent<AnimationController>();
 
     // Set the head bone for manual control
-    object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;
+    //object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
     RigidBody* body = objectNode->CreateComponent<RigidBody>();
@@ -100,7 +101,20 @@ void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
 
 }
 
+void Character::Control(Controls* controls)
+{
+    if(controls->IsDown(CTRL_UP))
+    {
+        LOGINFO("controls from in character");
+        //im not sure moving rigid bides here are right
+        //RigidBody* body = GetComponent<RigidBody>();
+        //body->ApplyImpulse(Vector3::FORWARD);
+    }
+}
+
 void Character::FixedUpdate(float timeStep)
 {
-
+    LOGINFO("MOVE ME");
+    RigidBody* body = GetComponent<RigidBody>();
+    body->ApplyImpulse(Vector3::FORWARD);
 }
