@@ -8,3 +8,4 @@ CMake
 CMakeFiles/
 launch.sh
 bin/Resources/Models/States/*
+bin/Resources/Models/Man/*
