@@ -11,7 +11,7 @@
 #include <Urho3D/Input/Controls.h>
 
 #include "Actor.h"
-#include "ApplicationInput.h"//i need this for the control constants
+#include "ApplicationInput.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -35,13 +35,17 @@ void Actor::RegisterObject(Context* context)
     // Component has been inserted into its scene node. Subscribe to events now
     SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Actor, HandleNodeCollision));
 }*/
-void Actor::Control(Controls* controls)
+void Actor::Possess(ApplicationInput* applicationInput)
+{
+    applicationInput_ = applicationInput;
+}
+/*void Actor::Control(Controls* controls)
 {
     if(controls->IsDown(CTRL_UP))
     {
         LOGINFO("pressed W");
     }
-}
+}*/
 void Actor::FixedUpdate(float timeStep)
 {
     LOGINFO("inside actor fixedupdate");

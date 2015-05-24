@@ -1,5 +1,5 @@
 #include <Urho3D/Urho3D.h>
-//#include <Urho3D/Core/Context.h>
+#include <Urho3D/Core/Context.h>
 //#include <Urho3D/Scene/Scene.h>
 
 #include <Urho3D/Graphics/AnimatedModel.h>
@@ -42,21 +42,22 @@ Character::Character(Context* context) :
     //paused_(false)
 {
     //CameraLogic::RegisterObject(context);
-    SetUpdateEventMask(USE_FIXEDUPDATE);
+    //SetUpdateEventMask(USE_FIXEDUPDATE);
 }
 
 //-------------------
 //-------------------
-/*void Character::RegisterObject(Context* context)
+void Character::RegisterObject(Context* context)
 {
     context->RegisterFactory<Character>();
 
-}*/
+}
 
 void Character::Start()
 {
     // Execute base class startup
     //ApplicationHandler::Start();
+    LOGINFO("Character start");
     SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Character, HandleNodeCollision));
 
 }
@@ -65,21 +66,21 @@ void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     //scene_ does not exists?
-    Node* objectNode = scene->CreateChild("Jack");
-    objectNode->SetPosition(Vector3(0.0f, 1.0f, 0.0f));
+    //Node* objectNode = scene->CreateChild("Jack");
+    node_->SetPosition(Vector3(0.0f, 1.0f, 0.0f));//objectNode
 
     // Create the rendering component + animation controller
-    AnimatedModel* object = objectNode->CreateComponent<AnimatedModel>();
+    AnimatedModel* object = node_->CreateComponent<AnimatedModel>();
     object->SetModel(cache->GetResource<Model>("Models/Man/MAN.mdl"));
     //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
     object->SetCastShadows(true);
-    objectNode->CreateComponent<AnimationController>();
+    node_->CreateComponent<AnimationController>();
 
     // Set the head bone for manual control
     //object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
-    RigidBody* body = objectNode->CreateComponent<RigidBody>();
+    RigidBody* body = node_->CreateComponent<RigidBody>();
     body->SetCollisionLayer(1);
     body->SetMass(1.0f);
 
@@ -91,7 +92,7 @@ void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
     body->SetCollisionEventMode(COLLISION_ALWAYS);
 
     // Set a capsule shape for collision
-    CollisionShape* shape = objectNode->CreateComponent<CollisionShape>();
+    CollisionShape* shape = node_->CreateComponent<CollisionShape>();
     shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
 
     // Create the character logic component, which takes care of steering the rigidbody
@@ -101,7 +102,7 @@ void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
 
 }
 
-void Character::Control(Controls* controls)
+/*void Character::Control(Controls* controls)
 {
     if(controls->IsDown(CTRL_UP))
     {
@@ -110,11 +111,11 @@ void Character::Control(Controls* controls)
         //RigidBody* body = GetComponent<RigidBody>();
         //body->ApplyImpulse(Vector3::FORWARD);
     }
-}
+}*/
 
 void Character::FixedUpdate(float timeStep)
 {
     LOGINFO("MOVE ME");
-    RigidBody* body = GetComponent<RigidBody>();
-    body->ApplyImpulse(Vector3::FORWARD);
+    /*RigidBody* body = GetComponent<RigidBody>();
+    body->ApplyImpulse(Vector3::FORWARD);*/
 }

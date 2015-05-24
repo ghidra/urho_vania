@@ -1,6 +1,6 @@
 #include <Urho3D/Urho3D.h>
 
-
+//#include <Urho3D/Core/Context.h>
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Engine/Console.h>
@@ -74,10 +74,12 @@ void Main::Start()
     stage_ = new VaniaDebugEnv(context_);
     stage_->Setup(scene_, cameraNode_);
 
-    character_ = new Character(context_);
-    character_->Setup(scene_, cameraNode_);
+    Node* characterNode = scene_->CreateChild("Jack");
+    character_ = characterNode->CreateComponent<Character>();
 
-    applicationInput_->Possess(character_);
+    //character_ = new Character(context_);
+    character_->Setup(scene_, cameraNode_);
+    character_->Possess(applicationInput_);
 
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
     // like the ScreenMode event sent by the Graphics subsystem when opening the application window. To catch those as well we

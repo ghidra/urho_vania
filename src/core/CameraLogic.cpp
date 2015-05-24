@@ -17,6 +17,7 @@ CameraLogic::CameraLogic(Context* context) :
     LogicComponent(context)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
+    //context->RegisterFactory<CameraLogic>();
     SetUpdateEventMask(USE_FIXEDUPDATE);
 }
 

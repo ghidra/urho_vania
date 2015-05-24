@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Urho3D/Scene/LogicComponent.h>
+#include "ApplicationInput.h"
 //#include <Urho3D/Input/Controls.h>
 
 using namespace Urho3D;
@@ -38,7 +39,8 @@ public:
 
     //virtual void Start();
     virtual void FixedUpdate(float timeStep);
-    virtual void Control(Controls* controls);
+    virtual void Possess(ApplicationInput* applicationInput);
+    //virtual void Control(Controls* controls);
     
 protected:
 
@@ -50,6 +52,7 @@ protected:
     //virtual void WorldCollision(VariantMap& eventData);
 
     //Controls* controls_ = NULL;
+    ApplicationInput* applicationInput_;
 
     String mesh_;
     String mesh_convex_;

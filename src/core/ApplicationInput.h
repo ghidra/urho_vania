@@ -6,7 +6,7 @@
 #include <Urho3D/Input/Controls.h>
 #include <Urho3D/Core/Object.h>
 
-#include "Actor.h"
+//#include "Actor.h"
 //#include "ApplicationHandler.h"
 
 using namespace Urho3D;
@@ -39,7 +39,7 @@ public:
 
     void SetCameraNode(SharedPtr<Node> cameraNode);
 
-    void Possess(Actor* actor);
+    //void Possess(Actor* actor);
 
     void HandleUpdate(StringHash eventType, VariantMap& eventData);//this is called from outside this class
 private:
@@ -59,7 +59,7 @@ private:
     /// Movement controls. Assigned by the main program each frame.
     Controls controls_;
 
-    SharedPtr<Actor> actor_;
+    //SharedPtr<Actor> actor_;
 
     bool touchEnabled_;
     /// Screen joystick index for navigational controls (mobile platforms only).

@@ -66,10 +66,10 @@ void ApplicationInput::SetCameraNode(SharedPtr<Node> cameraNode)
     cameraNode_ = cameraNode;
 }
 
-void ApplicationInput::Possess(Actor* actor)
+/*void ApplicationInput::Possess(Actor* actor)
 {
     actor_ = actor;
-}
+}*/
 
 void ApplicationInput::InitTouchInput()
 {
@@ -126,10 +126,10 @@ void ApplicationInput::HandleUpdate(StringHash eventType, VariantMap& eventData)
     
     }
     //now if we have possessed something, we can send it commands
-    if(actor_)
+    /*if(actor_)
     {
         actor_->Control(&controls_);
-    }
+    }*/
     //}
 
     /*if (actor_)
