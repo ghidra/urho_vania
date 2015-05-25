@@ -37,7 +37,9 @@ private:
 
     //ApplicationInput * applicationInput_ = NULL;
     VaniaDebugEnv* stage_ = NULL;
-    Character* character_;
+
+    SharedPtr<Node> characterNode_;
+    //Character* character_;
 
 };
 #endif

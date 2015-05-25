@@ -19,6 +19,10 @@ public:
     static void RegisterObject(Context* context);
     virtual void FixedUpdate(float timeStep);
 
+    //setters
+    virtual void SetCameraType(const String& cameraType){ cameraType_ = cameraType; }
+    virtual void SetCameraTarget(SharedPtr<Node> target){  target_ = target; }
+
 private:
 
     //SharedPtr<Node> cameraNode_;
@@ -26,6 +30,9 @@ private:
     float yaw_;
     /// Camera pitch angle.
     float pitch_;
+
+    String cameraType_;
+    SharedPtr<Node> target_;
 };
 
 #endif

@@ -66,7 +66,8 @@ void Main::Start()
     ApplicationHandler::Start();
 
     applicationInput_ = new ApplicationInput(context_);
-    SetApplicationInput(applicationInput_);
+    SetApplicationInput(applicationInput_);//this also set up the basic camera
+    applicationInput_->SetCameraType(String("sidescrolling"));
 
     // Create "Hello World" Text
     //CreateText();
@@ -74,12 +75,14 @@ void Main::Start()
     stage_ = new VaniaDebugEnv(context_);
     stage_->Setup(scene_, cameraNode_);
 
-    Node* characterNode = scene_->CreateChild("Jack");
-    character_ = characterNode->CreateComponent<Character>();
+    characterNode_ = scene_->CreateChild("Jack");
+    Character* character_ = characterNode_->CreateComponent<Character>();
 
     //character_ = new Character(context_);
     character_->Setup(scene_, cameraNode_);
     character_->Possess(applicationInput_);
+
+    applicationInput_->SetCameraTarget(characterNode_);
 
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
     // like the ScreenMode event sent by the Graphics subsystem when opening the application window. To catch those as well we

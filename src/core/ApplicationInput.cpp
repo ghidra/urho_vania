@@ -29,6 +29,7 @@
 //#include <Urho3D/Core/Variant.h>
 
 #include "ApplicationInput.h"
+#include "CameraLogic.h"
 //#include "ApplicationHandler.h"
 
 #include <Urho3D/DebugNew.h>
@@ -64,6 +65,16 @@ ApplicationInput::ApplicationInput(Context* context):
 void ApplicationInput::SetCameraNode(SharedPtr<Node> cameraNode)
 {
     cameraNode_ = cameraNode;
+    cameraLogic_ = cameraNode_->CreateComponent<CameraLogic>();
+    //cameraLogic_->SetCameraType(cameraType);
+}
+void ApplicationInput::SetCameraTarget(SharedPtr<Node> target)
+{
+    cameraLogic_->SetCameraTarget(target);
+}
+void ApplicationInput::SetCameraType(const String& cameraType)
+{
+    cameraLogic_->SetCameraType(cameraType);
 }
 
 /*void ApplicationInput::Possess(Actor* actor)

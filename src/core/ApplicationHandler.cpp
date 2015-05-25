@@ -39,6 +39,7 @@
 //#include "CameraLogic.h"
 #include "ApplicationInput.h"
 #include "ApplicationHandler.h"
+//#include "CameraLogic.h"
 
 #include <Urho3D/IO/Log.h>
 
@@ -112,6 +113,8 @@ void ApplicationHandler::SetApplicationInput(ApplicationInput* applicationInput)
 {
     applicationInput_ = applicationInput;
     applicationInput_->SetCameraNode(cameraNode_);
+    //CameraLogic* cameraLogic_ = cameraNode_->CreateComponent<CameraLogic>();
+    //cameraLogic_->SetCameraType(cameraType);
 }
 
 void ApplicationHandler::SetWindowTitleAndIcon()

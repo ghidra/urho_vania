@@ -52,7 +52,7 @@ protected:
     //virtual void WorldCollision(VariantMap& eventData);
 
     //Controls* controls_ = NULL;
-    ApplicationInput* applicationInput_;
+    ApplicationInput* applicationInput_ = NULL;
 
     String mesh_;
     String mesh_convex_;

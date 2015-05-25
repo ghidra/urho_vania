@@ -6,6 +6,8 @@
 #include <Urho3D/Input/Controls.h>
 #include <Urho3D/Core/Object.h>
 
+#include "CameraLogic.h"
+
 //#include "Actor.h"
 //#include "ApplicationHandler.h"
 
@@ -38,10 +40,14 @@ public:
     bool GetQuit(){return quit_;};
 
     void SetCameraNode(SharedPtr<Node> cameraNode);
+    void SetCameraTarget(SharedPtr<Node> target);//whom the camera should target
+    void SetCameraType(const String& cameraType );
 
     //void Possess(Actor* actor);
 
     void HandleUpdate(StringHash eventType, VariantMap& eventData);//this is called from outside this class
+
+    Controls controls_;
 private:
     /// Construct a new Text instance, containing the 'Hello World' String, and add it to the UI root element.
     //void CreateText();
@@ -57,7 +63,7 @@ private:
     virtual String GetScreenJoystickPatchString() const { return String::EMPTY; }
 
     /// Movement controls. Assigned by the main program each frame.
-    Controls controls_;
+    
 
     //SharedPtr<Actor> actor_;
 
@@ -71,6 +77,7 @@ private:
     bool quit_;
 
     SharedPtr<Node> cameraNode_;
+    CameraLogic* cameraLogic_;//i might not need to store this in the end
 
     /// Touch sensitivity.
     float touchSensitivity_;

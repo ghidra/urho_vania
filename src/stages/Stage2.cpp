@@ -26,7 +26,7 @@
 #include <Urho3D/Graphics/Zone.h>
 
 #include "Stage2.h"
-#include "../core/CameraLogic.h"
+//#include "../core/CameraLogic.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -264,5 +264,5 @@ void Stage2::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 
     //give the camera the logic I want
-    CameraLogic* cameralogic = cameraNode_->CreateComponent<CameraLogic>();
+    //CameraLogic* cameralogic = cameraNode_->CreateComponent<CameraLogic>();
 }
