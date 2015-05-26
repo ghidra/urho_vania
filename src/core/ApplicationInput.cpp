@@ -37,12 +37,11 @@
 
 ApplicationInput::ApplicationInput(Context* context):
     Object(context),
-    cameraDistanceMin_(1.0f),
-    cameraDistanceMax_(5.0f),
-    cameraDistanceIni_(20.0f),
     touchSensitivity_(2.0f),
     paused_(false),
-    quit_(false)
+    quit_(false),
+    debugCamera_(false),
+    debugDrawPhysics_(false)
 {
     if (GetPlatform() == "Android" || GetPlatform() == "iOS")
         // On mobile platform, enable touch by adding a screen joystick
@@ -75,6 +74,11 @@ void ApplicationInput::SetCameraTarget(SharedPtr<Node> target)
 void ApplicationInput::SetCameraType(const String& cameraType)
 {
     cameraLogic_->SetCameraType(cameraType);
+    cameraType_ = cameraType;
+}
+void ApplicationInput::SetCameraParameters(const float distance, const float distance_min, const float distance_max, const Quaternion orientation)
+{
+    cameraLogic_->SetCameraParameters(distance,distance_max,distance_min,orientation);
 }
 
 /*void ApplicationInput::Possess(Actor* actor)
@@ -246,6 +250,20 @@ void ApplicationInput::HandleKeyDown(StringHash eventType, VariantMap& eventData
     // Toggle debug HUD with F2
     else if (key == KEY_F2)
         GetSubsystem<DebugHud>()->ToggleAll();
+
+    else if (key == KEY_F3)
+        debugDrawPhysics_ = !debugDrawPhysics_;
+    else if (key == KEY_F4)
+    {
+        //turn on the debug camera
+        debugCamera_ = !debugCamera_;
+        if(debugCamera_)
+            cameraLogic_->SetCameraType(String("default"));
+        else
+            cameraLogic_->SetCameraType(cameraType_);
+    }
+
+
     
     // Common rendering quality controls, only when UI has no focused element
     else if (!GetSubsystem<UI>()->GetFocusElement())

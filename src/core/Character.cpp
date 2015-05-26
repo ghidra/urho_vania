@@ -117,32 +117,35 @@ void Character::FixedUpdate(float timeStep)
 {
     if(applicationInput_)
     {
-        //we are possessed by the application controller
-        Controls& ctrl = applicationInput_->controls_;
-        //LOGINFO("MOVE ME");
-        RigidBody* body = GetComponent<RigidBody>();
-        // Update movement & animation
-        const Quaternion& rot = node_->GetRotation();
-        Vector3 moveDir = Vector3::ZERO;
-        const Vector3& velocity = body->GetLinearVelocity();
-        // Velocity on the XZ plane
-        Vector3 planeVelocity(velocity.x_, 0.0f, velocity.z_);
-        
-        if (ctrl.IsDown(CTRL_UP))
-            moveDir += Vector3::FORWARD;
-        if (applicationInput_->controls_.IsDown(CTRL_DOWN))
-            moveDir += Vector3::BACK;
-        if (applicationInput_->controls_.IsDown(CTRL_LEFT))
-            moveDir += Vector3::LEFT;
-        if (applicationInput_->controls_.IsDown(CTRL_RIGHT))
-            moveDir += Vector3::RIGHT;
-        
-        // Normalize move vector so that diagonal strafing is not faster
-        if (moveDir.LengthSquared() > 0.0f)
-            moveDir.Normalize();
-        
-        // If in air, allow control, but slower than when on ground
-        body->ApplyImpulse(rot * moveDir * 0.3);
+        if(!applicationInput_->IsDebugCamera())//if we are not in debug camera mode
+        {
+            //we are possessed by the application controller
+            Controls& ctrl = applicationInput_->controls_;
+            //LOGINFO("MOVE ME");
+            RigidBody* body = GetComponent<RigidBody>();
+            // Update movement & animation
+            const Quaternion& rot = node_->GetRotation();
+            Vector3 moveDir = Vector3::ZERO;
+            const Vector3& velocity = body->GetLinearVelocity();
+            // Velocity on the XZ plane
+            Vector3 planeVelocity(velocity.x_, 0.0f, velocity.z_);
+            
+            if (ctrl.IsDown(CTRL_UP))
+                moveDir += Vector3::FORWARD;
+            if (applicationInput_->controls_.IsDown(CTRL_DOWN))
+                moveDir += Vector3::BACK;
+            if (applicationInput_->controls_.IsDown(CTRL_LEFT))
+                moveDir += Vector3::LEFT;
+            if (applicationInput_->controls_.IsDown(CTRL_RIGHT))
+                moveDir += Vector3::RIGHT;
+            
+            // Normalize move vector so that diagonal strafing is not faster
+            if (moveDir.LengthSquared() > 0.0f)
+                moveDir.Normalize();
+            
+            // If in air, allow control, but slower than when on ground
+            body->ApplyImpulse(rot * moveDir * 0.3);
+        }
     }
     
     //body->ApplyImpulse(Vector3::FORWARD);

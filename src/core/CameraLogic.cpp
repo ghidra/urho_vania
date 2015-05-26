@@ -15,6 +15,12 @@
 
 CameraLogic::CameraLogic(Context* context) :
     LogicComponent(context),
+    cameraDistanceMin_(1.0f),
+    cameraDistanceMax_(5.0f),
+    cameraDistanceIni_(20.0f),
+    outDirection_(Vector3(0.0f,0.0f,-1.0f)),
+    cameraRelativeOrientation_(Quaternion(30.0f,0.0f,0.0f)),
+    cameraDistance_(20.0f),
     cameraType_(String("default"))
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
@@ -26,6 +32,14 @@ void CameraLogic::RegisterObject(Context* context)
 {
     context->RegisterFactory<CameraLogic>();
 
+}
+void CameraLogic::SetCameraParameters(const float distance, const float distance_min, const float distance_max, const Quaternion orientation)
+{
+    cameraDistance_ = distance;
+    cameraDistanceMin_ = distance_min;
+    cameraDistanceMax_ = distance_max;
+    cameraDistanceIni_ = distance;
+    cameraRelativeOrientation_ = orientation;
 }
 
 void CameraLogic::FixedUpdate(float timeStep)
@@ -43,6 +57,7 @@ void CameraLogic::FixedUpdate(float timeStep)
 
     if(cameraType_ == String("default"))
     {
+        //this is the default "debug" behavior of the camera
         // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
         IntVector2 mouseMove = input->GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
@@ -61,6 +76,19 @@ void CameraLogic::FixedUpdate(float timeStep)
             node_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
         if (input->GetKeyDown('D'))
             node_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
+    }
+    else if(cameraType_ == String("sidescrolling"))
+    {
+        if(target_)//this will only work if I have a target
+        {
+            //i need the targets position, orientation, to get my cameras position and orientation
+            Vector3 target_position = target_->GetWorldPosition();
+            Quaternion target_orientation = target_->GetWorldRotation();//i may or may not need this at the moment
+
+            Vector3 rotated_origin = cameraRelativeOrientation_*outDirection_*cameraDistance_;
+            Vector3 target_offset_position = rotated_origin + target_position;
+            node_->SetPosition(target_offset_position);
+        }
     }
 
     // Toggle debug geometry with space
