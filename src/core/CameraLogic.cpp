@@ -87,7 +87,9 @@ void CameraLogic::FixedUpdate(float timeStep)
 
             Vector3 rotated_origin = cameraRelativeOrientation_*outDirection_*cameraDistance_;
             Vector3 target_offset_position = rotated_origin + target_position;
-            node_->SetPosition(target_offset_position);
+            newPosition_ = target_offset_position;
+            
+            node_->SetPosition(SmoothPosition(timeStep));
         }
     }
 
@@ -96,4 +98,15 @@ void CameraLogic::FixedUpdate(float timeStep)
     //    drawDebug_ = !drawDebug_;
     
     //LOGINFO("updating i guess");
+}
+
+Vector3 CameraLogic::SmoothPosition(float timeStep) {
+    Vector3 pos = node_->GetWorldPosition();
+    Vector3 diff = newPosition_ - pos;
+    Vector3 a = diff * timeStep * 10;
+    return pos + a;
+}
+
+void CameraLogic::SmoothZoom(float timeStep) {
+  //curFollow_ = Lerp(curFollow_, follow_, timeStep * 20.0f);
 }

@@ -27,7 +27,11 @@ public:
 
 private:
 
+    Vector3 SmoothPosition(float timeStep);
+    void SmoothZoom(float timeStep);
+
     //SharedPtr<Node> cameraNode_;
+    Vector3 newPosition_;//the target position, for smoothing
     /// Camera yaw angle.
     float yaw_;
     /// Camera pitch angle.

@@ -121,6 +121,9 @@ void Character::FixedUpdate(float timeStep)
         {
             //we are possessed by the application controller
             Controls& ctrl = applicationInput_->controls_;
+
+            AnimationController* animCtrl = GetComponent<AnimationController>();
+
             //LOGINFO("MOVE ME");
             RigidBody* body = GetComponent<RigidBody>();
             // Update movement & animation
@@ -145,6 +148,17 @@ void Character::FixedUpdate(float timeStep)
             
             // If in air, allow control, but slower than when on ground
             body->ApplyImpulse(rot * moveDir * 0.3);
+
+            //now control animation
+            // Play walk animation if moving on ground, otherwise fade it out
+            if (!moveDir.Equals(Vector3::ZERO))
+                animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
+            else
+                animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.2f);
+            // Set walk animation speed proportional to velocity
+            animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", planeVelocity.Length() * 0.3f);
+    
+
         }
     }
     
