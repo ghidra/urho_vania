@@ -18,8 +18,9 @@ CameraLogic::CameraLogic(Context* context) :
     cameraDistanceMin_(1.0f),
     cameraDistanceMax_(5.0f),
     cameraDistanceIni_(20.0f),
+    targetOffset_(Vector3(0.0f,0.0f,0.0f)),
     outDirection_(Vector3(0.0f,0.0f,-1.0f)),
-    cameraRelativeOrientation_(Quaternion(30.0f,0.0f,0.0f)),
+    outDirectionOrientation_(Quaternion(30.0f,0.0f,0.0f)),
     cameraDistance_(20.0f),
     cameraType_(String("default"))
 {
@@ -39,7 +40,17 @@ void CameraLogic::SetCameraParameters(const float distance, const float distance
     cameraDistanceMin_ = distance_min;
     cameraDistanceMax_ = distance_max;
     cameraDistanceIni_ = distance;
-    cameraRelativeOrientation_ = orientation;
+    outDirectionOrientation_ = orientation;
+}
+
+void CameraLogic::SetCameraParameters( VariantMap& parms)
+{
+    if( parms.Contains("targetOffset") ) targetOffset_ = parms["targetOffset"].GetVector3();
+    //cameraDistance_ = distance;
+    //cameraDistanceMin_ = distance_min;
+    //cameraDistanceMax_ = distance_max;
+    //cameraDistanceIni_ = distance;
+    //outDirectionOrientation_ = orientation;
 }
 
 void CameraLogic::FixedUpdate(float timeStep)
@@ -82,14 +93,20 @@ void CameraLogic::FixedUpdate(float timeStep)
         if(target_)//this will only work if I have a target
         {
             //i need the targets position, orientation, to get my cameras position and orientation
-            Vector3 target_position = target_->GetWorldPosition();
+            Vector3 target_position = target_->GetWorldPosition()+(target_->GetWorldRotation() * targetOffset_);
             Quaternion target_orientation = target_->GetWorldRotation();//i may or may not need this at the moment
 
-            Vector3 rotated_origin = cameraRelativeOrientation_*outDirection_*cameraDistance_;
+            Vector3 rotated_origin = outDirectionOrientation_ * outDirection_* cameraDistance_;
             Vector3 target_offset_position = rotated_origin + target_position;
+
             newPosition_ = target_offset_position;
+            Vector3 smoothPos = SmoothPosition(timeStep); 
             
-            node_->SetPosition(SmoothPosition(timeStep));
+            Vector3 lookDirection = target_position - smoothPos;
+            newRotation_.FromLookRotation(lookDirection.Normalized());
+
+            node_->SetPosition(smoothPos);
+            node_->SetRotation(newRotation_);
         }
     }
 

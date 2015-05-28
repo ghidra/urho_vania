@@ -23,15 +23,16 @@ public:
     virtual void SetCameraType(const String& cameraType){ cameraType_ = cameraType; }
     virtual void SetCameraTarget(SharedPtr<Node> target){  target_ = target; }
     virtual void SetCameraParameters(const float distance, const float distance_min = 1.0f, const float distance_max = 20.0f, const Quaternion orientation = Quaternion(0.0f,0.0f,0.0f,1.0f) );
+    virtual void SetCameraParameters( VariantMap& parms );
 
 
 private:
 
     Vector3 SmoothPosition(float timeStep);
     void SmoothZoom(float timeStep);
+    //Quaternion SmoothRotation(float timeStep);
 
     //SharedPtr<Node> cameraNode_;
-    Vector3 newPosition_;//the target position, for smoothing
     /// Camera yaw angle.
     float yaw_;
     /// Camera pitch angle.
@@ -39,13 +40,18 @@ private:
 
     String cameraType_;
     SharedPtr<Node> target_;
+    Vector3 targetOffset_;//a positional offset to aim at from the target node
+
+    Vector3 newPosition_;//the target position, for smoothing
+    Quaternion newRotation_;//the target rotation, incase I want to transition smoothly
 
     float cameraDistance_;
     float cameraDistanceMin_;
     float cameraDistanceMax_;
     float cameraDistanceIni_;
+
     Vector3 outDirection_;
-    Quaternion cameraRelativeOrientation_;
+    Quaternion outDirectionOrientation_;
 };
 
 #endif

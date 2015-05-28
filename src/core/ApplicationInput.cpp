@@ -80,6 +80,10 @@ void ApplicationInput::SetCameraParameters(const float distance, const float dis
 {
     cameraLogic_->SetCameraParameters(distance,distance_max,distance_min,orientation);
 }
+void ApplicationInput::SetCameraParameters( VariantMap& parms )
+{
+    cameraLogic_->SetCameraParameters( parms );
+}
 
 /*void ApplicationInput::Possess(Actor* actor)
 {

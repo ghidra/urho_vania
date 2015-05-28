@@ -68,6 +68,11 @@ void Main::Start()
     applicationInput_ = new ApplicationInput(context_);
     SetApplicationInput(applicationInput_);//this also set up the basic camera
     applicationInput_->SetCameraType(String("sidescrolling"));
+    
+    VariantMap camParms;
+    camParms["targetOffset"] = Vector3(0.0f,6.0f,0.0f);
+
+    applicationInput_->SetCameraParameters(camParms);
     //I can set parameters here if I want for the camera, for now, let the defaults deal with it
 
     // Create "Hello World" Text

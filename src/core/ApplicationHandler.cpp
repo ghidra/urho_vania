@@ -63,7 +63,7 @@ void ApplicationHandler::Setup()
     engineParameters_["LogName"]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
     engineParameters_["FullScreen"]  = false;
     engineParameters_["Headless"]    = false;
-    engineParameters_["VSync"] = true;
+    engineParameters_["VSync"] = true; // need this on my slow laptop
     engineParameters_["ResourcePaths"] = "Data;CoreData;Resources";//or
     //cache->AddResourceDir("Resources");
 }

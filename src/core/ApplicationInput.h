@@ -44,6 +44,7 @@ public:
     void SetCameraTarget(SharedPtr<Node> target);//whom the camera should target
     void SetCameraType(const String& cameraType );
     void SetCameraParameters(const float distance, const float distance_min = 1.0f, const float distance_max = 20.0f, const Quaternion orientation = Quaternion(30.0f,0.0f,0.0f) );
+    void SetCameraParameters( VariantMap& parms );
 
     //void Possess(Actor* actor);
 
