@@ -5,7 +5,7 @@
 
 //#include <Urho3D/Input/Controls.h>
 //#include <string>
-#include "Actor.h"
+#include "Pawn.h"
 
 using namespace Urho3D;
 
@@ -19,7 +19,7 @@ class Scene;
 
 using namespace Urho3D;
 
-class Character : public Actor
+class Character : public Pawn
 {
 
     OBJECT(Character);

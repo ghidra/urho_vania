@@ -35,11 +35,11 @@ class Actor : public LogicComponent
 public:
     Actor(Context* context);
 
-    static void RegisterObject(Context* context);
+    //static void RegisterObject(Context* context);
 
     //virtual void Start();
     virtual void FixedUpdate(float timeStep);
-    virtual void Possess(ApplicationInput* applicationInput);
+    //virtual void Possess(ApplicationInput* applicationInput);
     //virtual void Control(Controls* controls);
     
 protected:
@@ -61,11 +61,11 @@ protected:
     bool onGround_;
     bool isSliding_;
     float duration_;
-    float health_;
-    float maxHealth_;
+    //float health_;
+    //float maxHealth_;
     int side_;
-    int lastDamageSide_;
-    uint lastDamageCreatorID_;
+    //int lastDamageSide_;
+    //uint lastDamageCreatorID_;
     uint creatorID_;
 
     float speed_;

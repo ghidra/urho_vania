@@ -24,21 +24,20 @@ Actor::Actor(Context* context) :
     SetUpdateEventMask(USE_FIXEDUPDATE);
 }
 
-void Actor::RegisterObject(Context* context)
-{
-    context->RegisterFactory<Actor>();
-
-}
+//void Actor::RegisterObject(Context* context)
+//{
+//    context->RegisterFactory<Actor>();
+//}
 
 /*void Actor::Start()
 {
     // Component has been inserted into its scene node. Subscribe to events now
     SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Actor, HandleNodeCollision));
 }*/
-void Actor::Possess(ApplicationInput* applicationInput)
+/*void Actor::Possess(ApplicationInput* applicationInput)
 {
     applicationInput_ = applicationInput;
-}
+}*/
 /*void Actor::Control(Controls* controls)
 {
     if(controls->IsDown(CTRL_UP))
@@ -48,7 +47,7 @@ void Actor::Possess(ApplicationInput* applicationInput)
 }*/
 void Actor::FixedUpdate(float timeStep)
 {
-    LOGINFO("inside actor fixedupdate");
+    //LOGINFO("inside actor fixedupdate");
 	timeIncrement_+=timeStep;
     // Disappear when duration expired
     if (duration_ >= 0){

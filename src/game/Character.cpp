@@ -33,7 +33,7 @@
 #include <Urho3D/IO/Log.h>
 
 Character::Character(Context* context) :
-    Actor(context)
+    Pawn(context)
     //yaw_(0.0f),
     //pitch_(0.0f),
     //touchEnabled_(false),
