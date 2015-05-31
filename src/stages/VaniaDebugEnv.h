@@ -5,7 +5,7 @@
 
 //#include <string>
 #include <Urho3D/Core/Object.h>
-#include "../core/Character.h"
+#include "../game/Character.h"
 
 using namespace Urho3D;
 

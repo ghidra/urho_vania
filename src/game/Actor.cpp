@@ -11,7 +11,7 @@
 #include <Urho3D/Input/Controls.h>
 
 #include "Actor.h"
-#include "ApplicationInput.h"
+#include "../core/ApplicationInput.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>

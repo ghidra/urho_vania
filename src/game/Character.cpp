@@ -27,7 +27,7 @@
 #include <Urho3D/Scene/SceneEvents.h>
 
 #include "Character.h"
-#include "ApplicationInput.h"//i need this for the control constants
+#include "../core/ApplicationInput.h"//i need this for the control constants
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>

@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Urho3D/Scene/LogicComponent.h>
-#include "ApplicationInput.h"
+#include "../core/ApplicationInput.h"
 //#include <Urho3D/Input/Controls.h>
 
 using namespace Urho3D;
