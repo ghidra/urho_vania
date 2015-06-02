@@ -5,7 +5,7 @@
 
 //#include <Urho3D/Input/Controls.h>
 //#include <string>
-#include "Pawn.h"
+#include "../game/Pawn.h"
 
 using namespace Urho3D;
 

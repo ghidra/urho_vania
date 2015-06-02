@@ -32,7 +32,7 @@
 
 #include "Main.h"
 #include "core/CameraLogic.h" 
-#include "game/Character.h"
+#include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
 //#include "core/ApplicationInput.h"
 
