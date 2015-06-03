@@ -13,9 +13,9 @@
 #include <Urho3D/Core/ProcessUtils.h>
 #include <Urho3D/Input/Input.h>*/
 
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Graphics/Material.h>
+//#include <Urho3D/IO/FileSystem.h>
+//#include <Urho3D/Resource/ResourceCache.h>
+//#include <Urho3D/Graphics/Material.h>
 
 #include <Urho3D/Graphics/AnimationController.h>
 #include <Urho3D/Core/Context.h>
@@ -42,7 +42,8 @@ Character::Character(Context* context) :
     //paused_(false)
 {
     //CameraLogic::RegisterObject(context);
-    //SetUpdateEventMask(USE_FIXEDUPDATE);
+    SetUpdateEventMask(USE_FIXEDUPDATE);
+    mesh_ = String("Man/MAN.mdl");
 }
 
 //-------------------
@@ -61,9 +62,9 @@ void Character::Start()
     SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Character, HandleNodeCollision));
 
 }
-void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
+void Character::Setup()
 {
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
+    /*ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     //scene_ does not exists?
     //Node* objectNode = scene->CreateChild("Jack");
@@ -71,7 +72,7 @@ void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
 
     // Create the rendering component + animation controller
     AnimatedModel* object = node_->CreateComponent<AnimatedModel>();
-    object->SetModel(cache->GetResource<Model>("Models/Man/MAN.mdl"));
+    object->SetModel(cache->GetResource<Model>("Models/"+mesh_));
     //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
     object->SetCastShadows(true);
     node_->CreateComponent<AnimationController>();
@@ -81,7 +82,8 @@ void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
     RigidBody* body = node_->CreateComponent<RigidBody>();
-    body->SetCollisionLayer(1);
+    body->SetCollisionLayer(collision_layer_);
+    body->SetCollisionMask(collision_mask_);
     body->SetMass(1.0f);
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
@@ -90,10 +92,13 @@ void Character::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
 
     // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
     body->SetCollisionEventMode(COLLISION_ALWAYS);
-
+    */
     // Set a capsule shape for collision
+    Pawn::Setup();//do the basic set up with stored and set values
+    //then setup the collision shape
     CollisionShape* shape = node_->CreateComponent<CollisionShape>();
     shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
+
 
     // Create the character logic component, which takes care of steering the rigidbody
     // Remember it so that we can set the controls. Use a WeakPtr because the scene hierarchy already owns it

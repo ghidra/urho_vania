@@ -118,8 +118,10 @@ void VaniaDebugEnv::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
         // Make the floor physical by adding RigidBody and CollisionShape components. The RigidBody's default
         // parameters make the object static (zero mass.) Note that a CollisionShape by itself will not participate
         // in the physics simulation
-        /*RigidBody* body = */floorNode->CreateComponent<RigidBody>();
+        RigidBody* body = floorNode->CreateComponent<RigidBody>();
         CollisionShape* shape = floorNode->CreateComponent<CollisionShape>();
+        body->SetCollisionLayer(32);
+        body->SetCollisionMask(63);
         // Set a box shape of size 1 x 1 x 1 for collision. The shape will be scaled with the scene node scale, so the
         // rendering and physics representation sizes should match (the box model is also 1 x 1 x 1.)
         shape->SetBox(Vector3::ONE);

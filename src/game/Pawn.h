@@ -16,8 +16,6 @@ class Scene;
 
 }
 
-using namespace Urho3D;
-
 class Pawn : public Actor
 {
 
@@ -35,6 +33,8 @@ public:
     //virtual void Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode);
 
 protected:
+
+    virtual void Setup();
 
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
 

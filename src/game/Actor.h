@@ -76,5 +76,18 @@ protected:
     //character collision masks as default
     uint collision_layer_;//=1;
     uint collision_mask_;//=60;
+/*
+COLLISION LAYERS AND MASKS
+--------------------------------
+layers:                        masks:
+000001 = (1)character          111100 (60)
+000010 = (2)character bullets  111000 (56)
+000100 = (4)pickups            100001 (33)
+001000 = (8)enemy bullets      100001 (33)
+010000 = (16)enemies           100011 (35) 110011 (51)(collide with other enemies)
+100000 = (32)env               111111 (63)
+---------------------------------
+*/
+
 };
 #endif

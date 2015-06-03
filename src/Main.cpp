@@ -34,6 +34,7 @@
 #include "core/CameraLogic.h" 
 #include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
+#include "piece/PU_Weapon.h"
 //#include "core/ApplicationInput.h"
 
 
@@ -56,6 +57,7 @@ Main::Main(Context* context) :
 {
     CameraLogic::RegisterObject(context);
     Character::RegisterObject(context);
+    PU_Weapon::RegisterObject(context);
 }
 
 //-------------------
@@ -85,10 +87,14 @@ void Main::Start()
     Character* character_ = characterNode_->CreateComponent<Character>();
 
     //character_ = new Character(context_);
-    character_->Setup(scene_, cameraNode_);
+    character_->Setup();
     character_->Possess(applicationInput_);
 
     applicationInput_->SetCameraTarget(characterNode_);
+
+    Node* weaponNode_ = scene_->CreateChild("weapon");
+    PU_Weapon* weapon_ = weaponNode_->CreateComponent<PU_Weapon>();
+    weapon_->Setup();
 
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
     // like the ScreenMode event sent by the Graphics subsystem when opening the application window. To catch those as well we

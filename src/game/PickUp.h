@@ -30,6 +30,7 @@ public:
 
 protected:
 
+    virtual void Setup();
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
    
 };

@@ -32,7 +32,7 @@ public:
 
     virtual void Start();
     virtual void FixedUpdate(float timeStep);
-    virtual void Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode);
+    virtual void Setup();
     
     //virtual void Control(Controls* controls);
 

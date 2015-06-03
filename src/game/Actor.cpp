@@ -18,7 +18,9 @@
 
 
 Actor::Actor(Context* context) :
-    LogicComponent(context)
+    LogicComponent(context),
+    collision_layer_(1),
+    collision_mask_(60)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
