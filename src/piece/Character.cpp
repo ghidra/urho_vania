@@ -42,7 +42,7 @@ Character::Character(Context* context) :
     //paused_(false)
 {
     //CameraLogic::RegisterObject(context);
-    SetUpdateEventMask(USE_FIXEDUPDATE);
+    //SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN.mdl");
 }
 

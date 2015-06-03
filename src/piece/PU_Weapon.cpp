@@ -33,7 +33,7 @@ PU_Weapon::PU_Weapon(Context* context) :
     //paused_(false)
 {
     //CameraLogic::RegisterObject(context);
-    SetUpdateEventMask(USE_FIXEDUPDATE);
+    //SetUpdateEventMask(USE_FIXEDUPDATE);
     collision_layer_ = 4;
     collision_mask_ = 33;
     mesh_ = String("Man/MAN_gun.mdl");
