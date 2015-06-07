@@ -247,6 +247,10 @@ void ApplicationHandler::HandlePostRenderUpdate(StringHash eventType, VariantMap
     // If draw debug mode is enabled, draw viewport debug geometry, which will show eg. drawable bounding boxes and skeleton
     // bones. Note that debug geometry has to be separately requested each frame. Disable depth test so that we can see the
     // bones properly
-    if (drawDebug_)
-        GetSubsystem<Renderer>()->DrawDebugGeometry(false);
+    if(applicationInput_)
+    {
+        if (applicationInput_->IsDebugDrawPhysics())
+            scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
+            //GetSubsystem<Renderer>()->DrawDebugGeometry(false);//this draws lights and boundinbaxes at least
+    }
 }

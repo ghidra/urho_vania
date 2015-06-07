@@ -127,22 +127,37 @@ void Actor::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
 {
     // Check collision contacts and see if character is standing on ground (look for a contact that has near vertical normal)
     using namespace NodeCollision;
+
+    //as
+    //Node@ otherNode = eventData["OtherNode"].GetPtr();
+    //RigidBody@ otherBody = eventData["OtherBody"].GetPtr();
+    //VectorBuffer contacts = eventData["Contacts"].GetBuffer();
     
+    Node* otherNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
+    RigidBody* otherBody = static_cast<RigidBody*>(eventData[P_OTHERBODY].GetPtr());
     MemoryBuffer contacts(eventData[P_CONTACTS].GetBuffer());
+
+    LOGINFO(String(otherNode->HasComponent("Character")));
+    Actor* otherObject = otherNode->GetComponent<Actor>();
+    //Actor* actor = static_cast<Actor*>(otherNode->GetComponent<Character>());
+    if(otherObject != NULL)
+    {
+        LOGINFO("COLLISION");
+    }
     
-    while (!contacts.IsEof())
+    /*while (!contacts.IsEof())
     {
         Vector3 contactPosition = contacts.ReadVector3();
-        Vector3 contactNormal = contacts.ReadVector3();
-        /*float contactDistance = */contacts.ReadFloat();
-        /*float contactImpulse = */contacts.ReadFloat();
+        Vector3 contactNormal = contacts.ReadVector3();*/
+        /*float contactDistance = *///contacts.ReadFloat();
+        /*float contactImpulse = *///contacts.ReadFloat();
         
         // If contact is below node center and mostly vertical, assume it's a ground contact
-        if (contactPosition.y_ < (node_->GetPosition().y_ + 1.0f))
+        /*if (contactPosition.y_ < (node_->GetPosition().y_ + 1.0f))
         {
             float level = Abs(contactNormal.y_);
             if (level > 0.75)
                 onGround_ = true;
         }
-    }
+    }*/
 }
