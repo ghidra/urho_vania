@@ -30,6 +30,7 @@ Pawn::Pawn(Context* context) :
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     //SetUpdateEventMask(USE_FIXEDUPDATE);
 }
+Pawn::~Pawn(){}
 
 //void Actor::RegisterObject(Context* context)
 //{

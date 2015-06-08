@@ -79,6 +79,7 @@ void ApplicationHandler::Start()
     */
     // Create logo
     //CreateLogo();
+    //GetSubsystem<Input>()->SetMouseVisible(true);
 
     // Set custom window Title & Icon
     SetWindowTitleAndIcon();
@@ -148,6 +149,7 @@ void ApplicationHandler::HandleSceneUpdate(StringHash eventType, VariantMap& eve
     // Move the camera by touch, if the camera node is initialized by descendant sample class
     if (touchEnabled_ && cameraNode_)
     {
+        //LOGINFO("TOUCH ENABLED");
         Input* input = GetSubsystem<Input>();
         for (unsigned i = 0; i < input->GetNumTouches(); ++i)
         {
@@ -176,7 +178,12 @@ void ApplicationHandler::HandleSceneUpdate(StringHash eventType, VariantMap& eve
                 }
             }
         }
-    }
+    }/*else{
+        LOGINFO("WHAT NOW");
+        Cursor* cursor = GetSubsystem<UI>()->GetCursor();
+        if (cursor && cursor->IsVisible())
+            cursor->SetPosition(state->position_);
+    }*/
 }
 
 void ApplicationHandler::CreateScene()

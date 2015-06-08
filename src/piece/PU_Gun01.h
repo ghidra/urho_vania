@@ -1,5 +1,5 @@
-#ifndef PU_WEAPON_H
-#define PU_WEAPON_H
+#ifndef PU_GUN01_H
+#define PU_GUN01_H
 
 #pragma once
 
@@ -17,15 +17,16 @@ class Scene;
 
 using namespace Urho3D;
 
-class PU_Weapon : public PickUp
+class PU_Gun01 : public PickUp
 {
 
-    OBJECT(PU_Weapon);
+    OBJECT(PU_Gun01);
 
 public:
 
-    PU_Weapon(Context* context);
-
+    PU_Gun01(Context* context);
+    ~PU_Gun01();
+    
     static void RegisterObject(Context* context);
 
     virtual void Start();
@@ -36,6 +37,7 @@ protected:
 	//virtual void FixedUpdate(float timeStep);
     //SharedPtr<Scene> scene_;
     //SharedPtr<Node> cameraNode_;
+    virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
    
 };
 #endif

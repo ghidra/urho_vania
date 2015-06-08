@@ -25,6 +25,7 @@ class PickUp : public Actor
 public:
 
     PickUp(Context* context);
+    ~PickUp();
 
     virtual void FixedUpdate(float timeStep);
 
@@ -32,6 +33,8 @@ protected:
 
     virtual void Setup();
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
+
+    bool collected_;
    
 };
 #endif

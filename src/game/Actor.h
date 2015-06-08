@@ -34,6 +34,7 @@ class Actor : public LogicComponent
     
 public:
     Actor(Context* context);
+    ~Actor();
 
     //static void RegisterObject(Context* context);
 
@@ -76,6 +77,12 @@ protected:
     //character collision masks as default
     uint collision_layer_;//=1;
     uint collision_mask_;//=60;
+
+    //collision data
+    Vector3 contactPosition_;
+    Vector3 contactNormal_;
+    float contactDistance_;
+    float contactImpulse_;
 /*
 COLLISION LAYERS AND MASKS
 --------------------------------

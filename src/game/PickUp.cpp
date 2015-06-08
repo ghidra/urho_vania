@@ -17,19 +17,22 @@
 #include <Urho3D/Graphics/Material.h>
 
 #include "PickUp.h"
+#include "../piece/Character.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 
 
 PickUp::PickUp(Context* context) :
-    Actor(context)
+    Actor(context),
+    collected_(false)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
     collision_layer_ = 4;
     collision_mask_ = 33;
 }
+PickUp::~PickUp(){}
 
 void PickUp::FixedUpdate(float timeStep)
 {
@@ -69,6 +72,19 @@ void PickUp::Setup()
 
 void PickUp::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
 {
-    Actor::HandleNodeCollision(eventType, eventData);
+    //pickups only really care about collision with the character
+    using namespace NodeCollision;
+    //Actor::HandleNodeCollision(eventType, eventData);
     //
+    Node* otherNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
+    //RigidBody* otherBody = static_cast<RigidBody*>(eventData[P_OTHERBODY].GetPtr());
+    //MemoryBuffer contacts(eventData[P_CONTACTS].GetBuffer());
+
+    Actor* actor = static_cast<Actor*>(otherNode->GetComponent<Character>());
+    if(actor != NULL)
+    {
+        Actor::HandleNodeCollision(eventType,eventData);
+        collected_=true;
+        //LOGINFO("ACTOR CHARACTER COLLISION");
+    }
 }

@@ -34,7 +34,7 @@
 #include "core/CameraLogic.h" 
 #include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
-#include "piece/PU_Weapon.h"
+#include "piece/PU_Gun01.h"
 //#include "core/ApplicationInput.h"
 
 
@@ -57,7 +57,7 @@ Main::Main(Context* context) :
 {
     CameraLogic::RegisterObject(context);
     Character::RegisterObject(context);
-    PU_Weapon::RegisterObject(context);
+    PU_Gun01::RegisterObject(context);
 }
 
 //-------------------
@@ -93,7 +93,7 @@ void Main::Start()
     applicationInput_->SetCameraTarget(characterNode_);
 
     Node* weaponNode_ = scene_->CreateChild("weapon");
-    PU_Weapon* weapon_ = weaponNode_->CreateComponent<PU_Weapon>();
+    PU_Gun01* weapon_ = weaponNode_->CreateComponent<PU_Gun01>();
     weapon_->Setup();
 
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
