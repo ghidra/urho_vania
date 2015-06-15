@@ -55,7 +55,7 @@ void PU_Gun01::Start()
     SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(PU_Gun01, HandleNodeCollision));
 
 }
-PU_Gun01 void::Setup()
+void PU_Gun01::Setup()
 {
     PickUp::Setup();
     // Set a capsule shape for collision
