@@ -7,5 +7,6 @@ bin/urhovania
 CMake
 CMakeFiles/
 launch.sh
+editor.sh
 bin/Resources/Models/States/*
 bin/Resources/Models/Man/*

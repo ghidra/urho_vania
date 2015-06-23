@@ -88,7 +88,7 @@ void ApplicationHandler::Start()
     CreateConsoleAndDebugHud();
 
     ResourceCache* cache = GetSubsystem<ResourceCache>();
-    cache->AddResourceDir("/home/jimmy/Documents/projects/urho/urho_vania/bin/Resources");
+    //cache->AddResourceDir("/home/jimmy/Documents/projects/urho/urho_vania/bin/Resources");
 
     //----
     CreateScene();

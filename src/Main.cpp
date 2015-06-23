@@ -35,6 +35,7 @@
 #include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
 #include "piece/PU_Gun01.h"
+#include "piece/Gun01.h"
 //#include "core/ApplicationInput.h"
 
 
@@ -58,6 +59,7 @@ Main::Main(Context* context) :
     CameraLogic::RegisterObject(context);
     Character::RegisterObject(context);
     PU_Gun01::RegisterObject(context);
+    Gun01::RegisterObject(context);
 }
 
 //-------------------

@@ -18,52 +18,46 @@
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/SceneEvents.h>
 
-#include "PU_Gun01.h"
-
 #include "Gun01.h"
+
+#include "../game/Weapon.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Engine/DebugHud.h>
 
-PU_Gun01::PU_Gun01(Context* context) :
-    PickUp(context)
-    //yaw_(0.0f),
-    //pitch_(0.0f),
-    //touchEnabled_(false),
-    //screenJoystickIndex_(M_MAX_UNSIGNED),
-    //screenJoystickSettingsIndex_(M_MAX_UNSIGNED),
-    //paused_(false)
+Gun01::Gun01(Context* context) :
+    Weapon(context)
 {
     //CameraLogic::RegisterObject(context);
     //SetUpdateEventMask(USE_FIXEDUPDATE);
-    collision_layer_ = 4;
-    collision_mask_ = 33;
+    //collision_layer_ = 4;
+    //collision_mask_ = 33;
     mesh_ = String("Man/MAN_gun.mdl");
 }
-PU_Gun01::~PU_Gun01(){}
+Gun01::~Gun01(){}
 //-------------------
 //-------------------
-void PU_Gun01::RegisterObject(Context* context)
+void Gun01::RegisterObject(Context* context)
 {
-    context->RegisterFactory<PU_Gun01>();
+    context->RegisterFactory<Gun01>();
 
 }
 
-void PU_Gun01::Start()
+void Gun01::Start()
 {
     // Execute base class startup
     //ApplicationHandler::Start();
     //LOGINFO("Character start");
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(PU_Gun01, HandleNodeCollision));
+    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Gun01, HandleNodeCollision));
 
 }
-void PU_Gun01::Setup()
+void Gun01::Setup()
 {
-    PickUp::Setup();
+    Weapon::Setup();
     // Set a capsule shape for collision
-    CollisionShape* shape = node_->CreateComponent<CollisionShape>();
-    shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
+    //CollisionShape* shape = node_->CreateComponent<CollisionShape>();
+    //shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
 
     // Create the character logic component, which takes care of steering the rigidbody
     // Remember it so that we can set the controls. Use a WeakPtr because the scene hierarchy already owns it
@@ -72,17 +66,17 @@ void PU_Gun01::Setup()
 
 }
 
-void PU_Gun01::FixedUpdate(float timeStep)
+void Gun01::FixedUpdate(float timeStep)
 {
     
     //body->ApplyImpulse(Vector3::FORWARD);
-}void PU_Gun01::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
+}void Gun01::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
 {
     using namespace NodeCollision;
 
-    PickUp::HandleNodeCollision(eventType, eventData);
+    Weapon::HandleNodeCollision(eventType, eventData);
     
-    if(collected_)
+    /*if(collected_)
     {
         //LOGINFO("collected");
         Node* otherNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
@@ -94,20 +88,16 @@ void PU_Gun01::FixedUpdate(float timeStep)
         }else{
             String debugHover = String( boneNode->GetName() );
             GetSubsystem<DebugHud>()->SetAppStats("boneNode:", debugHover);
-
-            Node* gunNode = boneNode->CreateChild("gun_01");
-            Gun01* weapon_ = gunNode->CreateComponent<Gun01>();
-            weapon_->Setup();
-        
         }
         //now I need to equip the pickup
-        
+        Node* gunNode = boneNode->CreateChild("weapon");
+        Weapon* weapon_ = gunNode->CreateComponent<Weapon>();
         //weapon_->Setup();
 
         //remove the pickup after everything is given
         node_->Remove();
         //delete this;
-    }
+    }*/
     //
 }
 

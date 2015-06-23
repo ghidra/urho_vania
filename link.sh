@@ -42,6 +42,20 @@ else
     make_alias "Data" $URHOPATH"/bin/Data" $SCRIPTPATH"/bin/Data"
 
     echo "***********************************"
+    echo "create launch editor script"
+
+    EDIT=$URHOPATH"/bin/Urho3DPlayer /Scripts/Editor.as -pp "$SCRIPTPATH"/bin -p \"CoreData;Data;Resources\" -w -s"
+    EFILE=$SCRIPTPATH/editor.sh
+    if [ -f "$EFILE" ];then
+      printf "$EDIT" > $EFILE
+      echo "     -editor.sh edited"
+    else
+      touch $EFILE
+      printf "$EDIT" > $EFILE
+      echo "     -editor.sh created"
+    fi
+
+    echo "***********************************"
 
   else
     echo "***********************************"
