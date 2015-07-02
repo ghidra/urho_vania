@@ -131,6 +131,15 @@ void Character::FixedUpdate(float timeStep)
 
             //LOGINFO("MOVE ME");
             RigidBody* body = GetComponent<RigidBody>();
+
+            // Update the in air timer. Reset if grounded
+            if (!onGround_)
+                inAirTimer_ += timeStep;
+            else
+                inAirTimer_ = 0.0f;
+            // When character has been in air less than 1/10 second, it's still interpreted as being on ground
+            bool softGrounded = inAirTimer_ < inAirThresholdTime_;
+
             // Update movement & animation
             const Quaternion& rot = node_->GetRotation();
             Vector3 moveDir = Vector3::ZERO;
@@ -152,17 +161,50 @@ void Character::FixedUpdate(float timeStep)
                 moveDir.Normalize();
             
             // If in air, allow control, but slower than when on ground
-            body->ApplyImpulse(rot * moveDir * 0.3);
+            //body->ApplyImpulse(rot * moveDir * 0.3);
+            //body->ApplyImpulse(rot * moveDir * moveForce_);
+            body->ApplyImpulse(rot * moveDir * (softGrounded ? moveForce_ : inAirMoveForce_));
+    
 
             //now control animation
             // Play walk animation if moving on ground, otherwise fade it out
-            if (!moveDir.Equals(Vector3::ZERO))
+            /*if (!moveDir.Equals(Vector3::ZERO))
                 animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
             else
                 animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.2f);
             // Set walk animation speed proportional to velocity
             animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", planeVelocity.Length() * 0.3f);
-    
+            */
+            if (softGrounded)
+            {
+                // When on ground, apply a braking force to limit maximum ground velocity
+                Vector3 brakeForce = -planeVelocity * brakeForce_;
+                body->ApplyImpulse(brakeForce);
+                
+                // Jump. Must release jump control inbetween jumps
+                if (applicationInput_->controls_.IsDown(CTRL_JUMP))
+                {
+                    if (okToJump_)
+                    {
+                        body->ApplyImpulse(Vector3::UP * jumpForce_);
+                        okToJump_ = false;
+                    }
+                }
+                else
+                    okToJump_ = true;
+            }
+            
+            // Play walk animation if moving on ground, otherwise fade it out
+            if (softGrounded && !moveDir.Equals(Vector3::ZERO))
+                animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
+            else
+                animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.2f);
+            // Set walk animation speed proportional to velocity
+            animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", planeVelocity.Length() * 0.3f);
+            
+            // Reset grounded flag for next frame
+            //onGround_ = false;
+            onGround_ = true;
 
         }
     }

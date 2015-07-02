@@ -45,6 +45,17 @@ protected:
     float maxHealth_;
     int lastDamageSide_;
     uint lastDamageCreatorID_;
+
+    float moveForce_;
+    float inAirMoveForce_;
+    float brakeForce_;
+    float jumpForce_;
+    float yawSensitivity_;
+    float inAirThresholdTime_;
+
+    bool onGround_;
+    bool okToJump_;
+    float inAirTimer_;    /// In air timer. Due to possible physics inaccuracy, character can be off ground for max. 1/10 second and still be allowed to move.
    
 };
 #endif

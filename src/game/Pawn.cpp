@@ -25,7 +25,16 @@
 
 
 Pawn::Pawn(Context* context) :
-    Actor(context)
+    Actor(context),
+    moveForce_(0.8f),
+    inAirMoveForce_(0.02f),
+    brakeForce_(0.05f),
+    jumpForce_(7.0f),
+    yawSensitivity_(0.1f),
+    inAirThresholdTime_(0.1f),
+    onGround_(true),
+    okToJump_(true),
+    inAirTimer_(0.0f)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     //SetUpdateEventMask(USE_FIXEDUPDATE);
