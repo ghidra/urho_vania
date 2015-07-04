@@ -86,7 +86,7 @@ void PU_Gun01::FixedUpdate(float timeStep)
     {
         //LOGINFO("collected");
         Node* otherNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
-        Node* boneNode = otherNode->GetChild(String("wrist.R"), true);//get the bone that holds the gun
+        Node* boneNode = otherNode->GetChild(String("gun"), true);//get the bone that holds the gun
 
         if(!boneNode)
         {

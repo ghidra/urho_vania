@@ -19,6 +19,7 @@
 
 Actor::Actor(Context* context) :
     LogicComponent(context),
+    onGround_(false),
     collision_layer_(1),
     collision_mask_(60)
 {
@@ -150,11 +151,11 @@ void Actor::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
         contactImpulse_ = contacts.ReadFloat();
         
         // If contact is below node center and mostly vertical, assume it's a ground contact
-        /*if (contactPosition.y_ < (node_->GetPosition().y_ + 1.0f))
+        if (contactPosition_.y_ < (node_->GetPosition().y_ + 1.0f))
         {
-            float level = Abs(contactNormal.y_);
+            float level = Abs(contactNormal_.y_);
             if (level > 0.75)
                 onGround_ = true;
-        }*/
+        }
     }
 }

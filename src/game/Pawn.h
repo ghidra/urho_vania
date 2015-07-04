@@ -53,7 +53,7 @@ protected:
     float yawSensitivity_;
     float inAirThresholdTime_;
 
-    bool onGround_;
+    //bool onGround_;//already in the actor class
     bool okToJump_;
     float inAirTimer_;    /// In air timer. Due to possible physics inaccuracy, character can be off ground for max. 1/10 second and still be allowed to move.
    

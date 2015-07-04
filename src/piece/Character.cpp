@@ -126,10 +126,7 @@ void Character::FixedUpdate(float timeStep)
         {
             //we are possessed by the application controller
             Controls& ctrl = applicationInput_->controls_;
-
             AnimationController* animCtrl = GetComponent<AnimationController>();
-
-            //LOGINFO("MOVE ME");
             RigidBody* body = GetComponent<RigidBody>();
 
             // Update the in air timer. Reset if grounded
@@ -146,6 +143,7 @@ void Character::FixedUpdate(float timeStep)
             const Vector3& velocity = body->GetLinearVelocity();
             // Velocity on the XZ plane
             Vector3 planeVelocity(velocity.x_, 0.0f, velocity.z_);
+            Vector3 jumpVelocity(0.0f, velocity.y_, 0.0f);
             
             if (ctrl.IsDown(CTRL_UP))
                 moveDir += Vector3::FORWARD;
@@ -164,6 +162,7 @@ void Character::FixedUpdate(float timeStep)
             //body->ApplyImpulse(rot * moveDir * 0.3);
             //body->ApplyImpulse(rot * moveDir * moveForce_);
             body->ApplyImpulse(rot * moveDir * (softGrounded ? moveForce_ : inAirMoveForce_));
+            //body->SetLinearVelocity(rot * moveDir * (softGrounded ? moveForce_ : inAirMoveForce_));
     
 
             //now control animation
@@ -193,18 +192,43 @@ void Character::FixedUpdate(float timeStep)
                 else
                     okToJump_ = true;
             }
-            
+
+            /////////
+            /////////
+            // deal with the anmation asepect
+            /////////
+            /////////
+
             // Play walk animation if moving on ground, otherwise fade it out
             if (softGrounded && !moveDir.Equals(Vector3::ZERO))
+            {
+                animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
+
                 animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
+                // Set walk animation speed proportional to velocity
+                animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", planeVelocity.Length() * 0.04f);
+            }
+            //otherwise we are in the air, ornot moving: lets play the jump animation, o idle 
             else
-                animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.2f);
-            // Set walk animation speed proportional to velocity
-            animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", planeVelocity.Length() * 0.3f);
+            {
+                animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                
+                animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);  
+
+                if(velocity.y_>0.0f)
+                {
+                    animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);    
+                }
+                else
+                {
+                    animCtrl->Play("Models/Man/MAN_StandingIdleGun.ani", true, 0.5f);
+                }
+            }
             
             // Reset grounded flag for next frame
-            //onGround_ = false;
-            onGround_ = true;
+            onGround_ = false;
+            //onGround_ = true;
 
         }
     }
