@@ -31,6 +31,7 @@
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/Engine/DebugHud.h>
 
 Character::Character(Context* context) :
     Pawn(context)
@@ -95,6 +96,11 @@ void Character::Setup()
     */
     // Set a capsule shape for collision
     Pawn::Setup();//do the basic set up with stored and set values
+    //rotate it to face the right direction
+    AnimatedModel* model = GetComponent<AnimatedModel>();
+    Skeleton& skeleton = model->GetSkeleton();
+    skeleton.GetBone(String("root"))->animated_ = false;
+    //node_->Rotate(Quaternion(0.0f,90.0f,0.0f));
     //then setup the collision shape
     CollisionShape* shape = node_->CreateComponent<CollisionShape>();
     shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
@@ -147,17 +153,19 @@ void Character::FixedUpdate(float timeStep)
             
             if (ctrl.IsDown(CTRL_UP))
                 moveDir += Vector3::FORWARD;
-            if (applicationInput_->controls_.IsDown(CTRL_DOWN))
+            if (ctrl.IsDown(CTRL_DOWN))
                 moveDir += Vector3::BACK;
-            if (applicationInput_->controls_.IsDown(CTRL_LEFT))
+            if (ctrl.IsDown(CTRL_LEFT))
                 moveDir += Vector3::LEFT;
-            if (applicationInput_->controls_.IsDown(CTRL_RIGHT))
+            if (ctrl.IsDown(CTRL_RIGHT))
                 moveDir += Vector3::RIGHT;
             
             // Normalize move vector so that diagonal strafing is not faster
             if (moveDir.LengthSquared() > 0.0f)
+            {
+                moveDir*=Vector3(1.0f,1.0f,0.0f);
                 moveDir.Normalize();
-            
+            }
             // If in air, allow control, but slower than when on ground
             //body->ApplyImpulse(rot * moveDir * 0.3);
             //body->ApplyImpulse(rot * moveDir * moveForce_);
@@ -191,6 +199,25 @@ void Character::FixedUpdate(float timeStep)
                 }
                 else
                     okToJump_ = true;
+            }
+            /////////
+            // deal with the orientation of the character
+            /////////
+            Node* root = node_->GetChild(String("root"),true);
+            float dp = planeVelocity.Normalized().DotProduct(Vector3::LEFT);
+            
+            //String debugHover = String( dp );
+            //GetSubsystem<DebugHud>()->SetAppStats("direction dot product:", debugHover);
+
+            if(dp>0.9)
+            {
+                root->SetRotation(Quaternion(0.0f,-90.0f,0.0f));
+                //GetSubsystem<DebugHud>()->SetAppStats("direction:", String("left"));
+
+            }else if(dp<-0.9)
+            {
+                root->SetRotation(Quaternion(0.0f,90.0f,0.0f));
+                //GetSubsystem<DebugHud>()->SetAppStats("direction:", String("right"));
             }
 
             /////////
