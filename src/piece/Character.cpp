@@ -209,12 +209,12 @@ void Character::FixedUpdate(float timeStep)
             //String debugHover = String( dp );
             //GetSubsystem<DebugHud>()->SetAppStats("direction dot product:", debugHover);
 
-            if(dp>0.9)
+            if(dp>=0.99)
             {
                 root->SetRotation(Quaternion(0.0f,-90.0f,0.0f));
                 //GetSubsystem<DebugHud>()->SetAppStats("direction:", String("left"));
 
-            }else if(dp<-0.9)
+            }else if(dp<=-0.99)
             {
                 root->SetRotation(Quaternion(0.0f,90.0f,0.0f));
                 //GetSubsystem<DebugHud>()->SetAppStats("direction:", String("right"));
@@ -227,7 +227,7 @@ void Character::FixedUpdate(float timeStep)
             /////////
 
             // Play walk animation if moving on ground, otherwise fade it out
-            if (softGrounded && !moveDir.Equals(Vector3::ZERO))
+            if (softGrounded && !moveDir.Equals(Vector3::ZERO) )//!moveDir.Equals(Vector3::ZERO) //moveDir.Length()>0.0001
             {
                 animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
                 animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
@@ -239,18 +239,32 @@ void Character::FixedUpdate(float timeStep)
             //otherwise we are in the air, ornot moving: lets play the jump animation, o idle 
             else
             {
-                animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
-                
-                animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);  
+                //GetSubsystem<DebugHud>()->SetAppStats("jumpvel:", String( velocity.y_ ) );
 
+                float jumpTime = 0.0f;
                 if(velocity.y_>0.0f)
+                {
+                    jumpTime = Fit(velocity.y_,0.0f,jumpForce_-0.1f,0.0f,0.5f);
+                }
+                else
+                {
+                    jumpTime = Fit(velocity.y_,0.0f,-jumpForce_+0.1,0.5f,1.0f);
+                }
+                animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
+
+                animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);
+
+
+
+                /*if(velocity.y_>0.0f)
                 {
                     animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);    
                 }
                 else
                 {
                     animCtrl->Play("Models/Man/MAN_StandingIdleGun.ani", true, 0.5f);
-                }
+                }*/
             }
             
             // Reset grounded flag for next frame

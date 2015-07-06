@@ -50,6 +50,7 @@ protected:
     //virtual bool Heal(float amount);
     //virtual void PlaySound(const String& soundName);
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
+    float Fit(float v, float l1, float h1, float l2, float h2);
     //virtual void WorldCollision(VariantMap& eventData);
 
     //Controls* controls_ = NULL;

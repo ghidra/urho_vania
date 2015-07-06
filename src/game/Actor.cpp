@@ -159,3 +159,8 @@ void Actor::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
         }
     }
 }
+
+float Actor::Fit(float v, float l1, float h1, float l2=0.0f, float h2=1.0f)
+{
+    return Clamp( l2 + (v - l1) * (h2 - l2) / (h1 - l1), l2,h2);
+}
