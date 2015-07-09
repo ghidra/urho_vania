@@ -163,7 +163,7 @@ void Character::FixedUpdate(float timeStep)
             // Normalize move vector so that diagonal strafing is not faster
             if (moveDir.LengthSquared() > 0.0f)
             {
-                moveDir*=Vector3(1.0f,1.0f,0.0f);
+                moveDir*=Vector3(1.0f,1.0f,0.0f);//flatten movement out to a plane
                 moveDir.Normalize();
             }
             // If in air, allow control, but slower than when on ground
@@ -229,31 +229,74 @@ void Character::FixedUpdate(float timeStep)
             // Play walk animation if moving on ground, otherwise fade it out
             if (softGrounded && !moveDir.Equals(Vector3::ZERO) )//!moveDir.Equals(Vector3::ZERO) //moveDir.Length()>0.0001
             {
-                animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
-                animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
+                float dp2 = planeVelocity.Normalized().DotProduct(moveDir);//we are moving in the opposite direction we are trying to go
+                if( dp2<0.0f )
+                {
+                    float skid = planeVelocity.Length();
+                    float skidTime = Fit(skid,moveForce_/2.0f,0.0f,0.0f,1.5f);
+                    animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                    animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                    animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
+                    animCtrl->Play("Models/Man/MAN_TurnSkidGunning.ani", false, 0.1f);
+                    animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",skidTime);
+                }
+                else
+                {
+                    animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                    animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
+                    animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
+                    //animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
 
-                animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
-                // Set walk animation speed proportional to velocity
-                animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", planeVelocity.Length() * 0.04f);
+                    animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
+                    // Set walk animation speed proportional to velocity
+                    animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", planeVelocity.Length() * 0.04f);
+                }
             }
             //otherwise we are in the air, ornot moving: lets play the jump animation, o idle 
             else
             {
                 //GetSubsystem<DebugHud>()->SetAppStats("jumpvel:", String( velocity.y_ ) );
-
-                float jumpTime = 0.0f;
-                if(velocity.y_>0.0f)
+                if(!okToJump_)//we are jumping
                 {
-                    jumpTime = Fit(velocity.y_,0.0f,jumpForce_-0.1f,0.0f,0.5f);
+                    float jumpTime = 0.0f;
+                    if(velocity.y_>0.0f)
+                    {
+                        jumpTime = Fit(velocity.y_,jumpForce_,0.0f,0.0f,0.5f);
+                    }
+                    else
+                    {
+                        jumpTime = Fit(velocity.y_,0.0f,-jumpForce_,0.5f,1.0f);
+                    }
+                    animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                    animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                    animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
+                    animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
+                    animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);
                 }
-                else
+                else//we are idle
                 {
-                    jumpTime = Fit(velocity.y_,0.0f,-jumpForce_+0.1,0.5f,1.0f);
-                }
-                animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
-                animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
+                    if( planeVelocity.Length()>0.1f )
+                    {
+            
+                        float skid = planeVelocity.Length();
+                        float skidTime = Fit(skid,moveForce_/2.0f,0.0f,0.0f,1.5f);
+                        animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                        animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                        animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
+                        animCtrl->Play("Models/Man/MAN_TurnSkidGunning.ani", false, 0.1f);
+                        animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",skidTime);
+            
+                    }
+                    else
+                    {
+                        animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                        animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                        animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
+                        animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
 
-                animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);
+                        animCtrl->Play("Models/Man/MAN_StandingIdleGun.ani", true, 0.5f);
+                    }
+                }
 
 
 
