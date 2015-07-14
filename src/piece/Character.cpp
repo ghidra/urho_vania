@@ -232,19 +232,27 @@ void Character::FixedUpdate(float timeStep)
                 float dp2 = planeVelocity.Normalized().DotProduct(moveDir);//we are moving in the opposite direction we are trying to go
                 if( dp2<0.0f )
                 {
-                    float skid = planeVelocity.Length();
-                    float skidTime = Fit(skid,moveForce_/2.0f,0.0f,0.0f,1.5f);
-                    animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
-                    animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
-                    animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
-                    animCtrl->Play("Models/Man/MAN_TurnSkidGunning.ani", false, 0.1f);
-                    animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",skidTime);
+                    body->ApplyImpulse(rot * -moveDir * 0.9f * moveForce_);//i ned to make it turn around slower
+
+                    GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("pivot") );
+                    float skid = body->GetLinearVelocity().Length();
+                    float skidTime_a = Fit( skid,moveForce_,0.0f,0.0f,animCtrl->GetLength("Models/Man/MAN_TurnSkidGunning.ani") );
+                    GetSubsystem<DebugHud>()->SetAppStats("animtion speed:", skidTime_a );
+
+                    //animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                    //animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                    //animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
+                    
+                    animCtrl->PlayExclusive("Models/Man/MAN_TurnSkidGunning.ani", false, 0.1f);
+                    //animCtrl->SetWeight("Models/Man/MAN_TurnSkidGunning.ani",0.1f);
+                    //animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",skidTime_a);
                 }
                 else
                 {
-                    animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
-                    animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
-                    animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
+                    GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("run and gun") );
+                    //animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                    //animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
+                    //animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
                     //animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
 
                     animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
@@ -258,6 +266,7 @@ void Character::FixedUpdate(float timeStep)
                 //GetSubsystem<DebugHud>()->SetAppStats("jumpvel:", String( velocity.y_ ) );
                 if(!okToJump_)//we are jumping
                 {
+                    GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("jump") );
                     float jumpTime = 0.0f;
                     if(velocity.y_>0.0f)
                     {
@@ -267,34 +276,41 @@ void Character::FixedUpdate(float timeStep)
                     {
                         jumpTime = Fit(velocity.y_,0.0f,-jumpForce_,0.5f,1.0f);
                     }
-                    animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
-                    animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
-                    animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
-                    animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);
+                    //animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                    //animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                    //animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
+                    
+                    animCtrl->PlayExclusive("Models/Man/MAN_Jumping.ani", 0,false, 0.1f);
                     animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);
                 }
                 else//we are idle
                 {
+                    
                     if( planeVelocity.Length()>0.1f )
                     {
+                        GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("stop") );
             
                         float skid = planeVelocity.Length();
-                        float skidTime = Fit(skid,moveForce_/2.0f,0.0f,0.0f,1.5f);
-                        animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
-                        animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
-                        animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
-                        animCtrl->Play("Models/Man/MAN_TurnSkidGunning.ani", false, 0.1f);
+                        float skidTime = Fit(skid,moveForce_,0.0f,0.0f,0.03f);
+
+                        GetSubsystem<DebugHud>()->SetAppStats("animtion speed:", skidTime );
+                        //animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                        //animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                        //animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
+
+                        animCtrl->PlayExclusive("Models/Man/MAN_TurnSkidGunning.ani", 0,false, 0.2f);
                         animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",skidTime);
             
                     }
                     else
                     {
-                        animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
-                        animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
-                        animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
-                        animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
+                        GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("idle") );
+                        //animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
+                        //animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
+                        //animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
+                        //animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
 
-                        animCtrl->Play("Models/Man/MAN_StandingIdleGun.ani", true, 0.5f);
+                        animCtrl->PlayExclusive("Models/Man/MAN_StandingIdleGun.ani", 0,true, 0.5f);
                     }
                 }
 
