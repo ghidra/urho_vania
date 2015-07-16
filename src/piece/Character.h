@@ -40,6 +40,9 @@ protected:
 	//virtual void FixedUpdate(float timeStep);
     //SharedPtr<Scene> scene_;
     //SharedPtr<Node> cameraNode_;
+
+private:
+    bool turning;
    
 };
 #endif

@@ -34,7 +34,8 @@
 #include <Urho3D/Engine/DebugHud.h>
 
 Character::Character(Context* context) :
-    Pawn(context)
+    Pawn(context),
+    turning(false)
     //yaw_(0.0f),
     //pitch_(0.0f),
     //touchEnabled_(false),
@@ -212,11 +213,21 @@ void Character::FixedUpdate(float timeStep)
             if(dp>=0.99)
             {
                 root->SetRotation(Quaternion(0.0f,-90.0f,0.0f));
+                if(turning)
+                {
+                    animCtrl->Play("Models/Man/MAN_TurnSkidGunningFlipped.ani", false, 0.0f);
+                    turning=false;
+                }
                 //GetSubsystem<DebugHud>()->SetAppStats("direction:", String("left"));
 
             }else if(dp<=-0.99)
             {
                 root->SetRotation(Quaternion(0.0f,90.0f,0.0f));
+                if(turning)
+                {
+                    animCtrl->Play("Models/Man/MAN_TurnSkidGunningFlipped.ani", false, 0.0f);
+                    turning=false;
+                }
                 //GetSubsystem<DebugHud>()->SetAppStats("direction:", String("right"));
             }
 
@@ -246,6 +257,7 @@ void Character::FixedUpdate(float timeStep)
                     animCtrl->PlayExclusive("Models/Man/MAN_TurnSkidGunning.ani", false, 0.1f);
                     //animCtrl->SetWeight("Models/Man/MAN_TurnSkidGunning.ani",0.1f);
                     //animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",skidTime_a);
+                    turning = true;
                 }
                 else
                 {
