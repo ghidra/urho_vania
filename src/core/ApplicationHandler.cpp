@@ -193,8 +193,10 @@ void ApplicationHandler::CreateScene()
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
     scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<PhysicsWorld>();
+    PhysicsWorld* pw = scene_->CreateComponent<PhysicsWorld>();
     scene_->CreateComponent<DebugRenderer>();
+
+    //pw->SetGravity(Vector3(0.0f,-20.0f,0.0f));
 
     // Create the camera. Limit far clip distance to match the fog
     cameraNode_ = scene_->CreateChild("Camera");

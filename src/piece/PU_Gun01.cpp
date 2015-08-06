@@ -22,6 +22,8 @@
 
 #include "Gun01.h"
 
+#include "Character.h"
+
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Engine/DebugHud.h>
@@ -63,7 +65,11 @@ void PU_Gun01::Setup()
     PickUp::Setup();
     // Set a capsule shape for collision
     CollisionShape* shape = node_->CreateComponent<CollisionShape>();
-    shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
+    //shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
+    shape->SetBox(Vector3(2.0f, 1.0f, 4.0f));
+
+    node_->SetPosition(Vector3(4.0f, 8.0f, 0.0f));//objectNode
+    node_->SetRotation(Quaternion(33.0f,78.0f,24.0f));
 
     // Create the character logic component, which takes care of steering the rigidbody
     // Remember it so that we can set the controls. Use a WeakPtr because the scene hierarchy already owns it
@@ -91,14 +97,23 @@ void PU_Gun01::FixedUpdate(float timeStep)
         if(!boneNode)
         {
             LOGWARNING("Could not find bone " + String("Gun") );
-        }else{
+        }
+        else
+        {
             String debugHover = String( boneNode->GetName() );
             GetSubsystem<DebugHud>()->SetAppStats("boneNode:", debugHover);
 
             Node* gunNode = boneNode->CreateChild("gun_01");
-            Gun01* weapon_ = gunNode->CreateComponent<Gun01>();
-            weapon_->Setup();
-        
+            Gun01* weapon = gunNode->CreateComponent<Gun01>();
+            weapon->Setup();
+
+            //we need to give the weapon to the character
+            Character* character =  otherNode->GetComponent<Character>();
+            if(character != NULL)
+            {
+                character->EquipWeapon(weapon);
+                //GetSubsystem<DebugHud>()->SetAppStats("pickup:", String("we have a character") );
+            }
         }
         //now I need to equip the pickup
         

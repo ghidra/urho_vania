@@ -92,3 +92,15 @@ void Weapon::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
         //LOGINFO("ACTOR CHARACTER COLLISION");
     }*/
 }
+
+////firing mechanisms
+void Weapon::SetFireRate(float fireRate)
+{
+    //i should send in an actual rate and do the math, fire rate per second.
+    //as it is now, i send in the edsired interval
+    firing_interval_ = fireRate;
+}
+void Weapon::Fire(float timeStep){}
+void Weapon::ReleaseFire(){}
+void Weapon::FireLogic(float timeStep){}
+void Weapon::SpawnProjectile(){}

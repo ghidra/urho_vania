@@ -18,43 +18,44 @@
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/SceneEvents.h>
 
-#include "Gun01.h"
+#include "Projectile01.h"
 
-#include "../game/Weapon.h"
+#include "../game/Projectile.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Engine/DebugHud.h>
 
-Gun01::Gun01(Context* context) :
-    Weapon(context)
+Projectile01::Projectile01(Context* context) :
+    Projectile(context)
 {
     //CameraLogic::RegisterObject(context);
     //SetUpdateEventMask(USE_FIXEDUPDATE);
     //collision_layer_ = 4;
     //collision_mask_ = 33;
-    mesh_ = String("Man/MAN_gun.mdl");
+    mesh_ = String("Sphere.mdl");
+    speed_ = 10.0f;
 }
-Gun01::~Gun01(){}
+Projectile01::~Projectile01(){}
 //-------------------
 //-------------------
-void Gun01::RegisterObject(Context* context)
+void Projectile01::RegisterObject(Context* context)
 {
-    context->RegisterFactory<Gun01>();
+    context->RegisterFactory<Projectile01>();
 
 }
 
-void Gun01::Start()
+void Projectile01::Start()
 {
     // Execute base class startup
     //ApplicationHandler::Start();
     //LOGINFO("Character start");
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Gun01, HandleNodeCollision));
+    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Projectile01, HandleNodeCollision));
 
 }
-void Gun01::Setup()
+void Projectile01::Setup()
 {
-    Weapon::Setup();
+    Projectile::Setup();
     // Set a capsule shape for collision
     //CollisionShape* shape = node_->CreateComponent<CollisionShape>();
     //shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
@@ -66,40 +67,16 @@ void Gun01::Setup()
 
 }
 
-void Gun01::FixedUpdate(float timeStep)
+void Projectile01::FixedUpdate(float timeStep)
 {
     
     //body->ApplyImpulse(Vector3::FORWARD);
 }
-void Gun01::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
+void Projectile01::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
 {
     using namespace NodeCollision;
 
-    Weapon::HandleNodeCollision(eventType, eventData);
-    
-    /*if(collected_)
-    {
-        //LOGINFO("collected");
-        Node* otherNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
-        Node* boneNode = otherNode->GetChild(String("wrist.R"), true);//get the bone that holds the gun
-
-        if(!boneNode)
-        {
-            LOGWARNING("Could not find bone " + String("Gun") );
-        }else{
-            String debugHover = String( boneNode->GetName() );
-            GetSubsystem<DebugHud>()->SetAppStats("boneNode:", debugHover);
-        }
-        //now I need to equip the pickup
-        Node* gunNode = boneNode->CreateChild("weapon");
-        Weapon* weapon_ = gunNode->CreateComponent<Weapon>();
-        //weapon_->Setup();
-
-        //remove the pickup after everything is given
-        node_->Remove();
-        //delete this;
-    }*/
-    //
+    Projectile::HandleNodeCollision(eventType, eventData);
 }
 
 

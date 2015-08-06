@@ -16,32 +16,38 @@
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Graphics/Material.h>
 
-#include "PickUp.h"
-#include "../piece/Character.h"
+#include "Projectile.h"
+//#include "../piece/Character.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 
 
-PickUp::PickUp(Context* context) :
+Projectile::Projectile(Context* context) :
     Actor(context),
-    collected_(false)
+    range_(40.0f),
+    damage_(1.0f)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
-    collision_layer_ = 4;
-    collision_mask_ = 33;
-}
-PickUp::~PickUp(){}
+    mesh_ = String("Sphere.mdl");
+    collision_layer_ = 2;
+    collision_mask_ = 56;
+    side_ = SIDE_PLAYER;
 
-void PickUp::FixedUpdate(float timeStep)
+}
+Projectile::~Projectile(){}
+
+void Projectile::FixedUpdate(float timeStep)
 {
     Actor::FixedUpdate(timeStep);
     //something
 }
-void PickUp::Setup()
+void Projectile::Setup()
 {
 	ResourceCache* cache = GetSubsystem<ResourceCache>();
+
+    //node_->SetPosition(Vector3(4.0f, 1.0f, 0.0f));//objectNode
 
     // Create the rendering component + animation controller
     //AnimatedModel* object = node_->CreateComponent<AnimatedModel>();
@@ -55,27 +61,28 @@ void PickUp::Setup()
     //object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
-    RigidBody* body = node_->CreateComponent<RigidBody>();
+    /*RigidBody* body = node_->CreateComponent<RigidBody>();
     body->SetCollisionLayer(collision_layer_);
     body->SetCollisionMask(collision_mask_);
-    //body->SetMass(1.0f);
-    body->SetMass(0.01f);
+    body->SetMass(1.0f);
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
     // Instead we will control the character yaw manually
-    //body->SetAngularFactor(Vector3::ZERO);
+    body->SetAngularFactor(Vector3::ZERO);
 
     // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
-    body->SetCollisionEventMode(COLLISION_ALWAYS);
-
-    //body->SetTrigger(true);//wont sit on floor
-    //body->SetRestitution(0);
+    body->SetCollisionEventMode(COLLISION_ALWAYS);*/
+    pos_born_ = node_->GetWorldPosition();
 }
-
-void PickUp::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
+/*void Weapon::Attach(Node* bone)
 {
-    //pickups only really care about collision with the character
-    using namespace NodeCollision;
+
+}*/
+
+void Projectile::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
+{
+    //Weapons only really care about collision with the character
+   /* using namespace NodeCollision;
     //Actor::HandleNodeCollision(eventType, eventData);
     //
     Node* otherNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
@@ -86,7 +93,7 @@ void PickUp::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
     if(actor != NULL)
     {
         Actor::HandleNodeCollision(eventType,eventData);
-        collected_=true;
+        //collected_=true;
         //LOGINFO("ACTOR CHARACTER COLLISION");
-    }
+    }*/
 }

@@ -97,6 +97,8 @@ void Character::Setup()
     */
     // Set a capsule shape for collision
     Pawn::Setup();//do the basic set up with stored and set values
+    //scale it down
+    //node_->SetScale(0.5);
     //rotate it to face the right direction
     AnimatedModel* model = GetComponent<AnimatedModel>();
     Skeleton& skeleton = model->GetSkeleton();
@@ -160,7 +162,17 @@ void Character::FixedUpdate(float timeStep)
                 moveDir += Vector3::LEFT;
             if (ctrl.IsDown(CTRL_RIGHT))
                 moveDir += Vector3::RIGHT;
-            
+
+            if(ctrl.IsDown(CTRL_FIRE) && weapon_ != NULL)
+            {
+                GetSubsystem<DebugHud>()->SetAppStats("fire:", String("pressed") );
+                weapon_->Fire(timeStep);
+            }
+            else
+            {
+                GetSubsystem<DebugHud>()->SetAppStats("fire:", String("not pressed") );
+            }
+
             // Normalize move vector so that diagonal strafing is not faster
             if (moveDir.LengthSquared() > 0.0f)
             {
@@ -200,6 +212,12 @@ void Character::FixedUpdate(float timeStep)
                 }
                 else
                     okToJump_ = true;
+            }else{
+                //we are in the air and we need a downforce applied so its not like jumping on the moon
+                //if( Vector3(0.0f,-1.0f,0.0f).DotProduct(jumpVelocity.Normalized())>=0.0 )
+                //{
+                //    body->ApplyImpulse(Vector3(0.0f,-1.0f,0.0f)*jumpDownForce_);
+                //}
             }
             /////////
             // deal with the orientation of the character

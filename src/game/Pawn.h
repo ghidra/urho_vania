@@ -5,6 +5,7 @@
 
 #include "Actor.h"
 #include "../core/ApplicationInput.h"
+#include "../game/Weapon.h"
 
 using namespace Urho3D;
 
@@ -31,6 +32,7 @@ public:
 
     virtual void FixedUpdate(float timeStep);
     virtual void Possess(ApplicationInput* applicationInput);
+    virtual void EquipWeapon(Weapon* weapon);
     //virtual void Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode);
 
 protected:
@@ -40,6 +42,7 @@ protected:
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
 
     ApplicationInput* applicationInput_ = NULL;
+    Weapon* weapon_ = NULL;
   
     float health_;
     float maxHealth_;
@@ -50,6 +53,7 @@ protected:
     float inAirMoveForce_;
     float brakeForce_;
     float jumpForce_;
+    //float jumpDownForce_;
     float yawSensitivity_;
     float inAirThresholdTime_;
 
