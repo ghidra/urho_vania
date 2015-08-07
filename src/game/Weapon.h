@@ -40,7 +40,7 @@ protected:
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
 
     virtual void ReleaseFire();
-    virtual void FireLogic(float timeStep);
+    //virtual void FireLogic(float timeStep);
     virtual void SpawnProjectile();
 
     //bool collected_;

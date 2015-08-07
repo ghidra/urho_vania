@@ -21,10 +21,15 @@
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/Engine/DebugHud.h>
 
 
 Weapon::Weapon(Context* context) :
-    Actor(context)
+    Actor(context),
+    firing_(0),
+    fire_velocity_(50.0f),
+    firing_timer_(0.0f),
+    firing_interval_(0.2f)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
@@ -100,7 +105,32 @@ void Weapon::SetFireRate(float fireRate)
     //as it is now, i send in the edsired interval
     firing_interval_ = fireRate;
 }
-void Weapon::Fire(float timeStep){}
-void Weapon::ReleaseFire(){}
-void Weapon::FireLogic(float timeStep){}
-void Weapon::SpawnProjectile(){}
+void Weapon::Fire(float timeStep)
+{
+    //do the firing part
+    if(firing_)//if we are firing, just deal with the timer
+    {
+        firing_timer_ += timeStep;
+        if(firing_timer_ > firing_interval_)
+        {
+            firing_timer_=0.0f;
+            SpawnProjectile();
+        }
+    }
+    else
+    {
+        firing_ = 1;
+        firing_timer_ = timeStep;
+        SpawnProjectile();
+    }
+}
+void Weapon::ReleaseFire()
+{
+    firing_ = 0;
+    firing_timer_ = 0.0f;
+}
+void Weapon::SpawnProjectile()
+{
+    //Node* projectileNode_ = scene_->CreateChild("projectile");  
+    //i need to get the position and the rotation of the weapon to determine the location and roation to spawn at
+}
