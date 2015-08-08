@@ -61,6 +61,7 @@ Main::Main(Context* context) :
     Character::RegisterObject(context);
     PU_Gun01::RegisterObject(context);
     Gun01::RegisterObject(context);
+    Projectile::RegisterObject(context);
     Projectile01::RegisterObject(context);
 }
 

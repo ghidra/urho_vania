@@ -17,6 +17,7 @@
 #include <Urho3D/Graphics/Material.h>
 
 #include "Weapon.h"
+#include "Projectile.h"
 //#include "../piece/Character.h"
 
 #include <Urho3D/DebugNew.h>
@@ -131,6 +132,18 @@ void Weapon::ReleaseFire()
 }
 void Weapon::SpawnProjectile()
 {
-    //Node* projectileNode_ = scene_->CreateChild("projectile");  
+    Quaternion rot = node_->GetWorldRotation();
+    Vector3 pos = node_->GetWorldPosition();
+
+    //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", String(pos) );
+    //GetSubsystem<DebugHud>()->SetAppStats("gun_rot:", String(rot) );
+
+    Node* projectileNode_ = node_->GetScene()->CreateChild("projectile");
+    projectileNode_->SetWorldTransform(pos,rot,1.0f);
+    Projectile* projectile_ = projectileNode_->CreateComponent<Projectile>();
+    projectile_->Setup();
+    //projectileNode_.position = node.worldPosition+aprojectile_offset_[0];
+    //Projectile@ node_script_ = cast<Projectile>(projectile_.CreateScriptObject(scriptFile, ctype_, LOCAL));
+    //node_script_.set_parmameters(dir,fire_velocity_,isenemy_,hit); 
     //i need to get the position and the rotation of the weapon to determine the location and roation to spawn at
 }

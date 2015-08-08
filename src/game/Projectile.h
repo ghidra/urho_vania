@@ -26,6 +26,8 @@ public:
 
     Projectile(Context* context);
     ~Projectile();
+    
+    static void RegisterObject(Context* context);
 
     virtual void FixedUpdate(float timeStep);
     virtual void Setup();

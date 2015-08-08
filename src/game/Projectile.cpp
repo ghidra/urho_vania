@@ -21,6 +21,7 @@
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/Engine/DebugHud.h>
 
 
 Projectile::Projectile(Context* context) :
@@ -37,14 +38,21 @@ Projectile::Projectile(Context* context) :
 
 }
 Projectile::~Projectile(){}
+void Projectile::RegisterObject(Context* context)
+{
+    context->RegisterFactory<Projectile>();
 
+}
 void Projectile::FixedUpdate(float timeStep)
 {
     Actor::FixedUpdate(timeStep);
+    //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
     //something
 }
 void Projectile::Setup()
 {
+    //GetSubsystem<DebugHud>()->SetAppStats("projectile:", String("trying to make projectile") );
+
 	ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     //node_->SetPosition(Vector3(4.0f, 1.0f, 0.0f));//objectNode
@@ -61,18 +69,21 @@ void Projectile::Setup()
     //object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
-    /*RigidBody* body = node_->CreateComponent<RigidBody>();
+    RigidBody* body = node_->CreateComponent<RigidBody>();
     body->SetCollisionLayer(collision_layer_);
     body->SetCollisionMask(collision_mask_);
     body->SetMass(1.0f);
 
+    body->SetLinearVelocity(Vector3(-2.0f,0.0f,0.0f));
+
     // Set zero angular factor so that physics doesn't turn the character on its own.
     // Instead we will control the character yaw manually
-    body->SetAngularFactor(Vector3::ZERO);
+    /*body->SetAngularFactor(Vector3::ZERO);
 
     // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
     body->SetCollisionEventMode(COLLISION_ALWAYS);*/
     pos_born_ = node_->GetWorldPosition();
+    GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
 }
 /*void Weapon::Attach(Node* bone)
 {
