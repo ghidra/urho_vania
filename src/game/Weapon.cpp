@@ -30,7 +30,8 @@ Weapon::Weapon(Context* context) :
     firing_(0),
     fire_velocity_(50.0f),
     firing_timer_(0.0f),
-    firing_interval_(0.2f)
+    firing_interval_(0.2f),
+    fire_offset_(Vector3(0.0f,0.0f,1.0f))
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
@@ -124,6 +125,7 @@ void Weapon::Fire(float timeStep)
         firing_timer_ = timeStep;
         SpawnProjectile();
     }
+    //SpawnProjectile();
 }
 void Weapon::ReleaseFire()
 {
@@ -135,13 +137,17 @@ void Weapon::SpawnProjectile()
     Quaternion rot = node_->GetWorldRotation();
     Vector3 pos = node_->GetWorldPosition();
 
+    Vector3 rotoff = rot*fire_offset_;
+    Vector3 offpos = pos+rotoff;
+    Vector3 dir = rotoff.Normalized();
+
     //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", String(pos) );
     //GetSubsystem<DebugHud>()->SetAppStats("gun_rot:", String(rot) );
 
     Node* projectileNode_ = node_->GetScene()->CreateChild("projectile");
-    projectileNode_->SetWorldTransform(pos,rot,1.0f);
+    projectileNode_->SetPosition(offpos);
     Projectile* projectile_ = projectileNode_->CreateComponent<Projectile>();
-    projectile_->Setup();
+    projectile_->Setup(dir);
     //projectileNode_.position = node.worldPosition+aprojectile_offset_[0];
     //Projectile@ node_script_ = cast<Projectile>(projectile_.CreateScriptObject(scriptFile, ctype_, LOCAL));
     //node_script_.set_parmameters(dir,fire_velocity_,isenemy_,hit); 

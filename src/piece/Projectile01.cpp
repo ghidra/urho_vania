@@ -53,9 +53,9 @@ void Projectile01::Start()
     SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Projectile01, HandleNodeCollision));
 
 }
-void Projectile01::Setup()
+void Projectile01::Setup(const Vector3 direction)
 {
-    Projectile::Setup();
+    Projectile::Setup(direction);
     // Set a capsule shape for collision
     //CollisionShape* shape = node_->CreateComponent<CollisionShape>();
     //shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));

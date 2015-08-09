@@ -30,7 +30,7 @@ public:
     static void RegisterObject(Context* context);
 
     virtual void FixedUpdate(float timeStep);
-    virtual void Setup();
+    virtual void Setup(const Vector3 direction);
     //virtual void Attach(Node* bone);
 
 protected:

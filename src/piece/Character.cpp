@@ -163,14 +163,18 @@ void Character::FixedUpdate(float timeStep)
             if (ctrl.IsDown(CTRL_RIGHT))
                 moveDir += Vector3::RIGHT;
 
-            if(ctrl.IsDown(CTRL_FIRE) && weapon_ != NULL)
+            if(weapon_ != NULL)
             {
-                GetSubsystem<DebugHud>()->SetAppStats("fire:", String("pressed") );
-                weapon_->Fire(timeStep);
-            }
-            else
-            {
-                GetSubsystem<DebugHud>()->SetAppStats("fire:", String("not pressed") );
+                if(ctrl.IsDown(CTRL_FIRE))
+                {
+                    GetSubsystem<DebugHud>()->SetAppStats("fire:", String("pressed") );
+                    weapon_->Fire(timeStep);
+                }
+                else
+                {
+                    GetSubsystem<DebugHud>()->SetAppStats("fire:", String("not pressed") );
+                    weapon_->ReleaseFire();
+                }
             }
 
             // Normalize move vector so that diagonal strafing is not faster

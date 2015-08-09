@@ -49,7 +49,7 @@ void Projectile::FixedUpdate(float timeStep)
     //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
     //something
 }
-void Projectile::Setup()
+void Projectile::Setup(const Vector3 direction)
 {
     //GetSubsystem<DebugHud>()->SetAppStats("projectile:", String("trying to make projectile") );
 
@@ -65,16 +65,13 @@ void Projectile::Setup()
     object->SetCastShadows(true);
     //node_->CreateComponent<AnimationController>();
 
-    // Set the head bone for manual control
-    //object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;
-
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
     RigidBody* body = node_->CreateComponent<RigidBody>();
     body->SetCollisionLayer(collision_layer_);
     body->SetCollisionMask(collision_mask_);
     body->SetMass(1.0f);
-
-    body->SetLinearVelocity(Vector3(-2.0f,0.0f,0.0f));
+    body->SetTrigger(true);
+    //body->SetLinearVelocity(Vector3(-2.0f,0.0f,0.0f));
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
     // Instead we will control the character yaw manually
@@ -83,7 +80,13 @@ void Projectile::Setup()
     // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
     body->SetCollisionEventMode(COLLISION_ALWAYS);*/
     pos_born_ = node_->GetWorldPosition();
-    GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
+    //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
+
+    //use the pases in weapon info to determine the ways to set this things
+
+    
+
+    body->SetLinearVelocity(direction*80.0f);
 }
 /*void Weapon::Attach(Node* bone)
 {

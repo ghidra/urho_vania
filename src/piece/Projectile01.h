@@ -31,7 +31,7 @@ public:
 
     virtual void Start();
     virtual void FixedUpdate(float timeStep);
-    virtual void Setup();
+    virtual void Setup(const Vector3 direction);
 
 protected:
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
