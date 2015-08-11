@@ -226,7 +226,7 @@ void ApplicationHandler::HandleUpdate(StringHash eventType, VariantMap& eventDat
     using namespace Update;
 
     // Take the frame time step, which is stored as a float
-    float timeStep = eventData[P_TIMESTEP].GetFloat();
+    //float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     //check if we have an input object
     ////LOGDEBUG("something");

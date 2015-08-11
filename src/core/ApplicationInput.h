@@ -49,6 +49,7 @@ public:
     //void Possess(Actor* actor);
 
     void HandleUpdate(StringHash eventType, VariantMap& eventData);//this is called from outside this class
+    //void HandleFixedUpdate(StringHash eventType, VariantMap& eventData);//this is called from outside this class
 
     Controls controls_;
 
@@ -62,6 +63,9 @@ private:
     void InitTouchInput();
     /// Handle the logic update event.
     void HandleKeyDown(StringHash eventType, VariantMap& eventData);
+
+    //void HandleMouseButtonDown(StringHash eventType, VariantMap& eventData);
+    //void HandleMouseButtonUp(StringHash eventType, VariantMap& eventData);
 
     //
     void HandleTouchBegin(StringHash eventType, VariantMap& eventData);

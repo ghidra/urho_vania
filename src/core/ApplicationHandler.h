@@ -67,6 +67,7 @@ protected:
     void SubscribeToEvents();
 
     void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    //void HandleFixedUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle the post-render update event.
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
     

@@ -55,6 +55,8 @@ ApplicationInput::ApplicationInput(Context* context):
     // Subscribe scene update event
     //SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationInput, HandleSceneUpdate));
     //update is called from the class using this class to ahndle input, main.cpp
+    //SubscribeToEvent(E_MOUSEBUTTONDOWN, HANDLER(ApplicationInput, HandleMouseButtonDown));
+    //SubscribeToEvent(E_MOUSEBUTTONUP, HANDLER(ApplicationInput, HandleMouseButtonUp));
 }
 
 //void ApplicationInput::SetParameters(ApplicationHandler * applicationHandler)
@@ -137,6 +139,7 @@ void ApplicationInput::HandleUpdate(StringHash eventType, VariantMap& eventData)
         controls_.Set(CTRL_RIGHT, input->GetKeyDown('D'));
         //}
         if(input->GetKeyDown(KEY_LCTRL) || input->GetKeyPress(KEY_LCTRL) || input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT) )
+        //if(input->GetKeyDown(KEY_LCTRL) || input->GetKeyPress(KEY_LCTRL) )
         {
             controls_.Set(CTRL_FIRE, true);
         }

@@ -10,8 +10,8 @@
 /*#include <Urho3D/Input/Controls.h>
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Core/ProcessUtils.h>
-#include <Urho3D/Input/Input.h>*/
+#include <Urho3D/Core/ProcessUtils.h>*/
+#include <Urho3D/Input/Input.h>
 
 //#include <Urho3D/IO/FileSystem.h>
 //#include <Urho3D/Resource/ResourceCache.h>
@@ -44,7 +44,7 @@ Character::Character(Context* context) :
     //paused_(false)
 {
     //CameraLogic::RegisterObject(context);
-    //SetUpdateEventMask(USE_FIXEDUPDATE);
+    SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN.mdl");
 }
 
@@ -138,6 +138,8 @@ void Character::FixedUpdate(float timeStep)
             AnimationController* animCtrl = GetComponent<AnimationController>();
             RigidBody* body = GetComponent<RigidBody>();
 
+            Input* input = GetSubsystem<Input>();
+
             // Update the in air timer. Reset if grounded
             if (!onGround_)
                 inAirTimer_ += timeStep;
@@ -165,16 +167,13 @@ void Character::FixedUpdate(float timeStep)
 
             if(weapon_ != NULL)
             {
-                if(ctrl.IsDown(CTRL_FIRE))
-                {
-                    GetSubsystem<DebugHud>()->SetAppStats("fire:", String("pressed") );
+                if(input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonDown(MOUSEB_RIGHT))
+                //if(ctrl.IsDown(CTRL_FIRE))
                     weapon_->Fire(timeStep);
-                }
                 else
-                {
-                    GetSubsystem<DebugHud>()->SetAppStats("fire:", String("not pressed") );
                     weapon_->ReleaseFire();
-                }
+                
+
             }
 
             // Normalize move vector so that diagonal strafing is not faster

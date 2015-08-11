@@ -33,6 +33,7 @@ public:
     virtual void Fire(float timestep);
     virtual void ReleaseFire();
     virtual void SetFireRate(float fireRate);
+    //virtual unsigned GetFiring(){return firing_;};
     //virtual Vector3 GetFireOffset(return fire_offset_);
 
 protected:

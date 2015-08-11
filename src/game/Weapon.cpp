@@ -31,7 +31,7 @@ Weapon::Weapon(Context* context) :
     fire_velocity_(50.0f),
     firing_timer_(0.0f),
     firing_interval_(0.2f),
-    fire_offset_(Vector3(0.0f,0.0f,1.0f))
+    fire_offset_(Vector3(0.0f,0.0f,2.0f))
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
@@ -56,7 +56,7 @@ void Weapon::Setup()
     //AnimatedModel* object = node_->CreateComponent<AnimatedModel>();
     StaticModel* object = node_->CreateComponent<StaticModel>();
     object->SetModel(cache->GetResource<Model>("Models/"+mesh_));
-    //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
+    object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
     object->SetCastShadows(true);
     //node_->CreateComponent<AnimationController>();
 
@@ -110,7 +110,7 @@ void Weapon::SetFireRate(float fireRate)
 void Weapon::Fire(float timeStep)
 {
     //do the firing part
-    if(firing_)//if we are firing, just deal with the timer
+    /*if(firing_)//if we are firing, just deal with the timer
     {
         firing_timer_ += timeStep;
         if(firing_timer_ > firing_interval_)
@@ -124,8 +124,8 @@ void Weapon::Fire(float timeStep)
         firing_ = 1;
         firing_timer_ = timeStep;
         SpawnProjectile();
-    }
-    //SpawnProjectile();
+    }*/
+     SpawnProjectile();   
 }
 void Weapon::ReleaseFire()
 {

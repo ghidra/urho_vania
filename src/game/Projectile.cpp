@@ -66,11 +66,12 @@ void Projectile::Setup(const Vector3 direction)
     //node_->CreateComponent<AnimationController>();
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
-    RigidBody* body = node_->CreateComponent<RigidBody>();
+    /*RigidBody* body = node_->CreateComponent<RigidBody>();
     body->SetCollisionLayer(collision_layer_);
     body->SetCollisionMask(collision_mask_);
     body->SetMass(1.0f);
     body->SetTrigger(true);
+    */
     //body->SetLinearVelocity(Vector3(-2.0f,0.0f,0.0f));
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
@@ -79,14 +80,16 @@ void Projectile::Setup(const Vector3 direction)
 
     // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
     body->SetCollisionEventMode(COLLISION_ALWAYS);*/
+    
     pos_born_ = node_->GetWorldPosition();
+    //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(pos_born_) );
     //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
 
     //use the pases in weapon info to determine the ways to set this things
 
     
 
-    body->SetLinearVelocity(direction*80.0f);
+    //body->SetLinearVelocity(direction*80.0f);
 }
 /*void Weapon::Attach(Node* bone)
 {
