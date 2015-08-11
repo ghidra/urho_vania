@@ -146,8 +146,16 @@ void Weapon::SpawnProjectile()
 
     Node* projectileNode_ = node_->GetScene()->CreateChild("projectile");
     projectileNode_->SetPosition(offpos);
+
+    /*ResourceCache* cache = GetSubsystem<ResourceCache>();
+    StaticModel* object = projectileNode_->CreateComponent<StaticModel>();
+    object->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
+    //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
+    object->SetCastShadows(true);
+    */
+
     Projectile* projectile_ = projectileNode_->CreateComponent<Projectile>();
-    projectile_->Setup(dir);
+    //projectile_->Setup(dir);
     //projectileNode_.position = node.worldPosition+aprojectile_offset_[0];
     //Projectile@ node_script_ = cast<Projectile>(projectile_.CreateScriptObject(scriptFile, ctype_, LOCAL));
     //node_script_.set_parmameters(dir,fire_velocity_,isenemy_,hit); 

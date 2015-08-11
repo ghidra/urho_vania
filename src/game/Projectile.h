@@ -29,6 +29,7 @@ public:
     
     static void RegisterObject(Context* context);
 
+    virtual void Start();
     virtual void FixedUpdate(float timeStep);
     virtual void Setup(const Vector3 direction);
     //virtual void Attach(Node* bone);

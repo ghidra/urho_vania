@@ -129,10 +129,10 @@ void Character::Setup()
 
 void Character::FixedUpdate(float timeStep)
 {
-    if(applicationInput_)
-    {
-        if(!applicationInput_->IsDebugCamera())//if we are not in debug camera mode
-        {
+    //if(applicationInput_)
+    //{
+       // if(!applicationInput_->IsDebugCamera())//if we are not in debug camera mode
+        //{
             //we are possessed by the application controller
             Controls& ctrl = applicationInput_->controls_;
             AnimationController* animCtrl = GetComponent<AnimationController>();
@@ -167,8 +167,8 @@ void Character::FixedUpdate(float timeStep)
 
             if(weapon_ != NULL)
             {
-                if(input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonDown(MOUSEB_RIGHT))
-                //if(ctrl.IsDown(CTRL_FIRE))
+                //if(input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonDown(MOUSEB_RIGHT))
+                if(ctrl.IsDown(CTRL_FIRE))
                     weapon_->Fire(timeStep);
                 else
                     weapon_->ReleaseFire();
@@ -363,8 +363,8 @@ void Character::FixedUpdate(float timeStep)
             onGround_ = false;
             //onGround_ = true;
 
-        }
-    }
+        //}
+    //}
     
     //body->ApplyImpulse(Vector3::FORWARD);
 }

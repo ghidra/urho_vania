@@ -19,6 +19,8 @@
 
 Actor::Actor(Context* context) :
     LogicComponent(context),
+    duration_(-0.1f),
+    //readyForUpdate_(false),
     onGround_(false),
     collision_layer_(1),
     collision_mask_(60)
@@ -54,9 +56,9 @@ void Actor::FixedUpdate(float timeStep)
     //LOGINFO("inside actor fixedupdate");
 	timeIncrement_+=timeStep;
     // Disappear when duration expired
-    if (duration_ >= 0){
+    if (duration_ >= 0.0f){
       duration_ -= timeStep;
-      if (duration_ <= 0)
+      if (duration_ <= 0.0f)
           node_->Remove();
     }
     /// \todo Could cache the components for faster access instead of finding them each frame

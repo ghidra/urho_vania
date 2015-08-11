@@ -43,17 +43,9 @@ void Projectile::RegisterObject(Context* context)
     context->RegisterFactory<Projectile>();
 
 }
-void Projectile::FixedUpdate(float timeStep)
+void Projectile::Start()
 {
-    Actor::FixedUpdate(timeStep);
-    //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
-    //something
-}
-void Projectile::Setup(const Vector3 direction)
-{
-    //GetSubsystem<DebugHud>()->SetAppStats("projectile:", String("trying to make projectile") );
-
-	ResourceCache* cache = GetSubsystem<ResourceCache>();
+    ResourceCache* cache = GetSubsystem<ResourceCache>();
 
     //node_->SetPosition(Vector3(4.0f, 1.0f, 0.0f));//objectNode
 
@@ -63,6 +55,32 @@ void Projectile::Setup(const Vector3 direction)
     object->SetModel(cache->GetResource<Model>("Models/"+mesh_));
     //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
     object->SetCastShadows(true);
+
+    //readyForUpdate_=true;
+}
+void Projectile::FixedUpdate(float timeStep)
+{
+    //if(readyForUpdate_)
+        //Thats it, i need to wait until the fucking thing is set before I call this thing in here
+        Actor::FixedUpdate(timeStep);
+    //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
+    //something
+}
+void Projectile::Setup(const Vector3 direction)
+{
+    //GetSubsystem<DebugHud>()->SetAppStats("projectile:", String("trying to make projectile") );
+
+	/*ResourceCache* cache = GetSubsystem<ResourceCache>();
+
+    //node_->SetPosition(Vector3(4.0f, 1.0f, 0.0f));//objectNode
+
+    // Create the rendering component + animation controller
+    //AnimatedModel* object = node_->CreateComponent<AnimatedModel>();
+    StaticModel* object = node_->CreateComponent<StaticModel>();
+    object->SetModel(cache->GetResource<Model>("Models/"+mesh_));
+    //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
+    object->SetCastShadows(true);
+    */
     //node_->CreateComponent<AnimationController>();
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic

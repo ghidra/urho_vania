@@ -47,6 +47,7 @@ void Projectile01::RegisterObject(Context* context)
 
 void Projectile01::Start()
 {
+    Projectile::Start();
     // Execute base class startup
     //ApplicationHandler::Start();
     //LOGINFO("Character start");
@@ -67,11 +68,11 @@ void Projectile01::Setup(const Vector3 direction)
 
 }
 
-void Projectile01::FixedUpdate(float timeStep)
-{
+//void Projectile01::FixedUpdate(float timeStep)
+//{
     
     //body->ApplyImpulse(Vector3::FORWARD);
-}
+//}
 void Projectile01::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
 {
     using namespace NodeCollision;

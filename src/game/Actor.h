@@ -59,6 +59,8 @@ protected:
     String mesh_;
     String mesh_convex_;
     String material_;
+
+    //bool readyForUpdate_;//this is to make sure that we are totally initialized before calling fixedupdate. for physcs objects
   
     bool onGround_;
     bool isSliding_;
