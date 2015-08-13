@@ -57,6 +57,13 @@ void Projectile::Start()
     object->SetCastShadows(true);
 
     //readyForUpdate_=true;
+    RigidBody* body = node_->CreateComponent<RigidBody>();
+    body->SetCollisionLayer(collision_layer_);
+    body->SetCollisionMask(collision_mask_);
+    body->SetMass(1.0f);
+    body->SetTrigger(true);
+
+    pos_born_ = node_->GetWorldPosition();
 }
 void Projectile::FixedUpdate(float timeStep)
 {
@@ -90,7 +97,8 @@ void Projectile::Setup(const Vector3 direction)
     body->SetMass(1.0f);
     body->SetTrigger(true);
     */
-    //body->SetLinearVelocity(Vector3(-2.0f,0.0f,0.0f));
+    RigidBody* body = node_->GetComponent<RigidBody>();
+    body->SetLinearVelocity(direction*80.0f);
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
     // Instead we will control the character yaw manually
@@ -99,7 +107,7 @@ void Projectile::Setup(const Vector3 direction)
     // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
     body->SetCollisionEventMode(COLLISION_ALWAYS);*/
     
-    pos_born_ = node_->GetWorldPosition();
+    
     //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(pos_born_) );
     //GetSubsystem<DebugHud>()->SetAppStats("projectile_position:", String(node_->GetWorldPosition()) );
 

@@ -110,7 +110,7 @@ void Weapon::SetFireRate(float fireRate)
 void Weapon::Fire(float timeStep)
 {
     //do the firing part
-    /*if(firing_)//if we are firing, just deal with the timer
+    if(firing_)//if we are firing, just deal with the timer
     {
         firing_timer_ += timeStep;
         if(firing_timer_ > firing_interval_)
@@ -124,8 +124,8 @@ void Weapon::Fire(float timeStep)
         firing_ = 1;
         firing_timer_ = timeStep;
         SpawnProjectile();
-    }*/
-     SpawnProjectile();   
+    }
+    //SpawnProjectile();   
 }
 void Weapon::ReleaseFire()
 {
@@ -134,12 +134,17 @@ void Weapon::ReleaseFire()
 }
 void Weapon::SpawnProjectile()
 {
+    //I think that before I make the projectile, I should move the gun, to straighted it, as well as create kick
     Quaternion rot = node_->GetWorldRotation();
     Vector3 pos = node_->GetWorldPosition();
 
+    //initlal rotation of fire_direction
     Vector3 rotoff = rot*fire_offset_;
     Vector3 offpos = pos+rotoff;
     Vector3 dir = rotoff.Normalized();
+
+    //get rotation axis
+    Vector3 rotaxis = dir.CrossProduct( Vector3(0.0f,1.0f,0.0f) );
 
     //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", String(pos) );
     //GetSubsystem<DebugHud>()->SetAppStats("gun_rot:", String(rot) );
@@ -147,15 +152,8 @@ void Weapon::SpawnProjectile()
     Node* projectileNode_ = node_->GetScene()->CreateChild("projectile");
     projectileNode_->SetPosition(offpos);
 
-    /*ResourceCache* cache = GetSubsystem<ResourceCache>();
-    StaticModel* object = projectileNode_->CreateComponent<StaticModel>();
-    object->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
-    //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
-    object->SetCastShadows(true);
-    */
-
     Projectile* projectile_ = projectileNode_->CreateComponent<Projectile>();
-    //projectile_->Setup(dir);
+    projectile_->Setup(dir);
     //projectileNode_.position = node.worldPosition+aprojectile_offset_[0];
     //Projectile@ node_script_ = cast<Projectile>(projectile_.CreateScriptObject(scriptFile, ctype_, LOCAL));
     //node_script_.set_parmameters(dir,fire_velocity_,isenemy_,hit); 
