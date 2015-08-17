@@ -342,8 +342,14 @@ void Character::FixedUpdate(float timeStep)
                         //animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
                         //animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
                         //animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
-
-                        animCtrl->PlayExclusive("Models/Man/MAN_StandingIdleGun.ani", 0,true, 0.5f);
+                        if(ctrl.IsDown(CTRL_FIRE))
+                        {
+                            animCtrl->PlayExclusive("Models/Man/MAN_StandingShooting.ani", 0,true, 0.1f);
+                        }
+                        else
+                        {
+                            animCtrl->PlayExclusive("Models/Man/MAN_StandingIdleGun.ani", 0,true, 0.5f);
+                        }
                     }
                 }
 

@@ -30,14 +30,15 @@ Weapon::Weapon(Context* context) :
     firing_(0),
     fire_velocity_(50.0f),
     firing_timer_(0.0f),
-    firing_interval_(0.2f),
-    fire_offset_(Vector3(0.0f,0.0f,2.0f))
+    firing_interval_(0.1f),
+    fire_off_(Vector3(0.0f,0.0f,2.0f))
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN_gun.mdl");
     //collision_layer_ = 4;
     //collision_mask_ = 33;
+    //SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(Weapon, HandleSceneDrawableUpdateFinished));
 }
 Weapon::~Weapon(){}
 
@@ -80,6 +81,10 @@ void Weapon::Setup()
 {
 
 }*/
+//void Weapon::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData)
+//{ 
+//    node_->Rotate(kick_rot_);
+//}
 
 void Weapon::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
 {
@@ -113,6 +118,9 @@ void Weapon::Fire(float timeStep)
     if(firing_)//if we are firing, just deal with the timer
     {
         firing_timer_ += timeStep;
+        node_->SetRotation(Quaternion());
+        node_->Translate(-kick_off_,TS_WORLD);
+        kick_off_=Vector3(0.0f,0.0f,0.0f);
         if(firing_timer_ > firing_interval_)
         {
             firing_timer_=0.0f;
@@ -131,6 +139,8 @@ void Weapon::ReleaseFire()
 {
     firing_ = 0;
     firing_timer_ = 0.0f;
+    kick_rot_ = Quaternion();
+    node_->SetRotation(Quaternion());
 }
 void Weapon::SpawnProjectile()
 {
@@ -139,12 +149,17 @@ void Weapon::SpawnProjectile()
     Vector3 pos = node_->GetWorldPosition();
 
     //initlal rotation of fire_direction
-    Vector3 rotoff = rot*fire_offset_;
+    Vector3 rotoff = rot*fire_off_;
     Vector3 offpos = pos+rotoff;
-    Vector3 dir = rotoff.Normalized();
+    Vector3 dir = rotoff.Normalized()*Vector3(1.0f,1.0f,0.0f);//make sure its stays on plane
 
     //get rotation axis
-    Vector3 rotaxis = dir.CrossProduct( Vector3(0.0f,1.0f,0.0f) );
+    Vector3 rotaxis = dir.CrossProduct(Vector3(0.0f,1.0f,0.0f));//local to the gun
+    //Vector3 rotaxis = Vector3(0.0f,1.0f,0.0f);//local to the gun
+    kick_rot_ = Quaternion(12.0f,rotaxis);
+    node_->Rotate(kick_rot_,TS_WORLD);
+    kick_off_ = Vector3(Random(0.3f),Random(0.3f),Random(0.3f));
+    node_->Translate(kick_off_,TS_WORLD);
 
     //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", String(pos) );
     //GetSubsystem<DebugHud>()->SetAppStats("gun_rot:", String(rot) );

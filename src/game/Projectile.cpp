@@ -55,6 +55,7 @@ void Projectile::Start()
     object->SetModel(cache->GetResource<Model>("Models/"+mesh_));
     //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
     object->SetCastShadows(true);
+    node_->SetScale(0.25f);
 
     //readyForUpdate_=true;
     RigidBody* body = node_->CreateComponent<RigidBody>();

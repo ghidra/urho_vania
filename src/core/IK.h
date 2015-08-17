@@ -15,24 +15,25 @@ public:
     IK(Context* context);
     ~IK();
 
-    virtual void Update(float timeStep);
+    //virtual void Update(float timeStep);
+    virtual void CreateChain(const String bone);
     
 private:
 
-    String leftFootName;
-    String rightFootName;
-    Vector3 legAxis;
-    float unevenThreshold; // Set this threshold according to the delta between feet height in idle position/animation
-    bool doIK; // Allow to disable Foot IK, which is only relevant when the character is grounded
+    String boneName_;//leftFootName
+    //String rightFootName;
+    Vector3 axis_;//legAxis
+    float unevenThreshold_; // Set this threshold according to the delta between feet height in idle position/animation
+    bool doIK_; // Allow to disable Foot IK, which is only relevant when the character is grounded
 
-    Node* leftFoot;
-    Node* rightFoot;
-    Node* rootBone;
-    float leftLegLength;
-    float rightLegLength;
-    float originalRootHeight;
-    Quaternion leftFootInitialRot;
-    Quaternion rightFootInitialRot;
+    Node* effector_;//leftFoot
+    //Node* rightFoot;
+    //Node* rootBone;
+    float length_;//leftLegLength
+    //float rightLegLength;
+    //float originalRootHeight;
+    Quaternion initialRot_;//leftFootInitialRot
+    //Quaternion rightFootInitialRot;
     
 };
 #endif

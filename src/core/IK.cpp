@@ -10,8 +10,8 @@
 
 #include <Urho3D/Input/Controls.h>
 
-#include "Actor.h"
-#include "../core/ApplicationInput.h"
+#include "IK.h"
+//#include "../core/ApplicationInput.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -19,15 +19,48 @@
 
 IK::IK(Context* context) :
     LogicComponent(context),
-    unevenThreshold(0.05),
-    doIK(true)
+    unevenThreshold_(0.05),
+    doIK_(true)
 {
     //SetUpdateEventMask(USE_UPDATE);
 }
 IK::~IK(){}
 
+void IK::CreateChain(const String bone)
+{
+	// Set IK chains effectors
+	/*boneName_= bone;
+	effector_ = node_->GetChild(bone, true);
+	//rightFoot = node.GetChild(rightFootName, true);
+	if (!effector_)
+	{
+		//log.Info("Cannot get feet nodes " + leftFootName + " and/or " + rightFootName);
+		return;
+	}
 
-void CreateIKChains()
+	if (!effector_->GetParent() || !effector_->GetParent()->GetParent())
+		return;
+
+	// Set variables
+	AnimatedModel@ model = node.GetComponent("AnimatedModel");
+	Skeleton@ skel = model.skeleton;
+	if (skel is null) return;
+		rootBone = node.GetChild(skel.rootBone.name, true); // Get root bone of the skeleton as we will move its node up/down to match IK targets
+
+	leftLegLength = skel.GetBone(leftFoot.parent.parent.name).boundingBox.size.y + skel.GetBone(leftFoot.parent.name).boundingBox.size.y; // Left thigh length + left calf length
+	rightLegLength = skel.GetBone(rightFoot.parent.parent.name).boundingBox.size.y + skel.GetBone(rightFoot.parent.name).boundingBox.size.y; // Right thigh length + right calf length
+	originalRootHeight = rootBone.worldPosition.y - node.position.y; // Used when no animation is playing
+
+	// Keep track of initial rotation in case no animation is playing
+	leftFootInitialRot = skel.GetBone(leftFootName).initialRotation;
+	rightFootInitialRot = skel.GetBone(rightFootName).initialRotation;
+
+	// Subscribe to the SceneDrawableUpdateFinished event which is triggered after the animations have been updated, so we can apply IK to override them
+	//SubscribeToEvent("SceneDrawableUpdateFinished", "HandleSceneDrawableUpdateFinished");
+	SubscribeToEvent(GetNode(), E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(IK, HandleSceneDrawableUpdateFinished));
+	*/
+}
+/*void CreateIKChains()
 {
 	// Set IK chains effectors
 	leftFoot = node.GetChild(leftFootName, true);
@@ -199,4 +232,4 @@ void SolveLegIK(float timeStep)
 	if (!rightDown) SolveIKUrho(rightFoot, rightGround);
 	}
 
-}
+}*/
