@@ -7,6 +7,8 @@
 //#include <string>
 #include "../game/Pawn.h"
 
+#include "../core/IK.h"
+
 using namespace Urho3D;
 
 namespace Urho3D
@@ -43,6 +45,9 @@ protected:
 
 private:
     bool turning;
+
+    IK* leftArmIK_;
+    IK* rightArmIK_;
    
 };
 #endif

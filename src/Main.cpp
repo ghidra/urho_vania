@@ -32,6 +32,7 @@
 
 #include "Main.h"
 #include "core/CameraLogic.h" 
+#include "core/IK.h"
 #include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
 #include "piece/PU_Gun01.h"
@@ -59,6 +60,7 @@ Main::Main(Context* context) :
 {
     CameraLogic::RegisterObject(context);
     Character::RegisterObject(context);
+    IK::RegisterObject(context);
     PU_Gun01::RegisterObject(context);
     Gun01::RegisterObject(context);
     Projectile::RegisterObject(context);

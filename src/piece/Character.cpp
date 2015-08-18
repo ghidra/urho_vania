@@ -29,6 +29,8 @@
 #include "Character.h"
 #include "../core/ApplicationInput.h"//i need this for the control constants
 
+#include "../core/IK.h"
+
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Engine/DebugHud.h>
@@ -103,6 +105,9 @@ void Character::Setup()
     AnimatedModel* model = GetComponent<AnimatedModel>();
     Skeleton& skeleton = model->GetSkeleton();
     skeleton.GetBone(String("root"))->animated_ = false;
+
+    leftArmIK_ = node_->CreateComponent<IK>();//
+    leftArmIK_->CreateChain(String("wrist.L"));
     //node_->Rotate(Quaternion(0.0f,90.0f,0.0f));
     //then setup the collision shape
     CollisionShape* shape = node_->CreateComponent<CollisionShape>();

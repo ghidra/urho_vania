@@ -7,6 +7,14 @@
 
 using namespace Urho3D;
 
+/*namespace Urho3D
+{
+
+class Node;
+class Scene;
+
+}*/
+
 class IK : public LogicComponent
 {
     OBJECT(IK);
@@ -15,10 +23,15 @@ public:
     IK(Context* context);
     ~IK();
 
+    static void RegisterObject(Context* context);
+
     //virtual void Update(float timeStep);
     virtual void CreateChain(const String bone);
     
 private:
+
+    void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
+    void SolveIK(float timeStep);
 
     String boneName_;//leftFootName
     //String rightFootName;
