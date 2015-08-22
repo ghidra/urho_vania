@@ -189,6 +189,6 @@ Vector3 Weapon::GetLeftHandTarget()
 {
     //get the updated world position to update target positions for IK
     Matrix3x4 updated_trans = node_->GetWorldTransform();
-    //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", updated_trans );
+    //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", updated_trans*lefthand_off_ );
     return updated_trans * lefthand_off_ ;
 }

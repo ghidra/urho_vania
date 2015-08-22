@@ -22,6 +22,8 @@
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Engine/DebugHud.h>
+#include <Urho3D/Graphics/DebugRenderer.h>
+#include <Urho3D/Math/Sphere.h>
 
 
 IK::IK(Context* context) :
@@ -60,12 +62,12 @@ void IK::CreateChain(const String bone)
 	//if (!skel) 
 	//	return;
 
-	length_ = skel.GetBone(effector_->GetParent()->GetParent()->GetName())->boundingBox_.Size().y_ + skel.GetBone(effector_->GetParent()->GetName())->boundingBox_.Size().y_; // Left thigh length + left calf length
+	//length_ = skel.GetBone(effector_->GetParent()->GetParent()->GetName())->boundingBox_.Size().y_ + skel.GetBone(effector_->GetParent()->GetName())->boundingBox_.Size().y_; // Left thigh length + left calf length
 	//rightLegLength = skel.GetBone(rightFoot.parent.parent.name).boundingBox.size.y + skel.GetBone(rightFoot.parent.name).boundingBox.size.y; // Right thigh length + right calf length
 	//originalRootHeight = rootBone.worldPosition.y - node.position.y; // Used when no animation is playing
 
 	// Keep track of initial rotation in case no animation is playing
-	initialRot_ = skel.GetBone(boneName_)->initialRotation_;
+	//initialRot_ = skel.GetBone(boneName_)->initialRotation_;
 	//rightFootInitialRot = skel.GetBone(rightFootName).initialRotation;
 
 	// Subscribe to the SceneDrawableUpdateFinished event which is triggered after the animations have been updated, so we can apply IK to override them
@@ -73,7 +75,7 @@ void IK::CreateChain(const String bone)
 	//SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(IK, HandleSceneDrawableUpdateFinished));
 }
 
-void IK::SetTarget(Vector3 targetPos)
+void IK::SetTarget(Vector3 targetPos, Vector3 localPos)
 {
 	Solve(targetPos);
 }
@@ -101,6 +103,13 @@ void IK::Solve(Vector3 targetPos)
 	Vector3 calfDir = effectorPos - midJointPos; // Calf direction
 	Vector3 targetDir = targetPos - startJointPos; // Leg direction
 
+	//Local positions for axis calculation
+	//Vector3 startJointLocal = effector_->GetParent()->GetParent()->GetPosition();
+	//Vector3 effectorLocal = effector_->GetPosition();
+	//Vector3 dynAxis = Vector3(startJointLocal-effectorLocal).Normalized().CrossProduct(Vector3(0.0f,1.0f,0.0f));
+
+	//Vector3 kneeAxisLocal = effector_->GetParent()->LocalToWorld(dynAxis);
+	//Vector3 hipAxisLocal = effector_->GetParent()->GetParent()->LocalToWorld(dynAxis);
 	// Vectors lengths
 	float length1 = thighDir.Length();
 	float length2 = calfDir.Length();
@@ -124,19 +133,37 @@ void IK::Solve(Vector3 targetPos)
 		cos_theta = -1;
 	float theta = Acos(cos_theta);
 
+	//DEBUG
+	DebugRenderer* dbg = effector_->GetScene()->GetComponent<DebugRenderer>();
+	dbg->AddSphere(Sphere(startJointPos,0.2f),Color(1.0f,0.0f,0.0f),false);
+	dbg->AddLine(startJointPos,startJointPos+thighDir,Color(1.0f,0.0f,0.0f),false);
+
+	dbg->AddSphere(Sphere(midJointPos,0.2f),Color(0.0f,1.0f,0.0f),false);
+	dbg->AddLine(midJointPos,midJointPos+calfDir,Color(0.0f,1.0f,0.0f),false);
+
+	dbg->AddSphere(Sphere(effectorPos,0.2f),Color(0.0f,0.0f,1.0f),false);
+
+	dbg->AddSphere(Sphere(targetPos,0.2f),Color(1.0f,1.0f,0.0f),false);
+
 	// Quaternions for knee and hip joints
 	if (Abs(theta - kneeAngle) > 0.01)
 	{
 		Vector3 kneeAxis = thighDir.CrossProduct(calfDir);
 		Vector3 hipAxis = Vector3(startJointPos-effectorPos).Normalized().CrossProduct(Vector3(startJointPos-targetPos).Normalized());
-		Quaternion deltaKnee = Quaternion((theta - kneeAngle), kneeAxis.Normalized());
-		Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, hipAxis);
+		//Quaternion deltaKnee = Quaternion((theta - kneeAngle), kneeAxis.Normalized());
+		//Quaternion deltaKnee = Quaternion((theta - kneeAngle), hipAxis.Normalized());
+		//Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, hipAxis.Normalized());
 
+		Quaternion deltaKnee = Quaternion((theta - kneeAngle), axis_);
+		Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, axis_);
+		//Quaternion deltaKnee = Quaternion((theta - kneeAngle), kneeAxisLocal);
+		//Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, hipAxisLocal);
+		
 		// Apply rotations
-		effector_->GetParent()->SetRotation(effector_->GetParent()->GetRotation() * deltaKnee);
-		effector_->GetParent()->GetParent()->SetRotation(effector_->GetParent()->GetParent()->GetRotation() * deltaHip);
+		//effector_->GetParent()->SetRotation(effector_->GetParent()->GetRotation() * deltaKnee);
+		//effector_->GetParent()->GetParent()->SetRotation(effector_->GetParent()->GetParent()->GetRotation() * deltaHip);
 	}
-	effector_->SetWorldPosition(targetPos);//This is a Brute force way to put this thing in place
+	//effector_->SetWorldPosition(targetPos);//This is a Brute force way to put this thing in place
 
 }
 /*void CreateIKChains()//renamed to CreateChain

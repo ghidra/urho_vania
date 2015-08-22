@@ -27,7 +27,7 @@ public:
 
     //virtual void Update(float timeStep);
     virtual void CreateChain(const String bone);
-    virtual void SetTarget(Vector3 targetPos);
+    virtual void SetTarget(Vector3 targetPos, Vector3 localPos);
     
 private:
 
@@ -43,10 +43,10 @@ private:
     Node* effector_;//leftFoot
     //Node* rightFoot;
     //Node* rootBone;
-    float length_;//leftLegLength
+    //float length_;//leftLegLength
     //float rightLegLength;
     //float originalRootHeight;
-    Quaternion initialRot_;//leftFootInitialRot
+    //Quaternion initialRot_;//leftFootInitialRot
     Vector3 targetPos_;//set with function
     //Quaternion rightFootInitialRot;
     
