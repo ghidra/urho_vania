@@ -27,11 +27,12 @@ public:
 
     //virtual void Update(float timeStep);
     virtual void CreateChain(const String bone);
+    virtual void SetTarget(Vector3 targetPos);
     
 private:
 
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
-    void SolveIK(float timeStep);
+    void Solve(Vector3 targetPos);
 
     String boneName_;//leftFootName
     //String rightFootName;
@@ -46,6 +47,7 @@ private:
     //float rightLegLength;
     //float originalRootHeight;
     Quaternion initialRot_;//leftFootInitialRot
+    Vector3 targetPos_;//set with function
     //Quaternion rightFootInitialRot;
     
 };

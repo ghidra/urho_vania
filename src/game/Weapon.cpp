@@ -31,7 +31,8 @@ Weapon::Weapon(Context* context) :
     fire_velocity_(50.0f),
     firing_timer_(0.0f),
     firing_interval_(0.1f),
-    fire_off_(Vector3(0.0f,0.0f,2.0f))
+    fire_off_(Vector3(0.0f,0.0f,2.0f)),
+    lefthand_off_(Vector3(-0.2f,0.0f,1.1f))
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
@@ -46,6 +47,7 @@ void Weapon::FixedUpdate(float timeStep)
 {
     Actor::FixedUpdate(timeStep);
     //something
+    //SetLeftHandOffset();
 }
 void Weapon::Setup()
 {
@@ -161,6 +163,8 @@ void Weapon::SpawnProjectile()
     kick_off_ = Vector3(Random(0.3f),Random(0.3f),Random(0.3f));
     node_->Translate(kick_off_,TS_WORLD);
 
+    SetLeftHandOffset();
+
     //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", String(pos) );
     //GetSubsystem<DebugHud>()->SetAppStats("gun_rot:", String(rot) );
 
@@ -173,4 +177,12 @@ void Weapon::SpawnProjectile()
     //Projectile@ node_script_ = cast<Projectile>(projectile_.CreateScriptObject(scriptFile, ctype_, LOCAL));
     //node_script_.set_parmameters(dir,fire_velocity_,isenemy_,hit); 
     //i need to get the position and the rotation of the weapon to determine the location and roation to spawn at
+}
+
+void Weapon::SetLeftHandOffset()
+{
+    //get the updated world position to update target positions for IK
+    Matrix3x4 updated_trans = node_->GetWorldTransform();
+    //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", updated_trans );
+    lefthand_target_ = updated_trans * lefthand_off_ ;
 }

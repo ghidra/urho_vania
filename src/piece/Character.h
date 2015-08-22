@@ -44,6 +44,7 @@ protected:
     //SharedPtr<Node> cameraNode_;
 
 private:
+    void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
     bool turning;
 
     IK* leftArmIK_;

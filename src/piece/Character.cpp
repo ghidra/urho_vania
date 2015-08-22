@@ -64,6 +64,7 @@ void Character::Start()
     //ApplicationHandler::Start();
     //LOGINFO("Character start");
     SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Character, HandleNodeCollision));
+    //SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(Character, HandleSceneDrawableUpdateFinished));
 
 }
 void Character::Setup()
@@ -134,10 +135,10 @@ void Character::Setup()
 
 void Character::FixedUpdate(float timeStep)
 {
-    //if(applicationInput_)
-    //{
-       // if(!applicationInput_->IsDebugCamera())//if we are not in debug camera mode
-        //{
+    if(applicationInput_)
+    {
+        if(!applicationInput_->IsDebugCamera())//if we are not in debug camera mode
+        {
             //we are possessed by the application controller
             Controls& ctrl = applicationInput_->controls_;
             AnimationController* animCtrl = GetComponent<AnimationController>();
@@ -373,9 +374,19 @@ void Character::FixedUpdate(float timeStep)
             // Reset grounded flag for next frame
             onGround_ = false;
             //onGround_ = true;
+            
 
-        //}
-    //}
+        }
+    }
     
     //body->ApplyImpulse(Vector3::FORWARD);
+}
+
+void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData)
+{
+    //UPDATE IK TARGETS?
+    if(weapon_ != NULL)
+    {
+        leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
+    } 
 }
