@@ -120,9 +120,12 @@ void Weapon::Fire(float timeStep)
     if(firing_)//if we are firing, just deal with the timer
     {
         firing_timer_ += timeStep;
-        node_->SetRotation(Quaternion());
-        node_->Translate(-kick_off_,TS_WORLD);
-        kick_off_=Vector3(0.0f,0.0f,0.0f);
+
+        //this is a lame attempt at setting it back
+        //node_->SetRotation(Quaternion());
+        //node_->Translate(-kick_off_);
+        //kick_off_=Vector3(0.0f,0.0f,0.0f);
+        
         if(firing_timer_ > firing_interval_)
         {
             firing_timer_=0.0f;
@@ -141,8 +144,9 @@ void Weapon::ReleaseFire()
 {
     firing_ = 0;
     firing_timer_ = 0.0f;
-    kick_rot_ = Quaternion();
-    node_->SetRotation(Quaternion());
+    node_->SetTransform(Vector3(),Quaternion());
+    //kick_rot_ = Quaternion();
+    //node_->SetRotation(Quaternion());
 }
 void Weapon::SpawnProjectile()
 {
@@ -156,14 +160,16 @@ void Weapon::SpawnProjectile()
     Vector3 dir = rotoff.Normalized()*Vector3(1.0f,1.0f,0.0f);//make sure its stays on plane
 
     //get rotation axis
-    Vector3 rotaxis = dir.CrossProduct(Vector3(0.0f,1.0f,0.0f));//local to the gun
-    //Vector3 rotaxis = Vector3(0.0f,1.0f,0.0f);//local to the gun
-    kick_rot_ = Quaternion(12.0f,rotaxis);
-    node_->Rotate(kick_rot_,TS_WORLD);
+    //Vector3 rotaxis = dir.CrossProduct(Vector3(0.0f,1.0f,0.0f));//local to the gun
+    Vector3 rotaxis = Vector3(0.0f,1.0f,0.0f);//local to the gun
+    kick_rot_ = Quaternion(Random(12.0f),rotaxis);
+    //node_->Rotate(kick_rot_,TS_WORLD);
     kick_off_ = Vector3(Random(0.3f),Random(0.3f),Random(0.3f));
-    node_->Translate(kick_off_,TS_WORLD);
+    //node_->Translate(kick_off_,TS_WORLD);
 
-    SetLeftHandOffset();
+    node_->SetTransform(kick_off_,kick_rot_);
+
+    //SetLeftHandOffset();
 
     //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", String(pos) );
     //GetSubsystem<DebugHud>()->SetAppStats("gun_rot:", String(rot) );
@@ -179,10 +185,10 @@ void Weapon::SpawnProjectile()
     //i need to get the position and the rotation of the weapon to determine the location and roation to spawn at
 }
 
-void Weapon::SetLeftHandOffset()
+Vector3 Weapon::GetLeftHandTarget()
 {
     //get the updated world position to update target positions for IK
     Matrix3x4 updated_trans = node_->GetWorldTransform();
     //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", updated_trans );
-    lefthand_target_ = updated_trans * lefthand_off_ ;
+    return updated_trans * lefthand_off_ ;
 }

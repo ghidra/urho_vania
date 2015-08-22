@@ -35,7 +35,8 @@ public:
     virtual void SetFireRate(float fireRate);
     //virtual unsigned GetFiring(){return firing_;};
     //virtual Vector3 GetFireOffset(return fire_offset_);
-    virtual Vector3 GetLeftHandTarget(){return lefthand_target_;};
+    virtual Vector3 GetLeftHandTarget();
+    //virtual Vector3 GetLeftHandTarget(){return lefthand_target_;};
 
 protected:
 
@@ -47,7 +48,7 @@ protected:
     //virtual void FireLogic(float timeStep);
     virtual void SpawnProjectile();
 
-    virtual void SetLeftHandOffset();//set the offest. sets itself on fire. needs to always be set
+    //virtual void SetLeftHandOffset();//set the offest. sets itself on fire. needs to always be set
 
     //bool collected_;
 	unsigned firing_;
@@ -61,6 +62,6 @@ protected:
 
     Vector3 lefthand_off_;//the constant offset of the IK position
 
-    Vector3 lefthand_target_;//the updated target position for IK
+    //Vector3 lefthand_target_;//the updated target position for IK
 };
 #endif

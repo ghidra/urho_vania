@@ -64,7 +64,7 @@ void Character::Start()
     //ApplicationHandler::Start();
     //LOGINFO("Character start");
     SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Character, HandleNodeCollision));
-    //SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(Character, HandleSceneDrawableUpdateFinished));
+    SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(Character, HandleSceneDrawableUpdateFinished));
 
 }
 void Character::Setup()

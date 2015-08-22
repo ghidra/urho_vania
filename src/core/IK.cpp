@@ -136,6 +136,7 @@ void IK::Solve(Vector3 targetPos)
 		effector_->GetParent()->SetRotation(effector_->GetParent()->GetRotation() * deltaKnee);
 		effector_->GetParent()->GetParent()->SetRotation(effector_->GetParent()->GetParent()->GetRotation() * deltaHip);
 	}
+	effector_->SetWorldPosition(targetPos);//This is a Brute force way to put this thing in place
 
 }
 /*void CreateIKChains()//renamed to CreateChain
