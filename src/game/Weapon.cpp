@@ -32,7 +32,7 @@ Weapon::Weapon(Context* context) :
     firing_timer_(0.0f),
     firing_interval_(0.2f),
     fire_off_(Vector3(0.0f,0.0f,2.0f)),
-    lefthand_off_(Vector3(-0.2f,0.0f,1.1f))
+    lefthand_off_(Vector3(-0.2f,1.0f,0.9f))
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);

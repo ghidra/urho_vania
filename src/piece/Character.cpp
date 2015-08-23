@@ -392,7 +392,7 @@ void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantM
         //i need to put the target position in local space relative to the character
         //leftArmIK_->SetTarget(node_->WorldToLocal(weapon_->GetLeftHandTarget()));
         //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", node_->WorldToLocal(weapon_->GetLeftHandTarget()) );
-        leftArmIK_->SetTarget(weapon_->GetLeftHandTarget(),node_->WorldToLocal(weapon_->GetLeftHandTarget()));
+        leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
         //rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition(),node_->WorldToLocal(weapon_->GetNode()->GetPosition()));
 
     }

@@ -27,12 +27,21 @@ public:
 
     //virtual void Update(float timeStep);
     virtual void CreateChain(const String bone);
-    virtual void SetTarget(Vector3 targetPos, Vector3 localPos);
+    virtual void SetTarget(Vector3 targetPos);
     
 private:
 
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
     void Solve(Vector3 targetPos);
+
+    float FindD(const float a, const float b, const float c);
+    float FindE(const float a, const float d);
+    void DefineM(const Vector3 p, const Vector3 d);
+    Vector3 Rot(const Matrix3 M, Vector3 src);
+    bool Perlin(const float A, const float B, const Vector3 P, const Vector3 D );
+
+    Matrix3 Minv;
+    Matrix3 Mfwd;
 
     String boneName_;//leftFootName
     //String rightFootName;
