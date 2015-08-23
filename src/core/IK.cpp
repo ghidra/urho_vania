@@ -29,9 +29,9 @@
 
 IK::IK(Context* context) :
     LogicComponent(context),
-    unevenThreshold_(0.05),
+    //unevenThreshold_(0.05),
     doIK_(true),
-    axis_(Vector3(0.0f,0.0f,-1.0f))
+    drawDebug_(false)
 {
     //SetUpdateEventMask(USE_UPDATE);
 }
@@ -44,36 +44,12 @@ void IK::RegisterObject(Context* context)
 
 void IK::CreateChain(const String bone)
 {
-	// Set IK chains effectors
-	boneName_= bone;
 	effector_ = node_->GetChild(bone, true);
-	//rightFoot = node.GetChild(rightFootName, true);
 	if (!effector_)
-	{
-		//log.Info("Cannot get feet nodes " + leftFootName + " and/or " + rightFootName);
 		return;
-	}
 
 	if (!effector_->GetParent() || !effector_->GetParent()->GetParent())
 		return;
-
-	// Set variables
-	//AnimatedModel* model = node_->GetComponent<AnimatedModel>();
-	//Skeleton skel = model->GetSkeleton();
-	//if (!skel) 
-	//	return;
-
-	//length_ = skel.GetBone(effector_->GetParent()->GetParent()->GetName())->boundingBox_.Size().y_ + skel.GetBone(effector_->GetParent()->GetName())->boundingBox_.Size().y_; // Left thigh length + left calf length
-	//rightLegLength = skel.GetBone(rightFoot.parent.parent.name).boundingBox.size.y + skel.GetBone(rightFoot.parent.name).boundingBox.size.y; // Right thigh length + right calf length
-	//originalRootHeight = rootBone.worldPosition.y - node.position.y; // Used when no animation is playing
-
-	// Keep track of initial rotation in case no animation is playing
-	//initialRot_ = skel.GetBone(boneName_)->initialRotation_;
-	//rightFootInitialRot = skel.GetBone(rightFootName).initialRotation;
-
-	// Subscribe to the SceneDrawableUpdateFinished event which is triggered after the animations have been updated, so we can apply IK to override them
-	//SubscribeToEvent("SceneDrawableUpdateFinished", "HandleSceneDrawableUpdateFinished");
-	//SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(IK, HandleSceneDrawableUpdateFinished));
 }
 
 void IK::SetTarget(Vector3 targetPos)
@@ -81,7 +57,7 @@ void IK::SetTarget(Vector3 targetPos)
 	Solve(targetPos);
 }
 
-void IK::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData)
+/*void IK::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData)
 {
 	using namespace Update;
 	if (doIK_)
@@ -90,14 +66,89 @@ void IK::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eve
 		Solve( targetPos_ );
 		//GetSubsystem<DebugHud>()->SetAppStats("IK:", boneName_+String(":")+String(length_)+String(":")+String(initialRot_) );
 	}
-}
-float IK::FindD(const float a, const float b, const float c)
+}*/
+/*float IK::FindD(const float a, const float b, const float c)
 {
 	return Max(0.0f, Min(a, (c + (a*a-b*b)/c) / 2.0f));
 }
 float IK::FindE(const float a, const float d)
 {
 	return sqrtf(a*a-d*d);
+}*/
+
+bool IK::Solve(Vector3 targetPos)
+{
+	//http://mrl.nyu.edu/~perlin/gdc/ik/ik.java.html
+
+	//Get nodes
+	Node* hip = effector_->GetParent()->GetParent();
+	Node* knee = effector_->GetParent();
+
+	// Get current world position for the 3 joints of the IK chain
+	Vector3 hipPos = hip->GetWorldPosition(); // Thigh pos (hip joint)
+	Vector3 kneePos = knee->GetWorldPosition(); // Calf pos (knee joint)
+	Vector3 effectorPos = effector_->GetWorldPosition(); // Foot pos (ankle joint)
+
+	// Vectors lengths
+	float A = Vector3(kneePos - hipPos).Length();//length of hip to knee
+	float B = Vector3(effectorPos - kneePos).Length();//length of knee to foot
+	Vector3 P = hip->WorldToLocal(targetPos);//target at origin
+	Vector3 D = hip->WorldToLocal(kneePos);//pre solve knee at origin
+	//float limbLength = length1 + length2;
+	//float lengthH = targetDir.Length();
+
+	//PERLINS STUFF
+	//bool test = Perlin(A,B,C,D);
+	//GetSubsystem<DebugHud>()->SetAppStats("ik:", String(test) );
+	//------
+	Vector3 R;
+	DefineM(P,D);
+	R = Rot(Minv,P);
+	//FIND D
+	float c = R.Length();
+    float d = Max(0.0f, Min(A, (c + (A*A-B*B)/c) / 2.0f));//FindD(A,B,R.Length());
+    //FIND E
+    float e = sqrtf(A*A-d*d);//FindE(A,d);
+    Vector3 S = Vector3(d,e,0.0f);
+    Vector3 Q = Rot(Mfwd,S);
+
+
+    if(drawDebug_)
+    {
+	    DebugRenderer* dbg = effector_->GetScene()->GetComponent<DebugRenderer>();
+	    //at origin
+	    dbg->AddSphere(Sphere(Vector3(),0.2f),Color(0.0f,0.0f,0.0f),false);//origin
+	    dbg->AddSphere(Sphere(D,0.2f),Color(0.1f,0.0f,0.0f),false);//old elbow
+	    dbg->AddSphere(Sphere(P,0.2f),Color(0.0f,1.0f,0.0f),false);//target
+	    dbg->AddLine(Vector3(),P,Color(0.1f,0.1f,0.1f),false);
+
+	    //show solve at origin
+	    dbg->AddSphere(Sphere(Q,0.2f),Color(1.0f,0.0f,0.0f),false);
+		dbg->AddLine(Vector3(),Q,Color(1.0f,0.0f,0.0f),false);
+		dbg->AddLine(Q,P,Color(1.0f,0.0f,0.0f),false);
+
+		//show solve at position
+		Vector3 to = effector_->GetParent()->GetParent()->LocalToWorld(Vector3());
+		Vector3 tq = effector_->GetParent()->GetParent()->LocalToWorld(Q);
+		Vector3 tp = effector_->GetParent()->GetParent()->LocalToWorld(P);
+		dbg->AddSphere(Sphere(tq,0.2f),Color(1.0f,0.0f,0.0f),false);
+		dbg->AddSphere(Sphere(tp,0.2f),Color(0.0f,1.0f,0.0f),false);
+		dbg->AddLine(to,tq,Color(1.0f,0.0f,0.0f),false);
+		dbg->AddLine(tq,tp,Color(1.0f,0.0f,0.0f),false);
+	}
+
+    return d > 0.0f && d < A;
+
+	
+}
+
+Vector3 IK::Rot(const Matrix3 M, Vector3 src)
+{
+	Vector3 dst;
+    dst.x_ = Vector3(M.m00_,M.m01_,M.m02_).DotProduct(src);
+   	dst.y_ = Vector3(M.m10_,M.m11_,M.m12_).DotProduct(src);
+   	dst.z_ = Vector3(M.m20_,M.m21_,M.m22_).DotProduct(src);
+   	return dst;
 }
 void IK::DefineM(const Vector3 p, const Vector3 d)
 {
@@ -123,169 +174,6 @@ void IK::DefineM(const Vector3 p, const Vector3 d)
     Mfwd = Minv.Transpose();
 	// Mfwd = (Minv)T, since transposing inverts a rotation matrix.
 
-}
-void IK::Solve(Vector3 targetPos)
-{
-	//http://mrl.nyu.edu/~perlin/gdc/ik/ik.java.html
-
-	// Get current world position for the 3 joints of the IK chain
-	Vector3 startJointPos = effector_->GetParent()->GetParent()->GetWorldPosition(); // Thigh pos (hip joint)
-	Vector3 midJointPos = effector_->GetParent()->GetWorldPosition(); // Calf pos (knee joint)
-	Vector3 effectorPos = effector_->GetWorldPosition(); // Foot pos (ankle joint)
-
-	// Direction vectors
-	Vector3 thighDir = midJointPos - startJointPos; // Thigh direction
-	Vector3 calfDir = effectorPos - midJointPos; // Calf direction
-	Vector3 targetDir = targetPos - startJointPos; // Leg direction
-
-	Vector3 bendAxis = Vector3(effectorPos-startJointPos).Normalized().CrossProduct(targetDir.Normalized());
-
-
-	// Vectors lengths
-	float length1 = thighDir.Length();
-	float length2 = calfDir.Length();
-	float limbLength = length1 + length2;
-	float lengthH = targetDir.Length();
-
-	//PERLINS STUFF
-	bool test = Perlin(length1,length2, effector_->GetParent()->GetParent()->WorldToLocal(targetPos),effector_->GetParent()->GetParent()->WorldToLocal(midJointPos));
-	GetSubsystem<DebugHud>()->SetAppStats("ik:", String(test) );
-	//------
-
-	if (lengthH > limbLength)
-	{
-		targetDir = targetDir * (limbLength / lengthH) * 0.999; // Do not overshoot if target unreachable
-		lengthH = targetDir.Length();
-	}
-	float lengthHsquared = targetDir.LengthSquared();
-
-	// Current knee angle (from animation keyframe)
-	float kneeAngle = thighDir.Angle(calfDir);
-
-	// New knee angle
-	float cos_theta = (lengthHsquared - thighDir.LengthSquared() - calfDir.LengthSquared()) / (2 * length1 * length2);
-	if (cos_theta > 1) 
-		cos_theta = 1; 
-	else if (cos_theta < -1) 
-		cos_theta = -1;
-	float theta = Acos(cos_theta);
-
-	//get the next angle? http://www.ryanjuckett.com/programming/analytic-two-bone-ik-in-2d/
-	/*float sinAngle = Sin(theta);
-	float triAdjacent = length1 + length2*cos_theta;
-    float triOpposite = length2*sinAngle;
-
-    //rotate by axis, and flatten to 2d
-    Quaternion flatten = Quaternion();
-    flatten.FromRotationTo(bendAxis.Normalized(),Vector3(0.0,0.0,1.0));
-    Vector3 flat = flatten * targetPos;
-  
-  	float tanY = flat.y_*triAdjacent - flat.x_*triOpposite;
-    float tanX = flat.x_*triAdjacent + flat.y_*triOpposite;
-    //float tanY = targetY*triAdjacent - targetX*triOpposite;
-    //float tanX = targetX*triAdjacent + targetY*triOpposite;
-  
-    // Note that it is safe to call Atan2(0,0) which will happen if targetX and
-    // targetY are zero
-    float theta1 = Atan2( tanY, tanX );*/
-
-	//DEBUG
-	/*DebugRenderer* dbg = effector_->GetScene()->GetComponent<DebugRenderer>();
-	dbg->AddSphere(Sphere(startJointPos,0.2f),Color(1.0f,0.0f,0.0f),false);
-	dbg->AddLine(startJointPos,startJointPos+thighDir,Color(1.0f,0.0f,0.0f),false);
-
-	dbg->AddSphere(Sphere(midJointPos,0.2f),Color(0.0f,1.0f,0.0f),false);
-	dbg->AddLine(midJointPos,midJointPos+calfDir,Color(0.0f,1.0f,0.0f),false);
-
-	dbg->AddSphere(Sphere(effectorPos,0.2f),Color(0.0f,0.0f,1.0f),false);
-
-	dbg->AddSphere(Sphere(targetPos,0.2f),Color(1.0f,1.0f,0.0f),false);*/
-
-	// Quaternions for knee and hip joints
-	if (Abs(theta - kneeAngle) > 0.001)
-	{
-		//Vector3 kneeAxis = thighDir.CrossProduct(calfDir);
-		//Vector3 bendAxis = Vector3(effectorPos-startJointPos).Normalized().CrossProduct(targetDir.Normalized());
-		
-		//dbg->AddLine(startJointPos+(bendAxis.Normalized()*1.0f),startJointPos+(bendAxis.Normalized()*2.0f),Color(1.0f,1.0f,1.0f),false);
-		
-		Quaternion deltaKnee = Quaternion((theta - kneeAngle) , bendAxis.Normalized());
-		Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, bendAxis.Normalized());
-		//Quaternion deltaKnee = Quaternion((theta - kneeAngle) * 0.5, Vector3(1.0f,0.0f,0.0f));
-		//Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, Vector3(0.0f,0.0f,-1.0f));
-		
-		// Apply rotations
-		/*Vector3 newHip = startJointPos+(deltaHip*thighDir);
-		dbg->AddLine(startJointPos,newHip,Color(1.0f,0.5f,0.5f),false);
-		dbg->AddSphere(Sphere(newHip,0.2f),Color(0.5f,1.0f,0.5f),false);
-		
-		Vector3 newKnee = newHip+(deltaHip*calfDir);
-		dbg->AddLine(newHip,newKnee,Color(0.5f,1.0f,0.5f),false);
-		dbg->AddSphere(Sphere(newKnee,0.2f),Color(0.5f,0.5f,1.0f),false);*/
-		
-		//effector_->GetParent()->SetRotation(effector_->GetParent()->GetRotation() * deltaKnee);
-		//effector_->GetParent()->GetParent()->SetRotation(effector_->GetParent()->GetParent()->GetRotation() * deltaHip);
-		//effector_->GetParent()->SetWorldRotation(effector_->GetParent()->GetWorldRotation() * deltaKnee);
-		//effector_->GetParent()->GetParent()->SetWorldRotation(effector_->GetParent()->GetParent()->GetWorldRotation() * deltaHip);
-	}
-	//effector_->SetWorldPosition(targetPos);//This is a Brute force way to put this thing in place
-
-}
-bool IK::Perlin(const float A, const float B, const Vector3 P, const Vector3 D )
-{
-	//A is length of hip to knee
-	//B is length of knee to foot
-	//P is target
-	//D is pre bent elbow
-	Vector3 R;
-	DefineM(P,D);
-	R = Rot(Minv,P);
-    float d = FindD(A,B,R.Length());
-    float e = FindE(A,d);
-    Vector3 S = Vector3(d,e,0.0f);
-    Vector3 Q = Rot(Mfwd,S);
-
-    //R*=Vector3(-1.0,-1.0,1.0);
-    //S*=Vector3(-1.0,-1.0,1.0);
-
-    DebugRenderer* dbg = effector_->GetScene()->GetComponent<DebugRenderer>();
-
-    dbg->AddSphere(Sphere(Vector3(),0.2f),Color(0.0f,0.0f,0.0f),false);//origin
-    dbg->AddSphere(Sphere(D,0.2f),Color(0.1f,0.0f,0.0f),false);//old elbow
-    dbg->AddSphere(Sphere(P,0.2f),Color(0.0f,1.0f,0.0f),false);//target
-    dbg->AddLine(Vector3(),P,Color(0.1f,0.1f,0.1f),false);
-
-    dbg->AddSphere(Sphere(Q,0.2f),Color(1.0f,0.0f,0.0f),false);
-	dbg->AddLine(Vector3(),Q,Color(1.0f,0.0f,0.0f),false);
-	dbg->AddLine(Q,P,Color(1.0f,0.0f,0.0f),false);
-
-	Vector3 to = effector_->GetParent()->GetParent()->LocalToWorld(Vector3());
-	Vector3 tq = effector_->GetParent()->GetParent()->LocalToWorld(Q);
-	Vector3 tp = effector_->GetParent()->GetParent()->LocalToWorld(P);
-	dbg->AddSphere(Sphere(tq,0.2f),Color(1.0f,0.0f,0.0f),false);
-	dbg->AddSphere(Sphere(tp,0.2f),Color(0.0f,1.0f,0.0f),false);
-	dbg->AddLine(to,tq,Color(1.0f,0.0f,0.0f),false);
-	dbg->AddLine(tq,tp,Color(1.0f,0.0f,0.0f),false);
-	//dbg->AddSphere(Sphere(effector_->GetParent()->GetParent()->LocalToWorld(S),0.2f),Color(0.0f,1.0f,0.0f),false);
-	//dbg->AddLine(startJointPos,startJointPos+thighDir,Color(1.0f,0.0f,0.0f),false);
-	
-	//dbg->AddSphere(Sphere(S,0.2f),Color(0.0f,1.0f,0.0f),false);
-	//dbg->AddSphere(Sphere(effector_->GetParent()->GetParent()->LocalToWorld(P),0.2f),Color(0.0f,0.0f,1.0f),false);
-	
-
-	//dbg->AddSphere(Sphere(midJointPos,0.2f),Color(0.0f,1.0f,0.0f),false);
-	//dbg->AddLine(midJointPos,midJointPos+calfDir,Color(0.0f,1.0f,0.0f),false);
-
-    return d > 0.0f && d < A;
-
-}
-Vector3 IK::Rot(const Matrix3 M, Vector3 src)
-{
-	Vector3 dst;
-    dst.x_ = Vector3(M.m00_,M.m01_,M.m02_).DotProduct(src);
-   	dst.y_ = Vector3(M.m10_,M.m11_,M.m12_).DotProduct(src);
-   	dst.z_ = Vector3(M.m20_,M.m21_,M.m22_).DotProduct(src);
-   	return dst;
 }
 /*void CreateIKChains()//renamed to CreateChain
 {
