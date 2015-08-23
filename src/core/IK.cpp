@@ -57,8 +57,8 @@ void IK::CreateChain(const String bone)
 		return;
 
 	// Set variables
-	AnimatedModel* model = node_->GetComponent<AnimatedModel>();
-	Skeleton skel = model->GetSkeleton();
+	//AnimatedModel* model = node_->GetComponent<AnimatedModel>();
+	//Skeleton skel = model->GetSkeleton();
 	//if (!skel) 
 	//	return;
 
@@ -103,13 +103,8 @@ void IK::Solve(Vector3 targetPos)
 	Vector3 calfDir = effectorPos - midJointPos; // Calf direction
 	Vector3 targetDir = targetPos - startJointPos; // Leg direction
 
-	//Local positions for axis calculation
-	//Vector3 startJointLocal = effector_->GetParent()->GetParent()->GetPosition();
-	//Vector3 effectorLocal = effector_->GetPosition();
-	//Vector3 dynAxis = Vector3(startJointLocal-effectorLocal).Normalized().CrossProduct(Vector3(0.0f,1.0f,0.0f));
+	Vector3 bendAxis = Vector3(effectorPos-startJointPos).Normalized().CrossProduct(targetDir.Normalized());
 
-	//Vector3 kneeAxisLocal = effector_->GetParent()->LocalToWorld(dynAxis);
-	//Vector3 hipAxisLocal = effector_->GetParent()->GetParent()->LocalToWorld(dynAxis);
 	// Vectors lengths
 	float length1 = thighDir.Length();
 	float length2 = calfDir.Length();
@@ -133,8 +128,27 @@ void IK::Solve(Vector3 targetPos)
 		cos_theta = -1;
 	float theta = Acos(cos_theta);
 
+	//get the next angle? http://www.ryanjuckett.com/programming/analytic-two-bone-ik-in-2d/
+	/*float sinAngle = Sin(theta);
+	float triAdjacent = length1 + length2*cos_theta;
+    float triOpposite = length2*sinAngle;
+
+    //rotate by axis, and flatten to 2d
+    Quaternion flatten = Quaternion();
+    flatten.FromRotationTo(bendAxis.Normalized(),Vector3(0.0,0.0,1.0));
+    Vector3 flat = flatten * targetPos;
+  
+  	float tanY = flat.y_*triAdjacent - flat.x_*triOpposite;
+    float tanX = flat.x_*triAdjacent + flat.y_*triOpposite;
+    //float tanY = targetY*triAdjacent - targetX*triOpposite;
+    //float tanX = targetX*triAdjacent + targetY*triOpposite;
+  
+    // Note that it is safe to call Atan2(0,0) which will happen if targetX and
+    // targetY are zero
+    float theta1 = Atan2( tanY, tanX );*/
+
 	//DEBUG
-	DebugRenderer* dbg = effector_->GetScene()->GetComponent<DebugRenderer>();
+	/*DebugRenderer* dbg = effector_->GetScene()->GetComponent<DebugRenderer>();
 	dbg->AddSphere(Sphere(startJointPos,0.2f),Color(1.0f,0.0f,0.0f),false);
 	dbg->AddLine(startJointPos,startJointPos+thighDir,Color(1.0f,0.0f,0.0f),false);
 
@@ -143,25 +157,35 @@ void IK::Solve(Vector3 targetPos)
 
 	dbg->AddSphere(Sphere(effectorPos,0.2f),Color(0.0f,0.0f,1.0f),false);
 
-	dbg->AddSphere(Sphere(targetPos,0.2f),Color(1.0f,1.0f,0.0f),false);
+	dbg->AddSphere(Sphere(targetPos,0.2f),Color(1.0f,1.0f,0.0f),false);*/
 
 	// Quaternions for knee and hip joints
 	if (Abs(theta - kneeAngle) > 0.01)
 	{
-		Vector3 kneeAxis = thighDir.CrossProduct(calfDir);
-		Vector3 hipAxis = Vector3(startJointPos-effectorPos).Normalized().CrossProduct(Vector3(startJointPos-targetPos).Normalized());
-		//Quaternion deltaKnee = Quaternion((theta - kneeAngle), kneeAxis.Normalized());
-		//Quaternion deltaKnee = Quaternion((theta - kneeAngle), hipAxis.Normalized());
-		//Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, hipAxis.Normalized());
+		//Vector3 kneeAxis = thighDir.CrossProduct(calfDir);
+		Vector3 bendAxis = Vector3(effectorPos-startJointPos).Normalized().CrossProduct(targetDir.Normalized());
+		
+		//dbg->AddLine(startJointPos+(bendAxis.Normalized()*1.0f),startJointPos+(bendAxis.Normalized()*2.0f),Color(1.0f,1.0f,1.0f),false);
+		
+		//Quaternion deltaKnee = Quaternion((theta - kneeAngle) , bendAxis.Normalized());
+		//Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, bendAxis.Normalized());
+		Quaternion deltaKnee = Quaternion((theta - kneeAngle) * 0.5, Vector3(1.0f,0.0f,0.0f));
+		Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, Vector3(0.0f,0.0f,-1.0f));
 
-		Quaternion deltaKnee = Quaternion((theta - kneeAngle), axis_);
-		Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, axis_);
-		//Quaternion deltaKnee = Quaternion((theta - kneeAngle), kneeAxisLocal);
-		//Quaternion deltaHip = Quaternion(-(theta - kneeAngle) * 0.5, hipAxisLocal);
 		
 		// Apply rotations
+		/*Vector3 newHip = startJointPos+(deltaHip*thighDir);
+		dbg->AddLine(startJointPos,newHip,Color(1.0f,0.5f,0.5f),false);
+		dbg->AddSphere(Sphere(newHip,0.2f),Color(0.5f,1.0f,0.5f),false);
+		
+		Vector3 newKnee = newHip+(deltaHip*calfDir);
+		dbg->AddLine(newHip,newKnee,Color(0.5f,1.0f,0.5f),false);
+		dbg->AddSphere(Sphere(newKnee,0.2f),Color(0.5f,0.5f,1.0f),false);*/
+		
 		//effector_->GetParent()->SetRotation(effector_->GetParent()->GetRotation() * deltaKnee);
 		//effector_->GetParent()->GetParent()->SetRotation(effector_->GetParent()->GetParent()->GetRotation() * deltaHip);
+		effector_->GetParent()->SetWorldRotation(effector_->GetParent()->GetWorldRotation() * deltaKnee);
+		effector_->GetParent()->GetParent()->SetWorldRotation(effector_->GetParent()->GetParent()->GetWorldRotation() * deltaHip);
 	}
 	//effector_->SetWorldPosition(targetPos);//This is a Brute force way to put this thing in place
 

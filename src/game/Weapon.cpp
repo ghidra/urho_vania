@@ -30,7 +30,7 @@ Weapon::Weapon(Context* context) :
     firing_(0),
     fire_velocity_(50.0f),
     firing_timer_(0.0f),
-    firing_interval_(0.1f),
+    firing_interval_(0.2f),
     fire_off_(Vector3(0.0f,0.0f,2.0f)),
     lefthand_off_(Vector3(-0.2f,0.0f,1.1f))
 {

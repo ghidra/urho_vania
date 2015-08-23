@@ -270,7 +270,7 @@ void ApplicationInput::HandleKeyDown(StringHash eventType, VariantMap& eventData
             cameraLogic_->SetCameraType(cameraType_);
     }
     //else if (key == KEY_F10)
-    //    GetSubsystem<DebugHud>()->Toggle(2);//just the debug renderer
+    //    GetSubsystem<DebugHud>()->Toggle(3);//just the debug renderer
 
 
     
