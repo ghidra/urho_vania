@@ -109,10 +109,10 @@ void Character::Setup()
 
     leftArmIK_ = node_->CreateComponent<IK>();//
     leftArmIK_->CreateChain(String("wrist.L"));
-    leftArmIK_->ToggleDebug();
+    //leftArmIK_->ToggleDebug();
     rightArmIK_ = node_->CreateComponent<IK>();//
     rightArmIK_->CreateChain(String("wrist.R"));
-    rightArmIK_->ToggleDebug();
+    //rightArmIK_->ToggleDebug();
     //node_->Rotate(Quaternion(0.0f,90.0f,0.0f));
     //then setup the collision shape
     CollisionShape* shape = node_->CreateComponent<CollisionShape>();
@@ -394,8 +394,8 @@ void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantM
         //i need to put the target position in local space relative to the character
         //leftArmIK_->SetTarget(node_->WorldToLocal(weapon_->GetLeftHandTarget()));
         //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", node_->WorldToLocal(weapon_->GetLeftHandTarget()) );
-        leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
         rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition());
+        leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
 
     }
 }

@@ -32,7 +32,7 @@ Weapon::Weapon(Context* context) :
     firing_timer_(0.0f),
     firing_interval_(0.2f),
     fire_off_(Vector3(0.0f,0.0f,2.0f)),
-    lefthand_off_(Vector3(-0.2f,1.0f,0.9f))
+    lefthand_off_(Vector3(-0.4f,0.8f,1.1f))
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(USE_FIXEDUPDATE);
@@ -162,9 +162,9 @@ void Weapon::SpawnProjectile()
     //get rotation axis
     //Vector3 rotaxis = dir.CrossProduct(Vector3(0.0f,1.0f,0.0f));//local to the gun
     Vector3 rotaxis = Vector3(0.0f,1.0f,0.0f);//local to the gun
-    kick_rot_ = Quaternion(Random(12.0f),rotaxis);
+    kick_rot_ = Quaternion(Random(4.0f),rotaxis);
     //node_->Rotate(kick_rot_,TS_WORLD);
-    kick_off_ = Vector3(Random(0.3f),Random(0.3f),Random(0.3f));
+    kick_off_ = Vector3(Random(0.1f),Random(0.1f),Random(0.1f));
     //node_->Translate(kick_off_,TS_WORLD);
 
     node_->SetTransform(kick_off_,kick_rot_);
