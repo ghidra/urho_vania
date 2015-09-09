@@ -4,7 +4,7 @@
 #pragma once
 
 #include "core/ApplicationHandler.h"
-#include "stages/VaniaDebugEnv.h"
+#include "stages/StageForest.h"
 //#include "core/ApplicationInput.h"
 namespace Urho3D
 {
@@ -36,7 +36,7 @@ private:
     //void HandleUpdate(StringHash eventType, VariantMap& eventData);
 
     //ApplicationInput * applicationInput_ = NULL;
-    VaniaDebugEnv* stage_ = NULL;
+    StageForest* stage_ = NULL;
 
     SharedPtr<Node> characterNode_;
     //Character* character_;

@@ -116,7 +116,10 @@ void Character::Setup()
     //node_->Rotate(Quaternion(0.0f,90.0f,0.0f));
     //then setup the collision shape
     CollisionShape* shape = node_->CreateComponent<CollisionShape>();
-    shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
+    shape->SetCapsule(3.0f, 10.0f, Vector3(0.0f, 5.0f, 0.0f));
+
+    RigidBody* body = node_->GetComponent<RigidBody>();
+    body->SetMass(1.0f);
 
 
     // Create the character logic component, which takes care of steering the rigidbody

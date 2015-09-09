@@ -3,6 +3,7 @@
 //#include <Urho3D/Core/Context.h>
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Graphics/Camera.h>
+#include <Urho3D/Physics/PhysicsWorld.h>
 #include <Urho3D/Engine/Console.h>
 #include <Urho3D/UI/Cursor.h>
 #include <Urho3D/Engine/DebugHud.h>
@@ -35,6 +36,7 @@
 #include "core/IK.h"
 #include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
+#include "stages/StageForest.h"
 #include "piece/PU_Gun01.h"
 #include "piece/Gun01.h"
 #include "piece/Projectile01.h"
@@ -80,14 +82,20 @@ void Main::Start()
     
     VariantMap camParms;
     camParms["targetOffset"] = Vector3(0.0f,6.0f,0.0f);
+    camParms["distance"] = 80.0f;
+    camParms["distance_max"] = 200.0f;
+    camParms["orientation"] = Quaternion(10.0f,0.0f,0.0f);
 
     applicationInput_->SetCameraParameters(camParms);
     //I can set parameters here if I want for the camera, for now, let the defaults deal with it
 
     // Create "Hello World" Text
     //CreateText();
+    PhysicsWorld* pw = scene_->GetComponent<PhysicsWorld>();
+    pw->SetGravity(Vector3(0.0f,-20.0f,0.0f));
 
-    stage_ = new VaniaDebugEnv(context_);
+    //stage_ = new VaniaDebugEnv(context_);
+    stage_ = new StageForest(context_);
     stage_->Setup(scene_, cameraNode_);
 
     characterNode_ = scene_->CreateChild("Jack");
