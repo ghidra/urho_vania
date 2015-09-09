@@ -10,3 +10,4 @@ launch.sh
 editor.sh
 bin/Resources/Models/States/*
 bin/Resources/Models/Man/*
+bin/Resources/Models/StageForest/*
