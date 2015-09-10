@@ -30,7 +30,7 @@ Pawn::Pawn(Context* context) :
     moveForce_(3.0f),
     inAirMoveForce_(0.02f),
     brakeForce_(0.1f),
-    jumpForce_(9.0f),
+    jumpForce_(12.0f),
     //jumpDownForce_(0.5f),
     yawSensitivity_(0.1f),
     inAirThresholdTime_(0.1f),

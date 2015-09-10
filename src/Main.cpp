@@ -92,7 +92,7 @@ void Main::Start()
     // Create "Hello World" Text
     //CreateText();
     PhysicsWorld* pw = scene_->GetComponent<PhysicsWorld>();
-    pw->SetGravity(Vector3(0.0f,-20.0f,0.0f));
+    pw->SetGravity(Vector3(0.0f,-50.0f,0.0f));
 
     //stage_ = new VaniaDebugEnv(context_);
     stage_ = new StageForest(context_);
