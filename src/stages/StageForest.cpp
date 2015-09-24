@@ -58,7 +58,7 @@ void StageForest::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
 
     Node* stageNode = scene_->CreateChild("Stage");
 
-    SharedPtr<File> file = cache->GetFile("Scenes/StageForest.xml");
+    SharedPtr<File> file = cache->GetFile("Scenes/Stage_Forest.xml");
     //stageNode->LoadXML(*file);
     scene_->InstantiateXML(*file,Vector3(0.0f,-10.0f,0.0f),Quaternion());
 
