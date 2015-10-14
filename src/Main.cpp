@@ -82,8 +82,8 @@ void Main::Start()
     
     VariantMap camParms;
     camParms["targetOffset"] = Vector3(0.0f,6.0f,0.0f);
-    camParms["distance"] = 80.0f;
-    camParms["distance_max"] = 200.0f;
+    camParms["distance"] = 50.0f;
+    camParms["distance_max"] = 100.0f;
     camParms["orientation"] = Quaternion(10.0f,0.0f,0.0f);
 
     applicationInput_->SetCameraParameters(camParms);

@@ -146,6 +146,19 @@ void Character::FixedUpdate(float timeStep)
     {
         if(!applicationInput_->IsDebugCamera())//if we are not in debug camera mode
         {
+            switch(state_)
+            {
+                case State_Idle:
+                    break;
+                case State_Walking:
+                    break;
+                case State_Running:
+                    break;
+                case State_Jumping:
+                    break;
+                case State_Firing:
+                    break;
+            }
             //we are possessed by the application controller
             Controls& ctrl = applicationInput_->controls_;
             AnimationController* animCtrl = GetComponent<AnimationController>();
@@ -397,6 +410,7 @@ void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantM
         //i need to put the target position in local space relative to the character
         //leftArmIK_->SetTarget(node_->WorldToLocal(weapon_->GetLeftHandTarget()));
         //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", node_->WorldToLocal(weapon_->GetLeftHandTarget()) );
+        
         rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition());
         leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
 

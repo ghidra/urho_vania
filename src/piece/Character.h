@@ -6,7 +6,7 @@
 //#include <Urho3D/Input/Controls.h>
 //#include <string>
 #include "../game/Pawn.h"
-
+#include "../game/State.h"
 #include "../core/IK.h"
 
 using namespace Urho3D;
@@ -44,6 +44,17 @@ protected:
     //SharedPtr<Node> cameraNode_;
 
 private:
+
+    enum States
+    {
+        State_Idle,
+        State_Walking,
+        State_Running,
+        State_Jumping,
+        State_Firing
+    }state_;
+    //int state_ = State_Idle;
+    
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
     bool turning;
 
