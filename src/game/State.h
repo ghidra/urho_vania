@@ -8,6 +8,13 @@
 #include "Pawn.h"
 
 using namespace Urho3D;
+/*namespace Urho3D
+{
+
+class Node;
+class Scene;
+
+}*/
 
 class State : public Object
 {

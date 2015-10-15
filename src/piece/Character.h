@@ -47,13 +47,13 @@ private:
 
     enum States
     {
-        State_Idle,
+        State_Idle = 1,
         State_Walking,
         State_Running,
         State_Jumping,
         State_Firing
-    }state_;
-    //int state_ = State_Idle;
+    };
+    States state_;
     
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
     bool turning;
