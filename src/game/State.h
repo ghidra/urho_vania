@@ -7,14 +7,14 @@
 #include <Urho3D/Input/Input.h>
 #include "Pawn.h"
 
-using namespace Urho3D;
-/*namespace Urho3D
+//using namespace Urho3D;
+namespace Urho3D
 {
 
 class Node;
 class Scene;
 
-}*/
+}
 
 class State : public Object
 {
@@ -24,8 +24,14 @@ public:
     State(Context* context);
     ~State();
 
-    virtual void HandleInput(Pawn& pawn, Input* input);
-    virtual void Update(Pawn& pawn);
+    virtual State* HandleInput(Pawn* pawn, Input* input);
+    virtual void Update(Pawn* pawn);
+
+    virtual void Debug();
+
+protected:
+
+    String name_;
   
 };
 #endif

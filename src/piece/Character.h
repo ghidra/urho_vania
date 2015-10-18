@@ -45,7 +45,7 @@ protected:
 
 private:
 
-    enum States
+    /*enum States
     {
         State_Idle = 1,
         State_Walking,
@@ -53,7 +53,8 @@ private:
         State_Jumping,
         State_Firing
     };
-    States state_;
+    */
+    State* state_;
     
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
     bool turning;

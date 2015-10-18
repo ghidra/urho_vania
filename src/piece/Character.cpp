@@ -28,8 +28,10 @@
 
 #include "Character.h"
 #include "../core/ApplicationInput.h"//i need this for the control constants
-
 #include "../core/IK.h"
+#include "../game/State.h"
+
+#include "states/StateCharacterIdle.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -48,7 +50,8 @@ Character::Character(Context* context) :
     //CameraLogic::RegisterObject(context);
     SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN.mdl");
-    state_ = State_Idle;//set the initial state
+    state_= new State(context);
+    //state_ = State_Idle;//set the initial state
 }
 
 //-------------------
@@ -147,7 +150,25 @@ void Character::FixedUpdate(float timeStep)
     {
         if(!applicationInput_->IsDebugCamera())//if we are not in debug camera mode
         {
-            switch(state_)
+            //we are possessed by the application controller
+            Controls& ctrl = applicationInput_->controls_;
+            AnimationController* animCtrl = GetComponent<AnimationController>();
+            RigidBody* body = GetComponent<RigidBody>();
+
+            Input* input = GetSubsystem<Input>();
+
+            ///state stuff
+            if (ctrl.IsDown(CTRL_UP))
+            {
+                State* state = state_->HandleInput(static_cast<Pawn*>(this), input);
+                if (state != NULL)
+                {
+                    delete state_;
+                    state_ = state;
+                }
+            }
+            state_->Debug();
+            /*switch(state_)
             {
                 case State_Idle:
                     break;
@@ -159,13 +180,7 @@ void Character::FixedUpdate(float timeStep)
                     break;
                 case State_Firing:
                     break;
-            }
-            //we are possessed by the application controller
-            Controls& ctrl = applicationInput_->controls_;
-            AnimationController* animCtrl = GetComponent<AnimationController>();
-            RigidBody* body = GetComponent<RigidBody>();
-
-            Input* input = GetSubsystem<Input>();
+            }*/
 
             // Update the in air timer. Reset if grounded
             if (!onGround_)

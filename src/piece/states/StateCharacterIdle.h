@@ -3,11 +3,18 @@
 
 #pragma once
 
-#include <Urho3D/Input/Input.h>
 #include "../../game/State.h"
+#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
-using namespace Urho3D;
+//using namespace Urho3D;
+namespace Urho3D
+{
+
+class Node;
+class Scene;
+
+}
 
 class StateCharacterIdle : public State
 {
@@ -18,8 +25,8 @@ public:
     StateCharacterIdle(Context* context);
     ~StateCharacterIdle();
 
-    virtual void HandleInput(Pawn& pawn, Input* input);
-    virtual void Update(Pawn& pawn);
+    virtual State* HandleInput(Pawn* pawn, Input* input);
+    virtual void Update(Pawn* pawn);
 
 };
 #endif
