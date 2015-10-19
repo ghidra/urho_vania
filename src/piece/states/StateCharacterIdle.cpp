@@ -16,6 +16,9 @@ class StateCharacterIdle : public State
 
 #include "StateCharacterIdle.h"
 
+#include "StateCharacterRunning.h"
+#include "StateCharacterJumping.h"
+
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
@@ -30,16 +33,13 @@ StateCharacterIdle::StateCharacterIdle(Context* context):
 }
 StateCharacterIdle::~StateCharacterIdle(){}
 
-State* StateCharacterIdle::HandleInput(Pawn* pawn, Input* input)
+State* StateCharacterIdle::HandleInput(Pawn* pawn, Controls& ctrl, Input* input)
 {
-    return new StateCharacterIdle(context_);
+    if (ctrl.IsDown(CTRL_UP) || ctrl.IsDown(CTRL_DOWN) || ctrl.IsDown(CTRL_LEFT) || ctrl.IsDown(CTRL_RIGHT) )
+        return new StateCharacterRunning(context_);
+    else
+        return NULL;
 }
 void StateCharacterIdle::Update(Pawn* pawn)
 {
 }
-//void StateCharacterIdle::Debug(){
-    //GetSubsystem<DebugHud>()->SetAppStats("state:", String("pivot") );
-    //float skid = body->GetLinearVelocity().Length();
-    //float skidTime_a = Fit( skid,moveForce_,0.0f,0.0f,animCtrl->GetLength("Models/Man/MAN_TurnSkidGunning.ani") );
-    //GetSubsystem<DebugHud>()->SetAppStats("animtion speed:", skidTime_a );
-//}

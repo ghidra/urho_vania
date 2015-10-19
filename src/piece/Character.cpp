@@ -29,9 +29,12 @@
 #include "Character.h"
 #include "../core/ApplicationInput.h"//i need this for the control constants
 #include "../core/IK.h"
-#include "../game/State.h"
 
+//all of my states
+#include "../game/State.h"
 #include "states/StateCharacterIdle.h"
+#include "states/StateCharacterRunning.h"
+#include "states/StateCharacterJumping.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -50,7 +53,7 @@ Character::Character(Context* context) :
     //CameraLogic::RegisterObject(context);
     SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN.mdl");
-    state_= new State(context);
+    state_= new StateCharacterIdle(context);
     //state_ = State_Idle;//set the initial state
 }
 
@@ -158,15 +161,13 @@ void Character::FixedUpdate(float timeStep)
             Input* input = GetSubsystem<Input>();
 
             ///state stuff
-            if (ctrl.IsDown(CTRL_UP))
+            State* state = state_->HandleInput(static_cast<Pawn*>(this), ctrl, input);
+            if (state != NULL)
             {
-                State* state = state_->HandleInput(static_cast<Pawn*>(this), input);
-                if (state != NULL)
-                {
-                    delete state_;
-                    state_ = state;
-                }
+                delete state_;
+                state_ = state;
             }
+            state_->Update(static_cast<Pawn*>(this));
             state_->Debug();
             /*switch(state_)
             {

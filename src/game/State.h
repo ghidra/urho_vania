@@ -4,6 +4,8 @@
 #pragma once
 
 #include <Urho3D/Core/Object.h>
+#include <Urho3D/Input/Controls.h>
+#include "../core/ApplicationInput.h"
 #include <Urho3D/Input/Input.h>
 #include "Pawn.h"
 
@@ -24,7 +26,7 @@ public:
     State(Context* context);
     ~State();
 
-    virtual State* HandleInput(Pawn* pawn, Input* input);
+    virtual State* HandleInput(Pawn* pawn, Controls& ctrl, Input* input);
     virtual void Update(Pawn* pawn);
 
     virtual void Debug();

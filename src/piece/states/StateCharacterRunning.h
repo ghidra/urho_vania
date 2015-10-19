@@ -1,5 +1,5 @@
-#ifndef STATECHARACTERIDLE_H
-#define STATECHARACTERIDLE_H
+#ifndef STATECHARACTERRUNNING_H
+#define STATECHARACTERRUNNING_H
 
 #pragma once
 
@@ -18,14 +18,14 @@ class Scene;
 
 }
 
-class StateCharacterIdle : public State
+class StateCharacterRunning : public State
 {
-    OBJECT(StateCharacterIdle);
+    OBJECT(StateCharacterRunning);
 
 public:
     /// Construct.
-    StateCharacterIdle(Context* context);
-    ~StateCharacterIdle();
+    StateCharacterRunning(Context* context);
+    ~StateCharacterRunning();
 
     virtual State* HandleInput(Pawn* pawn, Controls& ctrl, Input* input);
     virtual void Update(Pawn* pawn);

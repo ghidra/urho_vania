@@ -14,9 +14,9 @@ State::State(Context* context):
 }
 State::~State(){}
 
-State* State::HandleInput(Pawn* pawn, Input* input)
+State* State::HandleInput(Pawn* pawn, Controls& ctrl, Input* input)
 {
-    return new State(context_);
+    return NULL;
 }
 void State::Update(Pawn* pawn)
 {
