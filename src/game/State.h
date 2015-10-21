@@ -26,14 +26,20 @@ public:
     State(Context* context);
     ~State();
 
-    virtual State* HandleInput(Pawn* pawn, Controls& ctrl, Input* input);
-    virtual void Update(Pawn* pawn);
+    virtual State* HandleInput(Controls& ctrl, Input* input);
+    virtual void Enter(Pawn* pawn);
+    virtual void Update();
+    virtual void Exit();
 
     virtual void Debug();
 
 protected:
 
     String name_;
+
+private:
+
+	Pawn* pawn_;
   
 };
 #endif

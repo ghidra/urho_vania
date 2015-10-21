@@ -33,13 +33,13 @@ StateCharacterIdle::StateCharacterIdle(Context* context):
 }
 StateCharacterIdle::~StateCharacterIdle(){}
 
-State* StateCharacterIdle::HandleInput(Pawn* pawn, Controls& ctrl, Input* input)
+State* StateCharacterIdle::HandleInput(Controls& ctrl, Input* input)
 {
     if (ctrl.IsDown(CTRL_UP) || ctrl.IsDown(CTRL_DOWN) || ctrl.IsDown(CTRL_LEFT) || ctrl.IsDown(CTRL_RIGHT) )
         return new StateCharacterRunning(context_);
     else
         return NULL;
 }
-void StateCharacterIdle::Update(Pawn* pawn)
+void StateCharacterIdle::Update()
 {
 }

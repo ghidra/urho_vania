@@ -27,8 +27,8 @@ public:
     StateCharacterIdle(Context* context);
     ~StateCharacterIdle();
 
-    virtual State* HandleInput(Pawn* pawn, Controls& ctrl, Input* input);
-    virtual void Update(Pawn* pawn);
+    virtual State* HandleInput(Controls& ctrl, Input* input);
+    virtual void Update();
 
 };
 #endif

@@ -53,7 +53,6 @@ Character::Character(Context* context) :
     //CameraLogic::RegisterObject(context);
     SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN.mdl");
-    state_= new StateCharacterIdle(context);
     //state_ = State_Idle;//set the initial state
 }
 
@@ -128,6 +127,10 @@ void Character::Setup()
     RigidBody* body = node_->GetComponent<RigidBody>();
     body->SetMass(1.0f);
 
+    //set initial state
+    state_= new StateCharacterIdle(context_);
+    state_->Enter(static_cast<Pawn*>(this));
+
 
     // Create the character logic component, which takes care of steering the rigidbody
     // Remember it so that we can set the controls. Use a WeakPtr because the scene hierarchy already owns it
@@ -161,27 +164,19 @@ void Character::FixedUpdate(float timeStep)
             Input* input = GetSubsystem<Input>();
 
             ///state stuff
-            State* state = state_->HandleInput(static_cast<Pawn*>(this), ctrl, input);
+            State* state = state_->HandleInput(ctrl, input);
             if (state != NULL)
             {
+                //do exit state before removing state
+                state_->Exit();
                 delete state_;
                 state_ = state;
+                //we are entering the new state
+                state_->Enter(static_cast<Pawn*>(this));
             }
-            state_->Update(static_cast<Pawn*>(this));
+            state_->Update();
             state_->Debug();
-            /*switch(state_)
-            {
-                case State_Idle:
-                    break;
-                case State_Walking:
-                    break;
-                case State_Running:
-                    break;
-                case State_Jumping:
-                    break;
-                case State_Firing:
-                    break;
-            }*/
+            //-------------
 
             // Update the in air timer. Reset if grounded
             if (!onGround_)

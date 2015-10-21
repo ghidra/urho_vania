@@ -17,11 +17,11 @@ StateCharacterJumping::StateCharacterJumping(Context* context):
 }
 StateCharacterJumping::~StateCharacterJumping(){}
 
-State* StateCharacterJumping::HandleInput(Pawn* pawn, Controls& ctrl, Input* input)
+State* StateCharacterJumping::HandleInput(Controls& ctrl, Input* input)
 {
     return NULL;
     //return new StateCharacterRunning(context_);
 }
-void StateCharacterJumping::Update(Pawn* pawn)
+void StateCharacterJumping::Update()
 {
 }

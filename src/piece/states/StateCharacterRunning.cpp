@@ -17,11 +17,11 @@ StateCharacterRunning::StateCharacterRunning(Context* context):
 }
 StateCharacterRunning::~StateCharacterRunning(){}
 
-State* StateCharacterRunning::HandleInput(Pawn* pawn, Controls& ctrl, Input* input)
+State* StateCharacterRunning::HandleInput(Controls& ctrl, Input* input)
 {
     return NULL;
     //return new StateCharacterRunning(context_);
 }
-void StateCharacterRunning::Update(Pawn* pawn)
+void StateCharacterRunning::Update()
 {
 }

@@ -45,15 +45,6 @@ protected:
 
 private:
 
-    /*enum States
-    {
-        State_Idle = 1,
-        State_Walking,
-        State_Running,
-        State_Jumping,
-        State_Firing
-    };
-    */
     State* state_;
     
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);

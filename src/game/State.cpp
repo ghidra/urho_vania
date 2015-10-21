@@ -14,11 +14,18 @@ State::State(Context* context):
 }
 State::~State(){}
 
-State* State::HandleInput(Pawn* pawn, Controls& ctrl, Input* input)
+State* State::HandleInput(Controls& ctrl, Input* input)
 {
     return NULL;
 }
-void State::Update(Pawn* pawn)
+void State::Enter(Pawn* pawn)
+{
+	pawn_  = pawn;
+}
+void State::Update()
+{
+}
+void State::Exit()
 {
 }
 void State::Debug(){
