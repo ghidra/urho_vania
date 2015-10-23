@@ -79,17 +79,18 @@ void Pawn::Setup()
     //object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
-    RigidBody* body = node_->CreateComponent<RigidBody>();
-    body->SetCollisionLayer(collision_layer_);
-    body->SetCollisionMask(collision_mask_);
-    body->SetMass(1.0f);
+    //RigidBody* body = node_->CreateComponent<RigidBody>();
+    body_ = node_->CreateComponent<RigidBody>();
+    body_->SetCollisionLayer(collision_layer_);
+    body_->SetCollisionMask(collision_mask_);
+    body_->SetMass(1.0f);
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
     // Instead we will control the character yaw manually
-    body->SetAngularFactor(Vector3::ZERO);
+    body_->SetAngularFactor(Vector3::ZERO);
 
     // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
-    body->SetCollisionEventMode(COLLISION_ALWAYS);
+    body_->SetCollisionEventMode(COLLISION_ALWAYS);
 
     //we still need to setup the collisionshape in the child class
 }

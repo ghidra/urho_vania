@@ -61,6 +61,13 @@ void Actor::FixedUpdate(float timeStep)
       if (duration_ <= 0.0f)
           node_->Remove();
     }
+
+    //----
+    //rigid body data
+    velocity_ = body_->GetLinearVelocity();
+    planeVelocity_ = Vector3(velocity_.x_, 0.0f, velocity_.z_);
+    jumpVelocity_ = Vector3(0.0f, velocity_.y_, 0.0f);
+
     /// \todo Could cache the components for faster access instead of finding them each frame
     /*RigidBody* body = GetComponent<RigidBody>();
     AnimationController* animCtrl = GetComponent<AnimationController>();

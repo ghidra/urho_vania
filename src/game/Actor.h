@@ -5,6 +5,9 @@
 
 #include <Urho3D/Scene/LogicComponent.h>
 #include "../core/ApplicationInput.h"
+
+#include <Urho3D/Physics/RigidBody.h>
+#include <Urho3D/Physics/CollisionShape.h>
 //#include <Urho3D/Input/Controls.h>
 
 using namespace Urho3D;
@@ -42,6 +45,9 @@ public:
     virtual void FixedUpdate(float timeStep);
     //virtual void Possess(ApplicationInput* applicationInput);
     //virtual void Control(Controls* controls);
+    Vector3 GetVelocity(){return velocity_;};
+    Vector3 GetPlaneVelocity(){return planeVelocity_;};
+    Vector3 GetJumpVelocity(){return jumpVelocity_;};
     
 protected:
 
@@ -76,6 +82,13 @@ protected:
     float sensitivity_;
 
     float timeIncrement_;
+
+    RigidBody* body_;
+    CollisionShape* shape_;
+
+    Vector3 velocity_;
+    Vector3 planeVelocity_;
+    Vector3 jumpVelocity_;
 
     //character collision masks as default
     uint collision_layer_;//=1;

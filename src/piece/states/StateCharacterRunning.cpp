@@ -3,6 +3,9 @@
 
 #include "StateCharacterRunning.h"
 
+#include "StateCharacterIdle.h"
+#include "StateCharacterJumping.h"
+
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
@@ -15,9 +18,18 @@ StateCharacterRunning::~StateCharacterRunning(){}
 
 State* StateCharacterRunning::HandleInput(Controls& ctrl, Input* input)
 {
-    return NULL;
-    //return new StateCharacterRunning(context_);
+	if (ctrl.IsDown(CTRL_UP) || ctrl.IsDown(CTRL_DOWN) || ctrl.IsDown(CTRL_LEFT) || ctrl.IsDown(CTRL_RIGHT) )
+	{
+		//keep running
+		return NULL;
+	}
+	else
+	{
+		//defer to grounded
+		StateCharacterGrounded::HandleInput(ctrl,input);
+	}
 }
 void StateCharacterRunning::Update()
 {
+	//StateCharacterGrounded::Update()
 }

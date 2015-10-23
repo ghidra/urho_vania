@@ -46,6 +46,7 @@ protected:
 private:
 
     State* state_;
+    State* stateArms_ = NULL;
     
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
     bool turning;

@@ -5,7 +5,7 @@
 
 #include <Urho3D/Core/Object.h>
 #include <Urho3D/Input/Controls.h>
-#include "../core/ApplicationInput.h"
+#include "../core/ApplicationInput.h"//for the control constants
 #include <Urho3D/Input/Input.h>
 #include "Pawn.h"
 

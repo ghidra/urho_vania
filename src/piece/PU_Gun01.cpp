@@ -64,9 +64,10 @@ void PU_Gun01::Setup()
 {
     PickUp::Setup();
     // Set a capsule shape for collision
-    CollisionShape* shape = node_->CreateComponent<CollisionShape>();
+    //CollisionShape* shape = node_->CreateComponent<CollisionShape>();
     //shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
-    shape->SetBox(Vector3(2.0f, 1.0f, 4.0f));
+    shape_ = node_->CreateComponent<CollisionShape>();
+    shape_->SetBox(Vector3(2.0f, 1.0f, 4.0f));
 
     node_->SetPosition(Vector3(4.0f, 8.0f, 0.0f));//objectNode
     node_->SetRotation(Quaternion(33.0f,78.0f,24.0f));
