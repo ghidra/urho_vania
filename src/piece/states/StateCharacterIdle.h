@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../../game/State.h"
+#include "StateCharacterGrounded.h"
 #include <Urho3D/Input/Controls.h>
 #include "../../core/ApplicationInput.h"
 #include <Urho3D/Input/Input.h>
@@ -18,7 +18,7 @@ class Scene;
 
 }
 
-class StateCharacterIdle : public State
+class StateCharacterIdle : public StateCharacterGrounded
 {
     OBJECT(StateCharacterIdle);
 

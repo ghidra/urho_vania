@@ -6,12 +6,8 @@
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
-#include <Urho3D/DebugNew.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Engine/DebugHud.h>
-
 StateCharacterRunning::StateCharacterRunning(Context* context):
-    State(context)
+    StateCharacterGrounded(context)
 {
     name_=String("running");
 }

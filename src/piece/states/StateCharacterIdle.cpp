@@ -27,7 +27,7 @@ class StateCharacterIdle : public State
 #include <Urho3D/Engine/DebugHud.h>
 
 StateCharacterIdle::StateCharacterIdle(Context* context):
-    State(context)
+    StateCharacterGrounded(context)
 {
     name_=String("idle");
 }
