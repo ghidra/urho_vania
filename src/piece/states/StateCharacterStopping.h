@@ -1,9 +1,9 @@
-#ifndef STATECHARACTERJUMPING_H
-#define STATECHARACTERJUMPING_H
+#ifndef STATECHARACTERSTOPPING_H
+#define STATECHARACTERSTOPPING_H
 
 #pragma once
 
-#include "../../game/State.h"
+#include "StateCharacterGrounded.h"
 #include <Urho3D/Input/Controls.h>
 #include "../../core/ApplicationInput.h"
 #include <Urho3D/Input/Input.h>
@@ -18,17 +18,16 @@ class Scene;
 
 }
 
-class StateCharacterJumping : public State
+class StateCharacterStopping : public StateCharacterGrounded
 {
-    OBJECT(StateCharacterJumping);
+    OBJECT(StateCharacterStopping);
 
 public:
     /// Construct.
-    StateCharacterJumping(Context* context);
-    ~StateCharacterJumping();
+    StateCharacterStopping(Context* context);
+    ~StateCharacterStopping();
 
     virtual State* HandleInput(Controls& ctrl, Input* input);
-    virtual void Enter(Pawn* pawn);
     virtual void Update();
 
 };

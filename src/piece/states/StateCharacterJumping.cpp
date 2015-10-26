@@ -1,5 +1,6 @@
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
+#include <Urho3D/Physics/RigidBody.h>
 
 #include "StateCharacterJumping.h"
 
@@ -16,6 +17,13 @@ StateCharacterJumping::StateCharacterJumping(Context* context):
     name_=String("jumping");
 }
 StateCharacterJumping::~StateCharacterJumping(){}
+
+void StateCharacterJumping::Enter(Pawn* pawn)
+{
+	State::Enter(pawn);
+	RigidBody* body = pawn_->GetBody();
+	body->ApplyImpulse(Vector3::UP * pawn_->GetJumpForce() );
+}
 
 State* StateCharacterJumping::HandleInput(Controls& ctrl, Input* input)
 {

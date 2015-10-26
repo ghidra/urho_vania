@@ -45,6 +45,9 @@ public:
     virtual void FixedUpdate(float timeStep);
     //virtual void Possess(ApplicationInput* applicationInput);
     //virtual void Control(Controls* controls);
+    Node* GetNode(){return node_;};
+    RigidBody* GetBody(){return body_;};
+    
     Vector3 GetVelocity(){return velocity_;};
     Vector3 GetPlaneVelocity(){return planeVelocity_;};
     Vector3 GetJumpVelocity(){return jumpVelocity_;};

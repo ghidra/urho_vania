@@ -35,6 +35,9 @@ public:
     virtual void EquipWeapon(Weapon* weapon);
     //virtual void Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode);
 
+    float GetMoveForce(){return moveForce_;};
+    float GetJumpForce(){return jumpForce_;};
+
 protected:
 
     virtual void Setup();

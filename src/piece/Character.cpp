@@ -120,21 +120,16 @@ void Character::FixedUpdate(float timeStep)
             //--------------------------------------------------
 
             // Update the in air timer. Reset if grounded
-            if (!onGround_)
+            /*if (!onGround_)
                 inAirTimer_ += timeStep;
             else
                 inAirTimer_ = 0.0f;
             // When character has been in air less than 1/10 second, it's still interpreted as being on ground
             bool softGrounded = inAirTimer_ < inAirThresholdTime_;
-
-            // Update movement & animation
-            const Quaternion& rot = node_->GetRotation();
-            Vector3 moveDir = Vector3::ZERO;
-            /*const Vector3& velocity = body_->GetLinearVelocity();
-            // Velocity on the XZ plane
-            Vector3 planeVelocity(velocity.x_, 0.0f, velocity.z_);
-            Vector3 jumpVelocity(0.0f, velocity.y_, 0.0f);
             */
+            // Update movement & animation
+            /*const Quaternion& rot = node_->GetRotation();
+            Vector3 moveDir = Vector3::ZERO;
 
             if (ctrl.IsDown(CTRL_UP))
                 moveDir += Vector3::FORWARD;
@@ -152,8 +147,6 @@ void Character::FixedUpdate(float timeStep)
                     weapon_->Fire(timeStep);
                 else
                     weapon_->ReleaseFire();
-                
-
             }
 
             // Normalize move vector so that diagonal strafing is not faster
@@ -163,21 +156,12 @@ void Character::FixedUpdate(float timeStep)
                 moveDir.Normalize();
             }
             // If in air, allow control, but slower than when on ground
-            //body->ApplyImpulse(rot * moveDir * 0.3);
-            //body->ApplyImpulse(rot * moveDir * moveForce_);
+            
             body_->ApplyImpulse(rot * moveDir * (softGrounded ? moveForce_ : inAirMoveForce_));
-            //body->SetLinearVelocity(rot * moveDir * (softGrounded ? moveForce_ : inAirMoveForce_));
-    
-
-            //now control animation
-            // Play walk animation if moving on ground, otherwise fade it out
-            /*if (!moveDir.Equals(Vector3::ZERO))
-                animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
-            else
-                animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.2f);
-            // Set walk animation speed proportional to velocity
-            animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", planeVelocity.Length() * 0.3f);
             */
+
+            /*
+            //now control animation
             if (softGrounded)
             {
                 // When on ground, apply a braking force to limit maximum ground velocity
@@ -246,10 +230,10 @@ void Character::FixedUpdate(float timeStep)
                 {
                     body_->ApplyImpulse(rot * -moveDir * 0.9f * moveForce_);//i ned to make it turn around slower
 
-                    GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("pivot") );
+                    //GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("pivot") );
                     float skid = body_->GetLinearVelocity().Length();
                     float skidTime_a = Fit( skid,moveForce_,0.0f,0.0f,animCtrl->GetLength("Models/Man/MAN_TurnSkidGunning.ani") );
-                    GetSubsystem<DebugHud>()->SetAppStats("animtion speed:", skidTime_a );
+                    //GetSubsystem<DebugHud>()->SetAppStats("animtion speed:", skidTime_a );
 
                     //animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
                     //animCtrl->Stop("Models/Man/MAN_RunningGunning.ani", 0.5f);
@@ -262,7 +246,7 @@ void Character::FixedUpdate(float timeStep)
                 }
                 else
                 {
-                    GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("run and gun") );
+                    //GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("run and gun") );
                     //animCtrl->Stop("Models/Man/MAN_StandingIdleGun.ani", 0.1f);
                     //animCtrl->Stop("Models/Man/MAN_Jumping.ani", 0.1f);
                     //animCtrl->Stop("Models/Man/MAN_TurnSkidGunning.ani", 0.1f);
@@ -333,18 +317,8 @@ void Character::FixedUpdate(float timeStep)
                     }
                 }
 
-
-
-                /*if(velocity.y_>0.0f)
-                {
-                    animCtrl->Play("Models/Man/MAN_Jumping.ani", false, 0.1f);    
-                }
-                else
-                {
-                    animCtrl->Play("Models/Man/MAN_StandingIdleGun.ani", true, 0.5f);
-                }*/
             }
-            
+            */           
             // Reset grounded flag for next frame
             onGround_ = false;
             //onGround_ = true;
@@ -365,8 +339,9 @@ void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantM
         //leftArmIK_->SetTarget(node_->WorldToLocal(weapon_->GetLeftHandTarget()));
         //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", node_->WorldToLocal(weapon_->GetLeftHandTarget()) );
         
-        rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition());
-        leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
+        //turn these off for the moment
+        //rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition());
+        //leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
 
     }
 }

@@ -31,13 +31,21 @@ StateCharacterIdle::~StateCharacterIdle(){}
 
 State* StateCharacterIdle::HandleInput(Controls& ctrl, Input* input)
 {
-    if (ctrl.IsDown(CTRL_UP) || ctrl.IsDown(CTRL_DOWN) || ctrl.IsDown(CTRL_LEFT) || ctrl.IsDown(CTRL_RIGHT) )
+    State* state = StateCharacterGrounded::HandleInput(ctrl,input);
+    if(state != NULL)
     {
-        return new StateCharacterRunning(context_);
+        return state;
     }
     else
     {
-        return NULL;
+        if (ctrl.IsDown(CTRL_UP) || ctrl.IsDown(CTRL_DOWN) || ctrl.IsDown(CTRL_LEFT) || ctrl.IsDown(CTRL_RIGHT) )
+        {
+            return new StateCharacterRunning(context_);
+        }
+        else
+        {
+            return NULL;
+        }
     }
 }
 void StateCharacterIdle::Update()

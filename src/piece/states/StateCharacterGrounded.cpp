@@ -3,8 +3,6 @@
 
 #include "StateCharacterGrounded.h"
 
-#include "StateCharacterIdle.h"
-#include "StateCharacterRunning.h"
 #include "StateCharacterJumping.h"
 
 #include <Urho3D/Input/Input.h>
@@ -19,22 +17,34 @@ StateCharacterGrounded::~StateCharacterGrounded(){}
 
 State* StateCharacterGrounded::HandleInput(Controls& ctrl, Input* input)
 {
-	if (ctrl.IsDown(CTRL_UP) || ctrl.IsDown(CTRL_DOWN) || ctrl.IsDown(CTRL_LEFT) || ctrl.IsDown(CTRL_RIGHT) )
-	{
-		return new StateCharacterRunning(context_);
-	}
-	else if ( ctrl.IsDown(CTRL_JUMP) ) 
+	//get the move direction
+	moveDir_ = Vector3::ZERO;
+	if (ctrl.IsDown(CTRL_UP))
+        moveDir_ += Vector3::FORWARD;
+    if (ctrl.IsDown(CTRL_DOWN))
+        moveDir_ += Vector3::BACK;
+    if (ctrl.IsDown(CTRL_LEFT))
+        moveDir_ += Vector3::LEFT;
+    if (ctrl.IsDown(CTRL_RIGHT))
+        moveDir_ += Vector3::RIGHT;
+
+    // Normalize move vector so that diagonal strafing is not faster
+    if (moveDir_.LengthSquared() > 0.0f)
+    {
+        moveDir_*=Vector3(1.0f,1.0f,0.0f);//flatten movement out to a plane
+        moveDir_.Normalize();
+    }
+    //------------------
+
+	if ( ctrl.IsDown(CTRL_JUMP) ) 
 	{
 		//we want to jump
 		return new StateCharacterJumping(context_);
+	}else{
+		return NULL;
 	}
-	else
-	{
-		return new StateCharacterIdle(context_);
-	}
-    //return NULL;
-    //return new StateCharacterRunning(context_);
 }
 void StateCharacterGrounded::Update()
 {
+	
 }

@@ -27,7 +27,7 @@
 
 Pawn::Pawn(Context* context) :
     Actor(context),
-    moveForce_(3.0f),
+    moveForce_(1.0f),
     inAirMoveForce_(0.02f),
     brakeForce_(0.1f),
     jumpForce_(12.0f),

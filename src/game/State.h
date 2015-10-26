@@ -36,10 +36,7 @@ public:
 protected:
 
     String name_;
-
-private:
-
-	Pawn* pawn_;
+    Pawn* pawn_;
   
 };
 #endif

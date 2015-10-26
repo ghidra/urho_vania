@@ -30,5 +30,7 @@ public:
     virtual State* HandleInput(Controls& ctrl, Input* input);
     virtual void Update();
 
+protected:
+	Vector3 moveDir_;
 };
 #endif
