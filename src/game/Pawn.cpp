@@ -20,6 +20,7 @@
 #include "Pawn.h"
 #include "../core/ApplicationInput.h"
 #include "../game/Weapon.h"
+#include "State.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -30,7 +31,7 @@ Pawn::Pawn(Context* context) :
     moveForce_(1.0f),
     inAirMoveForce_(0.02f),
     brakeForce_(0.1f),
-    jumpForce_(12.0f),
+    jumpForce_(14.0f),
     //jumpDownForce_(0.5f),
     yawSensitivity_(0.1f),
     inAirThresholdTime_(0.1f),
@@ -55,11 +56,27 @@ void Pawn::EquipWeapon(Weapon* weapon)
 {
     weapon_ = weapon;
 }
+//to be able to manually set the state from another state
+void Pawn::SetState(State* state)
+{
+    state_ = state;
+    //state_->Enter(static_cast<Pawn*>(this));
+    state_->Enter(this);
+}
+void Pawn::SetArmsState(State* state)
+{
+    stateArms_ = state;
+    //stateArms_->Enter(static_cast<Pawn*>(this));
+    stateArms_->Enter(this);
+}
 
 void Pawn::FixedUpdate(float timeStep)
 {
     Actor::FixedUpdate(timeStep);
-    //something
+    //rigid body data
+    velocity_ = body_->GetLinearVelocity();
+    planeVelocity_ = Vector3(velocity_.x_, 0.0f, velocity_.z_);
+    jumpVelocity_ = Vector3(0.0f, velocity_.y_, 0.0f);
 }
 
 void Pawn::Setup()

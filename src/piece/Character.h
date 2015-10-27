@@ -6,7 +6,7 @@
 //#include <Urho3D/Input/Controls.h>
 //#include <string>
 #include "../game/Pawn.h"
-#include "../game/State.h"
+//#include "../game/State.h"
 #include "../core/IK.h"
 
 using namespace Urho3D;
@@ -35,6 +35,9 @@ public:
     virtual void Start();
     virtual void FixedUpdate(float timeStep);
     virtual void Setup();
+
+    //void SetState(State* state);
+    //void SetArmsState(State* state);
     
     //virtual void Control(Controls* controls);
 
@@ -44,9 +47,6 @@ protected:
     //SharedPtr<Node> cameraNode_;
 
 private:
-
-    State* state_;
-    State* stateArms_ = NULL;
     
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
     bool turning;

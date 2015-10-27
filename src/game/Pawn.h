@@ -17,6 +17,8 @@ class Scene;
 
 }
 
+class State;
+
 class Pawn : public Actor
 {
 
@@ -37,6 +39,13 @@ public:
 
     float GetMoveForce(){return moveForce_;};
     float GetJumpForce(){return jumpForce_;};
+
+    Vector3 GetVelocity(){return velocity_;};
+    Vector3 GetPlaneVelocity(){return planeVelocity_;};
+    Vector3 GetJumpVelocity(){return jumpVelocity_;};
+
+    void SetState(State* state);
+    void SetArmsState(State* state);
 
 protected:
 
@@ -60,10 +69,17 @@ protected:
     float yawSensitivity_;
     float inAirThresholdTime_;
 
+    Vector3 velocity_;
+    Vector3 planeVelocity_;
+    Vector3 jumpVelocity_;
+
     //bool onGround_;//already in the actor class
 
     bool okToJump_;
     float inAirTimer_;    /// In air timer. Due to possible physics inaccuracy, character can be off ground for max. 1/10 second and still be allowed to move.
+
+    State* state_ = NULL;
+    State* stateArms_ = NULL;
    
 };
 #endif

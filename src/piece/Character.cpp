@@ -14,6 +14,7 @@
 #include "Character.h"
 #include "../core/ApplicationInput.h"//i need this for the control constants
 #include "../core/IK.h"
+//#include "../game/State.h"
 #include "states/StateCharacterIdle.h"
 
 #include <Urho3D/DebugNew.h>
@@ -68,10 +69,11 @@ void Character::Setup()
     body_->SetMass(1.0f);
 
     //set initial state
-    state_= new StateCharacterIdle(context_);
-    state_->Enter(static_cast<Pawn*>(this));
+    SetState( new StateCharacterIdle(context_) );
+    //state_= new StateCharacterIdle(context_);
+    //state_->Enter(static_cast<Pawn*>(this));
 }
-
+//--------
 void Character::FixedUpdate(float timeStep)
 {
     Pawn::FixedUpdate(timeStep);
@@ -88,33 +90,36 @@ void Character::FixedUpdate(float timeStep)
             //--------------------------------------------------
             //--------------------------------------------------
             ///state stuff
-            State* state = state_->HandleInput(ctrl, input);
-            if (state != NULL)
+            if(state_ != NULL)
             {
-                //do exit state before removing state
-                state_->Exit();
-                delete state_;
-                state_ = state;
-                //we are entering the new state
-                state_->Enter(static_cast<Pawn*>(this));
-            }
-            state_->Update();
-            state_->Debug();
-
-            if(stateArms_ != NULL)
-            {
-                State* stateArms = stateArms_->HandleInput(ctrl, input);
-                if (stateArms != NULL)
+                State* state = state_->HandleInput(ctrl, input);
+                if (state != NULL)
                 {
                     //do exit state before removing state
-                    stateArms_->Exit();
-                    delete stateArms_;
-                    stateArms_ = stateArms;
+                    state_->Exit();
+                    delete state_;
+                    state_ = state;
                     //we are entering the new state
-                    stateArms_->Enter(static_cast<Pawn*>(this));
+                    state_->Enter(static_cast<Pawn*>(this));
                 }
-                stateArms_->Update();
-                stateArms_->Debug();
+                state_->Update();
+                state_->Debug();
+
+                if(stateArms_ != NULL)
+                {
+                    State* stateArms = stateArms_->HandleInput(ctrl, input);
+                    if (stateArms != NULL)
+                    {
+                        //do exit state before removing state
+                        stateArms_->Exit();
+                        delete stateArms_;
+                        stateArms_ = stateArms;
+                        //we are entering the new state
+                        stateArms_->Enter(static_cast<Pawn*>(this));
+                    }
+                    stateArms_->Update();
+                    stateArms_->Debug();
+                }
             }
             //--------------------------------------------------
             //--------------------------------------------------

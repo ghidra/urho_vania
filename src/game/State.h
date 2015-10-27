@@ -18,6 +18,8 @@ class Scene;
 
 }
 
+class Pawn;
+
 class State : public Object
 {
     OBJECT(State);

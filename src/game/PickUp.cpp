@@ -17,6 +17,7 @@
 #include <Urho3D/Graphics/Material.h>
 
 #include "PickUp.h"
+//i need to remove this dependency from here... it should not have to know about character class
 #include "../piece/Character.h"
 
 #include <Urho3D/DebugNew.h>
@@ -83,6 +84,7 @@ void PickUp::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
     //MemoryBuffer contacts(eventData[P_CONTACTS].GetBuffer());
 
     Actor* actor = static_cast<Actor*>(otherNode->GetComponent<Character>());
+    //Actor* actor = otherNode->GetComponent<Actor>();
     if(actor != NULL)
     {
         Actor::HandleNodeCollision(eventType,eventData);

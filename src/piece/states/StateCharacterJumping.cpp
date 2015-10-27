@@ -4,6 +4,8 @@
 
 #include "StateCharacterJumping.h"
 
+#include "StateCharacterFalling.h"
+
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
@@ -32,4 +34,8 @@ State* StateCharacterJumping::HandleInput(Controls& ctrl, Input* input)
 }
 void StateCharacterJumping::Update()
 {
+	//i need to get the dot product against gravity to do this right, cause it starts out falling
+	float jumpspeed = pawn_->GetJumpVelocity().Length();
+	if(jumpspeed<=0.1)
+		pawn_->SetState(new StateCharacterFalling(context_));
 }

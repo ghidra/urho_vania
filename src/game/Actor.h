@@ -48,10 +48,6 @@ public:
     Node* GetNode(){return node_;};
     RigidBody* GetBody(){return body_;};
     
-    Vector3 GetVelocity(){return velocity_;};
-    Vector3 GetPlaneVelocity(){return planeVelocity_;};
-    Vector3 GetJumpVelocity(){return jumpVelocity_;};
-    
 protected:
 
     
@@ -88,10 +84,6 @@ protected:
 
     RigidBody* body_;
     CollisionShape* shape_;
-
-    Vector3 velocity_;
-    Vector3 planeVelocity_;
-    Vector3 jumpVelocity_;
 
     //character collision masks as default
     uint collision_layer_;//=1;
