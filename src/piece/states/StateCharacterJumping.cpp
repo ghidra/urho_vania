@@ -14,7 +14,8 @@
 #include <Urho3D/Engine/DebugHud.h>
 
 StateCharacterJumping::StateCharacterJumping(Context* context):
-    State(context)
+    State(context),
+    jumping_(false)
 {
     name_=String("jumping");
 }
@@ -34,8 +35,12 @@ State* StateCharacterJumping::HandleInput(Controls& ctrl, Input* input)
 }
 void StateCharacterJumping::Update()
 {
-	//i need to get the dot product against gravity to do this right, cause it starts out falling
-	float jumpspeed = pawn_->GetJumpVelocity().Length();
-	if(jumpspeed<=0.1)
+	Vector3 jumpVector = pawn_->GetJumpVelocity();
+	//first we need to set that we are jumping before we check that we are falling.
+	//its not working to set a bool in enter, so lest wait and check here
+	if(!jumping_ && jumpVector.y_>0.1)
+		jumping_=true;
+	//now, once we start to decend, we are falling, set the appropriate state
+	if(jumpVector.y_<=0.1 && jumping_)
 		pawn_->SetState(new StateCharacterFalling(context_));
 }

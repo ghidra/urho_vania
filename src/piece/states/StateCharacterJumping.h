@@ -31,5 +31,7 @@ public:
     virtual void Enter(Pawn* pawn);
     virtual void Update();
 
+private:
+	bool jumping_;
 };
 #endif

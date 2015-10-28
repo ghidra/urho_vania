@@ -9,6 +9,8 @@
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
+#include <Urho3D/Physics/PhysicsWorld.h>//for the raycasting
+
 //using namespace Urho3D;
 namespace Urho3D
 {
@@ -30,6 +32,12 @@ public:
     virtual State* HandleInput(Controls& ctrl, Input* input);
     virtual void Enter(Pawn* pawn);
     virtual void Update();
+
+private:
+
+	float distanceBottom_;//the initial distnace to the bottom found on enter
+
+	PhysicsRaycastResult FindBottom();//do the raycasting
 
 };
 #endif
