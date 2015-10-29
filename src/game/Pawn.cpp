@@ -28,7 +28,7 @@
 
 Pawn::Pawn(Context* context) :
     Actor(context),
-    moveForce_(1.0f),
+    moveForce_(3.0f),
     inAirMoveForce_(0.02f),
     brakeForce_(0.1f),
     jumpForce_(14.0f),
@@ -90,7 +90,8 @@ void Pawn::Setup()
     object->SetModel(cache->GetResource<Model>("Models/"+mesh_));
     //object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
     object->SetCastShadows(true);
-    node_->CreateComponent<AnimationController>();
+
+    animationController_ = node_->CreateComponent<AnimationController>();
 
     // Set the head bone for manual control
     //object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;

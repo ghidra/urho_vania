@@ -46,5 +46,6 @@ State* StateCharacterGrounded::HandleInput(Controls& ctrl, Input* input)
 }
 void StateCharacterGrounded::Update()
 {
-	
+    RigidBody* body = pawn_->GetBody();
+    body->ApplyImpulse(-pawn_->GetPlaneVelocity() * pawn_->GetBrakeForce());
 }

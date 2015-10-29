@@ -39,6 +39,8 @@ protected:
 
     String name_;
     Pawn* pawn_;
+
+    float Fit(float v, float l1, float h1, float l2, float h2);
   
 };
 #endif

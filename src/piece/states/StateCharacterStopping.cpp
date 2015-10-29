@@ -40,5 +40,22 @@ State* StateCharacterStopping::HandleInput(Controls& ctrl, Input* input)
 }
 void StateCharacterStopping::Update()
 {
-	//StateCharacterGrounded::Update()
+	StateCharacterGrounded::Update();//apply the brake force
+
+	RigidBody* body = pawn_->GetBody();
+	AnimationController* animCtrl = pawn_->GetAnimationController();
+
+	//animation
+
+	float skid = pawn_->GetPlaneVelocity().Length();
+
+	if(skid<=0.1)
+		pawn_->SetState(new StateCharacterIdle(context_));
+
+    float skidTime = Fit(skid,pawn_->GetMoveForce(),0.0f,0.0f,0.03f);
+
+    //GetSubsystem<DebugHud>()->SetAppStats("animtion speed:", skidTime );
+
+    animCtrl->PlayExclusive("Models/Man/MAN_TurnSkidGunning.ani", 0,false, 0.2f);
+    animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",skidTime);
 }

@@ -6,6 +6,8 @@
 
 #include "StateCharacterStopping.h"
 
+//#include <Urho3D/Graphics/AnimationController.h>
+
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
@@ -40,9 +42,16 @@ State* StateCharacterRunning::HandleInput(Controls& ctrl, Input* input)
 }
 void StateCharacterRunning::Update()
 {
+	StateCharacterGrounded::Update();//apply brake force
 	//const Quaternion& rot = pawn_->GetNode()->GetRotation();
 	//pawn_->GetBody()->ApplyImpulse(rot * moveDir_ * pawn_->GetMoveForce() );
 	RigidBody* body = pawn_->GetBody();
+	AnimationController* animCtrl = pawn_->GetAnimationController(); 
+	
 	body->ApplyImpulse(moveDir_ * pawn_->GetMoveForce() );
-	//StateCharacterGrounded::Update()
+
+	//animation
+	
+	animCtrl->PlayExclusive("Models/Man/MAN_RunningGunning.ani", 0, true, 0.2f);
+	animCtrl->SetSpeed("Models/Man/MAN_RunningGunning.ani", pawn_->GetPlaneVelocity().Length() * 0.04f);
 }

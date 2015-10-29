@@ -43,4 +43,16 @@ void StateCharacterJumping::Update()
 	//now, once we start to decend, we are falling, set the appropriate state
 	if(jumpVector.y_<=0.1 && jumping_)
 		pawn_->SetState(new StateCharacterFalling(context_));
+
+	//now carry on with the animation
+	AnimationController* animCtrl = pawn_->GetAnimationController();
+	/*float jumpTime = 0.0f;
+    if(jumpVector.y_>0.0f)
+        jumpTime = Fit(jumpVector.y_,pawn_->GetJumpForce(),0.0f,0.0f,0.5f);
+    else
+        jumpTime = Fit(jumpVector.y_,0.0f,-pawn_->GetJumpForce(),0.5f,1.0f);*/
+    float jumpTime = Fit(jumpVector.y_,pawn_->GetJumpForce(),0.0f,0.0f,0.5f);
+    
+    animCtrl->PlayExclusive("Models/Man/MAN_Jumping.ani", 0,false, 0.1f);
+    animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);
 }

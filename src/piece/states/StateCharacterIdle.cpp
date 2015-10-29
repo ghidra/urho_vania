@@ -50,4 +50,7 @@ State* StateCharacterIdle::HandleInput(Controls& ctrl, Input* input)
 }
 void StateCharacterIdle::Update()
 {
+    StateCharacterGrounded::Update();//apply brake force
+    AnimationController* animCtrl = pawn_->GetAnimationController(); 
+    animCtrl->PlayExclusive("Models/Man/MAN_StandingIdleGun.ani", 0,true, 0.5f);
 }

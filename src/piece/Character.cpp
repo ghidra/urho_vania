@@ -84,7 +84,7 @@ void Character::FixedUpdate(float timeStep)
         {
             //we are possessed by the application controller
             Controls& ctrl = applicationInput_->controls_;
-            AnimationController* animCtrl = GetComponent<AnimationController>();
+            //AnimationController* animCtrl = GetComponent<AnimationController>();
             Input* input = GetSubsystem<Input>();
 
             //--------------------------------------------------

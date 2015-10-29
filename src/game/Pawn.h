@@ -7,6 +7,8 @@
 #include "../core/ApplicationInput.h"
 #include "../game/Weapon.h"
 
+#include <Urho3D/Graphics/AnimationController.h>
+
 using namespace Urho3D;
 
 namespace Urho3D
@@ -39,10 +41,13 @@ public:
 
     float GetMoveForce(){return moveForce_;};
     float GetJumpForce(){return jumpForce_;};
+    float GetBrakeForce(){return brakeForce_;};
 
     Vector3 GetVelocity(){return velocity_;};
     Vector3 GetPlaneVelocity(){return planeVelocity_;};
     Vector3 GetJumpVelocity(){return jumpVelocity_;};
+
+    AnimationController* GetAnimationController(){return animationController_;};
 
     void SetState(State* state);
     void SetArmsState(State* state);
@@ -53,7 +58,7 @@ protected:
 
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
 
-    ApplicationInput* applicationInput_ = NULL;
+    //ApplicationInput* applicationInput_ = NULL;
     Weapon* weapon_ = NULL;
   
     float health_;
@@ -78,6 +83,8 @@ protected:
     bool okToJump_;
     float inAirTimer_;    /// In air timer. Due to possible physics inaccuracy, character can be off ground for max. 1/10 second and still be allowed to move.
 
+    AnimationController* animationController_;
+    
     State* state_ = NULL;
     State* stateArms_ = NULL;
    
