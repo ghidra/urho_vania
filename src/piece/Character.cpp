@@ -16,6 +16,7 @@
 #include "../core/IK.h"
 //#include "../game/State.h"
 #include "states/StateCharacterIdle.h"
+#include "states/StateCharacterFalling.h"//force it into falling first
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -69,7 +70,7 @@ void Character::Setup()
     body_->SetMass(1.0f);
 
     //set initial state
-    SetState( new StateCharacterIdle(context_) );
+    SetState( new StateCharacterFalling(context_) );
     //state_= new StateCharacterIdle(context_);
     //state_->Enter(static_cast<Pawn*>(this));
 }

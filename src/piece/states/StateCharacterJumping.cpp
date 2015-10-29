@@ -51,7 +51,7 @@ void StateCharacterJumping::Update()
         jumpTime = Fit(jumpVector.y_,pawn_->GetJumpForce(),0.0f,0.0f,0.5f);
     else
         jumpTime = Fit(jumpVector.y_,0.0f,-pawn_->GetJumpForce(),0.5f,1.0f);*/
-    float jumpTime = Fit(jumpVector.y_,pawn_->GetJumpForce(),0.0f,0.0f,0.5f);
+    float jumpTime = Fit(jumpVector.y_,pawn_->GetJumpForce(),0.1f,0.0f,0.5f);
     
     animCtrl->PlayExclusive("Models/Man/MAN_Jumping.ani", 0,false, 0.1f);
     animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);

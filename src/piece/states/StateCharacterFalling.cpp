@@ -25,9 +25,10 @@ void StateCharacterFalling::Enter(Pawn* pawn)
 {
 	State::Enter(pawn);
 	//set the distanceBottom_
+	//i need to send in the direction, because it isnt getting the ray 
 	PhysicsRaycastResult result = FindBottom();
-
 	distanceBottom_=result.distance_;
+	//GetSubsystem<DebugHud>()->SetAppStats("distance:", result.distance_ );
 }
 
 State* StateCharacterFalling::HandleInput(Controls& ctrl, Input* input)
@@ -42,24 +43,17 @@ void StateCharacterFalling::Update()
 	//if we hit the bottom, resume state based on velocity I suppose, right now just go to idle
 	if(result.distance_<0.1)
 		pawn_->SetState(new StateCharacterIdle(context_));
-	//GetSubsystem<DebugHud>()->SetAppStats("distance:", result.distance_ );
 	
-	//now we can set the animatoin
-
-	/*Vector3 jumpVector = pawn_->GetJumpVelocity();
-	//first we need to set that we are jumping before we check that we are falling.
-	//its not working to set a bool in enter, so lest wait and check here
-	if(!jumping_ && jumpVector.y_>0.1)
-		jumping_=true;
-	//now, once we start to decend, we are falling, set the appropriate state
-	if(jumpVector.y_<=0.1 && jumping_)
-		pawn_->SetState(new StateCharacterFalling(context_));
+	//now we can set the animation
 
 	AnimationController* animCtrl = pawn_->GetAnimationController();
-    float jumpTime = Fit(jumpVector.y_,0.0f,-pawn_->GetJumpForce(),0.5f,1.0f);;
+    //Vector3 jumpVector = pawn_->GetJumpVelocity();
+    //float jumpTime = Fit(jumpVector.y_,0.0f,-pawn_->GetJumpForce(),0.5f,1.0f);//force based
+    float jumpTime = Fit(result.distance_,distanceBottom_,0.1f,0.5f,1.0f);
+    //GetSubsystem<DebugHud>()->SetAppStats("distance:", result.distance_ );
     
     animCtrl->PlayExclusive("Models/Man/MAN_Jumping.ani", 0,false, 0.1f);
-    animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);*/
+    animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);
 }
 //specific function to ray cast to find the bottom rigidbody that we can land on
 PhysicsRaycastResult StateCharacterFalling::FindBottom()
@@ -67,9 +61,10 @@ PhysicsRaycastResult StateCharacterFalling::FindBottom()
 	RigidBody* body = pawn_->GetBody();
 	Vector3 dir = body->GetLinearVelocity();
 	//get the physics world to do some raycasting
+	//i need to do a check to make sure that I am at least getting a vector from linear velocitiy that I can use to check with
 	PhysicsRaycastResult result;
 	PhysicsWorld* pw = pawn_->GetScene()->GetComponent<PhysicsWorld>();
-	pw->RaycastSingle( result,Ray(body->GetPosition(), dir.Normalized()), dir.Length()*3 );
+	pw->RaycastSingle( result,Ray(body->GetPosition(), dir.Normalized()), dir.Length()*pawn_->GetJumpForce()*3 );
 
 	return result;
 }
