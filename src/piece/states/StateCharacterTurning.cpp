@@ -3,8 +3,7 @@
 
 #include "StateCharacterTurning.h"
 
-#include "StateCharacterIdle.h"
-#include "StateCharacterJumping.h"
+#include "StateCharacterRunning.h"
 
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"

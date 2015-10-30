@@ -34,6 +34,8 @@ Character::Character(Context* context) :
 {
     SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN.mdl");
+    rootName_ = String("root");
+    facingDirection_=false;
 }
 
 //-------------------

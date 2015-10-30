@@ -18,9 +18,14 @@ class StateCharacterIdle : public State
 
 #include "StateCharacterRunning.h"
 #include "StateCharacterJumping.h"
+#include "StateCharacterTurning.h"
 
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
+
+#include <Urho3D/DebugNew.h>
+#include <Urho3D/IO/Log.h>
+#include <Urho3D/Engine/DebugHud.h>
 
 StateCharacterIdle::StateCharacterIdle(Context* context):
     StateCharacterGrounded(context)
@@ -40,7 +45,10 @@ State* StateCharacterIdle::HandleInput(Controls& ctrl, Input* input)
     {
         if (ctrl.IsDown(CTRL_UP) || ctrl.IsDown(CTRL_DOWN) || ctrl.IsDown(CTRL_LEFT) || ctrl.IsDown(CTRL_RIGHT) )
         {
-            return new StateCharacterRunning(context_);
+            if(DoTurn())
+                return new StateCharacterTurning(context_);
+            else
+                return new StateCharacterRunning(context_);
         }
         else
         {

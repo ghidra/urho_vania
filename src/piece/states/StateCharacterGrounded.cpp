@@ -49,3 +49,18 @@ void StateCharacterGrounded::Update()
     RigidBody* body = pawn_->GetBody();
     body->ApplyImpulse(-pawn_->GetPlaneVelocity() * pawn_->GetBrakeForce());
 }
+
+bool StateCharacterGrounded::DoTurn()
+{
+    Node* root = pawn_->GetNode()->GetChild(pawn_->GetRootName(),true);
+    const Quaternion& rot = root->GetRotation();
+
+    Vector3 euler = rot.EulerAngles();//get the direction that this this is going -90 is looking left 90 is looking right
+    float dp = moveDir_.DotProduct(Vector3::LEFT);//if 1 we are trying to go left, -1 we are trying to go right
+          
+    //so, if we are facing -90 and want to go -1, we need to turn around
+    //if we are facing 90 and want to go 1, we need to turn around
+    //so if we multiply them, -90*-1=90, 90*1=90, so positive values turn around, -90*1=-90, 90*-1=-90, negative values, dont turn
+
+    return dp*euler.y_>0;
+}

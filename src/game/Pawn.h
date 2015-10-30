@@ -48,6 +48,9 @@ public:
     Vector3 GetJumpVelocity(){return jumpVelocity_;};
 
     AnimationController* GetAnimationController(){return animationController_;};
+    String GetRootName(){return rootName_;};
+    bool GetFacingDirection(){return facingDirection_;};
+    void SetFacingDirection(bool d){facingDirection_=d;}
 
     void SetState(State* state);
     void SetArmsState(State* state);
@@ -84,6 +87,9 @@ protected:
     float inAirTimer_;    /// In air timer. Due to possible physics inaccuracy, character can be off ground for max. 1/10 second and still be allowed to move.
 
     AnimationController* animationController_;
+
+    String rootName_;//the name of the root node, to grab for world transforms
+    bool facingDirection_;//the direction I am facing. left=0 or right=1;
     
     State* state_ = NULL;
     State* stateArms_ = NULL;

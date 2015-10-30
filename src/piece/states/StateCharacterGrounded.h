@@ -31,6 +31,7 @@ public:
     virtual void Update();
 
 protected:
+	bool DoTurn();//check if we need to turn around
 	Vector3 moveDir_;
 };
 #endif
