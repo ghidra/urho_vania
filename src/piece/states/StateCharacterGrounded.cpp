@@ -8,6 +8,10 @@
 #include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
+#include <Urho3D/DebugNew.h>
+#include <Urho3D/IO/Log.h>
+#include <Urho3D/Engine/DebugHud.h>
+
 StateCharacterGrounded::StateCharacterGrounded(Context* context):
     State(context)
 {
@@ -47,10 +51,10 @@ State* StateCharacterGrounded::HandleInput(Controls& ctrl, Input* input)
 void StateCharacterGrounded::Update()
 {
     RigidBody* body = pawn_->GetBody();
-    body->ApplyImpulse(-pawn_->GetPlaneVelocity() * pawn_->GetBrakeForce());
+    body->ApplyImpulse(-pawn_->GetPlaneVelocity() * pawn_->GetBrakeForce());//this is the brake force
 }
 
-bool StateCharacterGrounded::DoTurn()
+bool StateCharacterGrounded::TestTurn()
 {
     Node* root = pawn_->GetNode()->GetChild(pawn_->GetRootName(),true);
     const Quaternion& rot = root->GetRotation();
@@ -63,4 +67,15 @@ bool StateCharacterGrounded::DoTurn()
     //so if we multiply them, -90*-1=90, 90*1=90, so positive values turn around, -90*1=-90, 90*-1=-90, negative values, dont turn
 
     return dp*euler.y_>0;
+}
+void StateCharacterGrounded::Turn()
+{
+    //0 * 2 - 1 = -1
+    //1 * 2 - 1 = 1
+    //float rot = 90.0f * -(static_cast<float>(pawn_->GetFacingDirection())*2-1 );//get the rotation value based on what is set
+    float rot = 90.0f * -(float(pawn_->GetFacingDirection())*2-1 );//get the rotation value based on what is set
+    //GetSubsystem<DebugHud>()->SetAppStats("cast:", String(rot) );
+    Node* root = pawn_->GetNode()->GetChild(pawn_->GetRootName(),true);//get the root node
+    root->SetRotation(Quaternion(0.0f,rot,0.0f));//rotate the node
+    pawn_->SetFacingDirection(!pawn_->GetFacingDirection());//then set the facing direction
 }

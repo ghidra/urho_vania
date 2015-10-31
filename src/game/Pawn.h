@@ -53,7 +53,7 @@ public:
     void SetFacingDirection(bool d){facingDirection_=d;}
 
     void SetState(State* state);
-    void SetArmsState(State* state);
+    //void SetArmsState(State* state);
 
 protected:
 
@@ -92,7 +92,7 @@ protected:
     bool facingDirection_;//the direction I am facing. left=0 or right=1;
     
     State* state_ = NULL;
-    State* stateArms_ = NULL;
+    //State* stateArms_ = NULL;
    
 };
 #endif

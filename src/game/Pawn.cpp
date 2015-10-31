@@ -31,7 +31,7 @@ Pawn::Pawn(Context* context) :
     moveForce_(3.0f),
     inAirMoveForce_(0.02f),
     brakeForce_(0.1f),
-    jumpForce_(14.0f),
+    jumpForce_(20.0f),
     //jumpDownForce_(0.5f),
     yawSensitivity_(0.1f),
     inAirThresholdTime_(0.1f),
@@ -63,12 +63,12 @@ void Pawn::SetState(State* state)
     //state_->Enter(static_cast<Pawn*>(this));
     state_->Enter(this);
 }
-void Pawn::SetArmsState(State* state)
+/*void Pawn::SetArmsState(State* state)
 {
     stateArms_ = state;
     //stateArms_->Enter(static_cast<Pawn*>(this));
     stateArms_->Enter(this);
-}
+}*/
 
 void Pawn::FixedUpdate(float timeStep)
 {

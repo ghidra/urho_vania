@@ -108,7 +108,7 @@ void Character::FixedUpdate(float timeStep)
                 state_->Update();
                 state_->Debug();
 
-                if(stateArms_ != NULL)
+                /*if(stateArms_ != NULL)
                 {
                     State* stateArms = stateArms_->HandleInput(ctrl, input);
                     if (stateArms != NULL)
@@ -122,7 +122,7 @@ void Character::FixedUpdate(float timeStep)
                     }
                     stateArms_->Update();
                     stateArms_->Debug();
-                }
+                }*/
             }
             //--------------------------------------------------
             //--------------------------------------------------

@@ -31,7 +31,7 @@ State* StateCharacterRunning::HandleInput(Controls& ctrl, Input* input)
 		if (ctrl.IsDown(CTRL_UP) || ctrl.IsDown(CTRL_DOWN) || ctrl.IsDown(CTRL_LEFT) || ctrl.IsDown(CTRL_RIGHT) )
 		{
 			//keep running
-			if(DoTurn())
+			if(TestTurn())
 				return new StateCharacterTurning(context_);
 			else
 				return NULL;

@@ -31,7 +31,8 @@ public:
     virtual void Update();
 
 protected:
-	bool DoTurn();//check if we need to turn around
+	bool TestTurn();//check if we need to turn around
+	void Turn();//do the actual rotation of the root node
 	Vector3 moveDir_;
 };
 #endif

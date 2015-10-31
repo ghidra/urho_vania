@@ -5,6 +5,7 @@
 
 #include "core/ApplicationHandler.h"
 #include "stages/StageForest.h"
+#include "stages/VaniaDebugEnv.h"
 //#include "core/ApplicationInput.h"
 namespace Urho3D
 {
@@ -37,6 +38,7 @@ private:
 
     //ApplicationInput * applicationInput_ = NULL;
     StageForest* stage_ = NULL;
+    //VaniaDebugEnv* stage_ = NULL;
 
     SharedPtr<Node> characterNode_;
     //Character* character_;
