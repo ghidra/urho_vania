@@ -48,15 +48,15 @@ ApplicationInput::ApplicationInput(Context* context):
         InitTouchInput();
     else if (GetSubsystem<Input>()->GetNumJoysticks() == 0)
         // On desktop platform, do not detect touch when we already got a joystick
-        SubscribeToEvent(E_TOUCHBEGIN, HANDLER(ApplicationInput, HandleTouchBegin));
+        SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(ApplicationInput, HandleTouchBegin));
 
     // Subscribe key down event
-    SubscribeToEvent(E_KEYDOWN, HANDLER(ApplicationInput, HandleKeyDown));
+    SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(ApplicationInput, HandleKeyDown));
     // Subscribe scene update event
-    //SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationInput, HandleSceneUpdate));
+    //SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(ApplicationInput, HandleSceneUpdate));
     //update is called from the class using this class to ahndle input, main.cpp
-    //SubscribeToEvent(E_MOUSEBUTTONDOWN, HANDLER(ApplicationInput, HandleMouseButtonDown));
-    //SubscribeToEvent(E_MOUSEBUTTONUP, HANDLER(ApplicationInput, HandleMouseButtonUp));
+    //SubscribeToEvent(E_MOUSEBUTTONDOWN, URHO3D_HANDLER(ApplicationInput, HandleMouseButtonDown));
+    //SubscribeToEvent(E_MOUSEBUTTONUP, URHO3D_HANDLER(ApplicationInput, HandleMouseButtonUp));
 }
 
 //void ApplicationInput::SetParameters(ApplicationHandler * applicationHandler)

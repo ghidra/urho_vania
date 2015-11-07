@@ -33,7 +33,7 @@ const float INAIR_THRESHOLD_TIME = 0.1f;*/
 /// Custom logic component for moving the animated model and rotating at area edges.
 class Actor : public LogicComponent
 {
-    OBJECT(Actor);
+    URHO3D_OBJECT(Actor,LogicComponent);
     
 public:
     Actor(Context* context);

@@ -39,7 +39,7 @@ Weapon::Weapon(Context* context) :
     mesh_ = String("Man/MAN_gun.mdl");
     //collision_layer_ = 4;
     //collision_mask_ = 33;
-    //SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(Weapon, HandleSceneDrawableUpdateFinished));
+    //SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, URHO3D_HANDLER(Weapon, HandleSceneDrawableUpdateFinished));
 }
 Weapon::~Weapon(){}
 

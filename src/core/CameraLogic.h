@@ -10,7 +10,7 @@ using namespace Urho3D;
 /// Custom logic component for moving the animated model and rotating at area edges.
 class CameraLogic : public LogicComponent
 {
-    OBJECT(CameraLogic);
+    URHO3D_OBJECT(CameraLogic,LogicComponent);
     
 public:
     /// Construct.

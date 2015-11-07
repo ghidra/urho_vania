@@ -219,7 +219,7 @@ void Stage1::Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode)
         StaticModel* stateModel = stateNode->CreateComponent<StaticModel>();
         stateModel->SetModel( cache->GetResource<Model>(String("Models/States/")+states_[j]) );
         
-        LOGINFO(positions_[j].ToString());
+        //LOGINFO(positions_[j].ToString());
     }
     /*Node* stateNode = scene_->CreateChild("state");
     stateNode->SetPosition(positions_[0]);

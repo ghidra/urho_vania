@@ -22,7 +22,7 @@ using namespace Urho3D;
 class StageForest : public Object
 {
 
-    OBJECT(StageForest);
+    URHO3D_OBJECT(StageForest,Object);
 
 public:
 

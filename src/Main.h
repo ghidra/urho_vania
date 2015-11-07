@@ -20,11 +20,12 @@ class CameraLogic;
 
 class Main : public ApplicationHandler
 {
-    OBJECT(Main);
+    URHO3D_OBJECT(Main,ApplicationHandler);
 
 public:
     /// Construct.
     Main(Context* context);
+    ~Main();
 
     virtual void Start();
 

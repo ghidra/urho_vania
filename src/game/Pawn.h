@@ -24,7 +24,7 @@ class State;
 class Pawn : public Actor
 {
 
-    OBJECT(Pawn);
+    URHO3D_OBJECT(Pawn,Actor);
 
 public:
 

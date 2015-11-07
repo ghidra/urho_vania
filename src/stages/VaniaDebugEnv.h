@@ -22,7 +22,7 @@ using namespace Urho3D;
 class VaniaDebugEnv : public Object
 {
 
-    OBJECT(VaniaDebugEnv);
+    URHO3D_OBJECT(VaniaDebugEnv,Object);
 
 public:
 

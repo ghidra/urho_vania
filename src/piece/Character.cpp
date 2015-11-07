@@ -48,8 +48,8 @@ void Character::RegisterObject(Context* context)
 
 void Character::Start()
 {
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Character, HandleNodeCollision));
-    SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(Character, HandleSceneDrawableUpdateFinished));
+    SubscribeToEvent(GetNode(), E_NODECOLLISION, URHO3D_HANDLER(Character, HandleNodeCollision));
+    SubscribeToEvent(E_SCENEDRAWABLEUPDATEFINISHED, URHO3D_HANDLER(Character, HandleSceneDrawableUpdateFinished));
 }
 
 void Character::Setup()

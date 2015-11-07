@@ -22,7 +22,7 @@ class Scene;
 
 class StateCharacterFalling : public State
 {
-    OBJECT(StateCharacterFalling);
+    URHO3D_OBJECT(StateCharacterFalling,State);
 
 public:
     /// Construct.

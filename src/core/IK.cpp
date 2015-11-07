@@ -237,7 +237,7 @@ void IK::DefineM(const Vector3 p, const Vector3 d)
 
 	// Subscribe to the SceneDrawableUpdateFinished event which is triggered after the animations have been updated, so we can apply IK to override them
 	//SubscribeToEvent("SceneDrawableUpdateFinished", "HandleSceneDrawableUpdateFinished");
-	SubscribeToEvent(GetNode(), E_SCENEDRAWABLEUPDATEFINISHED, HANDLER(IK, HandleSceneDrawableUpdateFinished));
+	SubscribeToEvent(GetNode(), E_SCENEDRAWABLEUPDATEFINISHED, URHO3D_HANDLER(IK, HandleSceneDrawableUpdateFinished));
 }
 
 

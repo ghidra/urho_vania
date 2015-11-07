@@ -20,7 +20,7 @@ class Scene;
 
 class StateCharacterJumping : public State
 {
-    OBJECT(StateCharacterJumping);
+    URHO3D_OBJECT(StateCharacterJumping,State);
 
 public:
     /// Construct.

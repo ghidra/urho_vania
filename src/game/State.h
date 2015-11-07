@@ -22,7 +22,7 @@ class Pawn;
 
 class State : public Object
 {
-    OBJECT(State);
+    URHO3D_OBJECT(State,Object);
     
 public:
     State(Context* context);

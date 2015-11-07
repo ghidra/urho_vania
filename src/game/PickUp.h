@@ -20,7 +20,7 @@ using namespace Urho3D;
 class PickUp : public Actor
 {
 
-    OBJECT(PickUp);
+    URHO3D_OBJECT(PickUp,Actor);
 
 public:
 

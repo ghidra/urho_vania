@@ -57,7 +57,7 @@ void PU_Gun01::Start()
     // Execute base class startup
     //ApplicationHandler::Start();
     //LOGINFO("Character start");
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(PU_Gun01, HandleNodeCollision));
+    SubscribeToEvent(GetNode(), E_NODECOLLISION, URHO3D_HANDLER(PU_Gun01, HandleNodeCollision));
 
 }
 void PU_Gun01::Setup()
@@ -97,7 +97,7 @@ void PU_Gun01::FixedUpdate(float timeStep)
 
         if(!boneNode)
         {
-            LOGWARNING("Could not find bone " + String("Gun") );
+            //LOGWARNING("Could not find bone " + String("Gun") );
         }
         else
         {

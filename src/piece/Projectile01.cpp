@@ -51,7 +51,7 @@ void Projectile01::Start()
     // Execute base class startup
     //ApplicationHandler::Start();
     //LOGINFO("Character start");
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Projectile01, HandleNodeCollision));
+    SubscribeToEvent(GetNode(), E_NODECOLLISION, URHO3D_HANDLER(Projectile01, HandleNodeCollision));
 
 }
 void Projectile01::Setup(const Vector3 direction)

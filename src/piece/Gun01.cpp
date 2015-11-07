@@ -49,7 +49,7 @@ void Gun01::Start()
     // Execute base class startup
     //ApplicationHandler::Start();
     //LOGINFO("Character start");
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Gun01, HandleNodeCollision));
+    SubscribeToEvent(GetNode(), E_NODECOLLISION, URHO3D_HANDLER(Gun01, HandleNodeCollision));
 
 }
 void Gun01::Setup()

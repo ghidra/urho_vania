@@ -24,7 +24,7 @@ using namespace Urho3D;
 class Character : public Pawn
 {
 
-    OBJECT(Character);
+    URHO3D_OBJECT(Character,Pawn);
 
 public:
 

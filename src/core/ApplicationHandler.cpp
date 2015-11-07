@@ -78,7 +78,7 @@ void ApplicationHandler::Start()
         InitTouchInput();
     else if (GetSubsystem<Input>()->GetNumJoysticks() == 0)
         // On desktop platform, do not detect touch when we already got a joystick
-        SubscribeToEvent(E_TOUCHBEGIN, HANDLER(ApplicationHandler, HandleTouchBegin));
+        SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(ApplicationHandler, HandleTouchBegin));
     */
     // Create logo
     //CreateLogo();
@@ -104,9 +104,9 @@ void ApplicationHandler::Start()
     //-------
 
     // Subscribe key down event
-    //SubscribeToEvent(E_KEYDOWN, HANDLER(ApplicationHandler, HandleKeyDown));
+    //SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(ApplicationHandler, HandleKeyDown));
     // Subscribe scene update event
-    //SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationHandler, HandleSceneUpdate));
+    //SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(ApplicationHandler, HandleSceneUpdate));
 }
 
 void ApplicationHandler::Stop()
@@ -218,10 +218,10 @@ void ApplicationHandler::SetupViewport()
 
 void ApplicationHandler::SubscribeToEvents()
 {
-    SubscribeToEvent(E_UPDATE, HANDLER(ApplicationHandler, HandleUpdate));
-    SubscribeToEvent(E_POSTRENDERUPDATE, HANDLER(ApplicationHandler, HandlePostRenderUpdate));
-    SubscribeToEvent(E_SCENEUPDATE, HANDLER(ApplicationHandler, HandleSceneUpdate));
-    //SubscribeToEvent(E_FIXEDUPDATE, HANDLER(ApplicationHandler, HandleFixedUpdate));
+    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(ApplicationHandler, HandleUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(ApplicationHandler, HandlePostRenderUpdate));
+    SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(ApplicationHandler, HandleSceneUpdate));
+    //SubscribeToEvent(E_FIXEDUPDATE, URHO3D_HANDLER(ApplicationHandler, HandleFixedUpdate));
 
 }
 void ApplicationHandler::HandleUpdate(StringHash eventType, VariantMap& eventData)

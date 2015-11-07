@@ -20,7 +20,7 @@ class Scene;
 
 class StateCharacterIdle : public StateCharacterGrounded
 {
-    OBJECT(StateCharacterIdle);
+    URHO3D_OBJECT(StateCharacterIdle,StateCharacterGrounded);
 
 public:
     /// Construct.

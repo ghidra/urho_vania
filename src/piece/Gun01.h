@@ -20,7 +20,7 @@ using namespace Urho3D;
 class Gun01 : public Weapon
 {
 
-    OBJECT(Gun01);
+    URHO3D_OBJECT(Gun01,Weapon);
 
 public:
 

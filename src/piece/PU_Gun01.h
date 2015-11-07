@@ -20,7 +20,7 @@ using namespace Urho3D;
 class PU_Gun01 : public PickUp
 {
 
-    OBJECT(PU_Gun01);
+    URHO3D_OBJECT(PU_Gun01,PickUp);
 
 public:
 

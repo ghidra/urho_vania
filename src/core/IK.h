@@ -17,7 +17,7 @@ class Scene;
 
 class IK : public LogicComponent
 {
-    OBJECT(IK);
+    URHO3D_OBJECT(IK,LogicComponent);
     
 public:
     IK(Context* context);

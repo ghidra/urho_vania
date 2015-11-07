@@ -38,7 +38,7 @@ Actor::~Actor(){}
 /*void Actor::Start()
 {
     // Component has been inserted into its scene node. Subscribe to events now
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, HANDLER(Actor, HandleNodeCollision));
+    SubscribeToEvent(GetNode(), E_NODECOLLISION, URHO3D_HANDLER(Actor, HandleNodeCollision));
 }*/
 /*void Actor::Possess(ApplicationInput* applicationInput)
 {

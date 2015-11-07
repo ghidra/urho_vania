@@ -1,6 +1,6 @@
 //
-#ifndef APPLICATIONHANDLER_H
-#define APPLICATIONHANDLER_H
+#ifndef APPLICATIONURHO3D_HANDLER_H
+#define APPLICATIONURHO3D_HANDLER_H
 
 #pragma once
 
@@ -32,7 +32,7 @@ using namespace Urho3D;
 class ApplicationHandler : public Application
 {
     // Enable type information.
-    OBJECT(ApplicationHandler);
+    URHO3D_OBJECT(ApplicationHandler,Application);
 
 public:
     /// Construct.

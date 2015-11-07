@@ -20,7 +20,7 @@ using namespace Urho3D;
 class Projectile : public Actor
 {
 
-    OBJECT(Projectile);
+    URHO3D_OBJECT(Projectile,Actor);
 
 public:
 

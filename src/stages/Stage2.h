@@ -21,7 +21,7 @@ using namespace Urho3D;
 class Stage2 : public Object
 {
 
-    OBJECT(Stage2);
+    URHO3D_OBJECT(Stage2,Object);
 
 public:
 
