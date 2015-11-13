@@ -10,11 +10,19 @@
 #include "../../game/Pawn.h"
 
 StateCharacterTurning::StateCharacterTurning(Context* context):
-    StateCharacterGrounded(context)
+    StateCharacterGrounded(context),
+    flipped_(false)
 {
     name_=String("turning");
 }
 StateCharacterTurning::~StateCharacterTurning(){}
+
+void StateCharacterTurning::Enter(Pawn* pawn)
+{
+    State::Enter(pawn);
+    speed_ = pawn_->GetPlaneVelocity().Length();
+    //GetSubsystem<DebugHud>()->SetAppStats("init distance:", result.distance_ );
+}
 
 State* StateCharacterTurning::HandleInput(Controls& ctrl, Input* input)
 {
@@ -43,32 +51,30 @@ void StateCharacterTurning::Update()
 	RigidBody* body = pawn_->GetBody();
 	AnimationController* animCtrl = pawn_->GetAnimationController();
 
-	//from a stand still
+	//apply a force to slow it down further, since we are changing direction
 	body->ApplyImpulse(moveDir_ * pawn_->GetMoveForce() *0.25);//0.25 to dampen it
 
-	//Node* root = pawn_->GetNode()->GetChild(pawn_->GetRootName(),true);
-	//const Quaternion& rot = root->GetRotation();
-
-	//body->ApplyImpulse(rot * -moveDir_ * 0.9f * pawn_->GetMoveForce());//i ned to make it turn around slower
-	//body->ApplyImpulse(moveDir_ * 0.9f * pawn_->GetMoveForce());
-    //GetSubsystem<DebugHud>()->SetAppStats("animtion:", String("pivot") );
-    //float skid = body->GetLinearVelocity().Length();
-    //float skidTime = Fit( skid,pawn_->GetMoveForce(),0.0f,0.0f,animCtrl->GetLength("Models/Man/MAN_TurnSkidGunning.ani") );
-    if( animCtrl->GetTime("Models/Man/MAN_TurnSkidGunning.ani") >= animCtrl->GetLength("Models/Man/MAN_TurnSkidGunning.ani")-0.05 )
+    //get the speed that we are travelling, that will determine when we turn around
+    if(!flipped_)
     {
-    //if(body->GetLinearVelocity().Length()>=pawn_->GetMoveForce()-0.05)
-    	//i need to also rotate the fucker
-    	Turn();
-    	pawn_->SetState( new StateCharacterRunning(context_) );
-    }      
-    animCtrl->PlayExclusive("Models/Man/MAN_TurnSkidGunning.ani", false, 0.1f);
-    //turning = true;
+        //before we are flipped around, we drive the turning animation
+        //float spd = pawn_->GetPlaneVelocity().Length();
+        //float turnTime = Fit(spd,0.0f,speed_,1.0f,0.0f);
+        
+        animCtrl->PlayExclusive("Models/Man/MAN_TurnSkidGunning.ani", 0,false, 0.1f);
+        //animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",turnTime);
 
-	//this one, when it reaches 0, i need to rotate the null, and them play the flipped version?
-	/*
-    float skid = pawn_->GetPlaneVelocity().Length();
-    float skidTime = Fit(skid,pawn_->GetMoveForce(),0.0f,0.0f,0.03f);
-    animCtrl->PlayExclusive("Models/Man/MAN_TurnSkidGunning.ani", 0,false, 0.2f);
-    animCtrl->SetTime("Models/Man/MAN_TurnSkidGunning.ani",skidTime);
-    */
+        if(animCtrl->IsAtEnd("Models/Man/MAN_TurnSkidGunning.ani"))
+        {
+            Turn();
+            animCtrl->Play("Models/Man/MAN_TurnSkidGunningFlipped.ani", false, 0.0f);
+            flipped_=true;
+        }
+    }
+    else
+    {
+        animCtrl->Play("Models/Man/MAN_TurnSkidGunningFlipped.ani", false, 0.0f);
+        //now that we are flipped we can set it to the next state too
+        pawn_->SetState( new StateCharacterRunning(context_) );
+    }
 }

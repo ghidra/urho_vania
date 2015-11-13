@@ -28,6 +28,7 @@ public:
     ~StateCharacterStopping();
 
     virtual State* HandleInput(Controls& ctrl, Input* input);
+    virtual void Enter(Pawn* pawn);
     virtual void Update();
 
 };

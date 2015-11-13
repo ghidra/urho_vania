@@ -16,6 +16,13 @@ StateCharacterStopping::StateCharacterStopping(Context* context):
 }
 StateCharacterStopping::~StateCharacterStopping(){}
 
+void StateCharacterStopping::Enter(Pawn* pawn)
+{
+    State::Enter(pawn);
+    pawn_->GetBody()->SetFriction(1.0f);//no sliding on ground
+}
+
+
 State* StateCharacterStopping::HandleInput(Controls& ctrl, Input* input)
 {
 	State* state = StateCharacterGrounded::HandleInput(ctrl,input);

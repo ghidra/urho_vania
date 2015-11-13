@@ -102,6 +102,7 @@ void Pawn::Setup()
     body_->SetCollisionLayer(collision_layer_);
     body_->SetCollisionMask(collision_mask_);
     body_->SetMass(1.0f);
+    body_->SetFriction(1.0f);
 
     // Set zero angular factor so that physics doesn't turn the character on its own.
     // Instead we will control the character yaw manually

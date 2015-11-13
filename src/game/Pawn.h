@@ -93,6 +93,8 @@ protected:
     
     State* state_ = NULL;
     //State* stateArms_ = NULL;
+
+    //now I can maybe have an array or something to hold the required animation paths?
    
 };
 #endif

@@ -28,7 +28,13 @@ public:
     ~StateCharacterTurning();
 
     virtual State* HandleInput(Controls& ctrl, Input* input);
+    virtual void Enter(Pawn* pawn);
     virtual void Update();
+
+private:
+	
+	float speed_;//the initial speed that we enter the state in
+	bool flipped_;
 
 };
 #endif

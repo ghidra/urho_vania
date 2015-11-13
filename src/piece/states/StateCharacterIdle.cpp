@@ -1,6 +1,7 @@
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 
+//#include <Urho3D/Physics/RigidBody.h>
 /*
 #include "../../game/State.h"
 
@@ -34,9 +35,17 @@ StateCharacterIdle::StateCharacterIdle(Context* context):
 }
 StateCharacterIdle::~StateCharacterIdle(){}
 
+void StateCharacterIdle::Enter(Pawn* pawn)
+{
+    State::Enter(pawn);
+    pawn_->GetBody()->SetFriction(1.0f);//no sliding on ground
+    //GetSubsystem<DebugHud>()->SetAppStats("init distance:", result.distance_ );
+}
+
 State* StateCharacterIdle::HandleInput(Controls& ctrl, Input* input)
 {
     State* state = StateCharacterGrounded::HandleInput(ctrl,input);
+    
     if(state != NULL)
     {
         return state;
@@ -61,4 +70,8 @@ void StateCharacterIdle::Update()
     StateCharacterGrounded::Update();//apply brake force
     AnimationController* animCtrl = pawn_->GetAnimationController(); 
     animCtrl->PlayExclusive("Models/Man/MAN_StandingIdleGun.ani", 0,true, 0.5f);
+}
+void StateCharacterIdle::Exit()
+{
+    pawn_->GetBody()->SetFriction(0.0f);//no sliding on ground
 }

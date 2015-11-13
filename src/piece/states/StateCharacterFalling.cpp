@@ -24,11 +24,9 @@ StateCharacterFalling::~StateCharacterFalling(){}
 void StateCharacterFalling::Enter(Pawn* pawn)
 {
 	State::Enter(pawn);
-	//set the distanceBottom_
-	//i need to send in the direction, because it isnt getting the ray 
 	PhysicsRaycastResult result = FindBottom();
 	distanceBottom_=result.distance_;
-	//GetSubsystem<DebugHud>()->SetAppStats("distance:", result.distance_ );
+	//GetSubsystem<DebugHud>()->SetAppStats("init distance:", result.distance_ );
 }
 
 State* StateCharacterFalling::HandleInput(Controls& ctrl, Input* input)
@@ -49,8 +47,11 @@ void StateCharacterFalling::Update()
 	AnimationController* animCtrl = pawn_->GetAnimationController();
     //Vector3 jumpVector = pawn_->GetJumpVelocity();
     //float jumpTime = Fit(jumpVector.y_,0.0f,-pawn_->GetJumpForce(),0.5f,1.0f);//force based
-    float jumpTime = Fit(result.distance_,distanceBottom_,0.1f,0.5f,1.0f);
+    //float jumpTime = Fit(result.distance_,distanceBottom_,0.1f,0.5f,1.0f);
+    Vector3 vel = pawn_->GetJumpVelocity();
+    float jumpTime = Fit(abs(vel.y_),0.0f,pawn_->GetJumpForce(),0.5f,1.0f);
     //GetSubsystem<DebugHud>()->SetAppStats("distance:", result.distance_ );
+    //GetSubsystem<DebugHud>()->SetAppStats("fallspeed:", abs(vel.y_) );
     
     animCtrl->PlayExclusive("Models/Man/MAN_Jumping.ani", 0,false, 0.1f);
     animCtrl->SetTime("Models/Man/MAN_Jumping.ani",jumpTime);
@@ -64,7 +65,7 @@ PhysicsRaycastResult StateCharacterFalling::FindBottom()
 	//i need to do a check to make sure that I am at least getting a vector from linear velocitiy that I can use to check with
 	PhysicsRaycastResult result;
 	PhysicsWorld* pw = pawn_->GetScene()->GetComponent<PhysicsWorld>();
-	pw->RaycastSingle( result,Ray(body->GetPosition(), dir.Normalized()), dir.Length()*pawn_->GetJumpForce()*3 );
+	pw->RaycastSingle( result,Ray(body->GetPosition(), Vector3::DOWN), 200.0f );
 
 	return result;
 }

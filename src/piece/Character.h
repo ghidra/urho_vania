@@ -49,7 +49,6 @@ protected:
 private:
     
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
-    bool turning;
 
     IK* leftArmIK_;
     IK* rightArmIK_;

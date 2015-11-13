@@ -83,7 +83,7 @@ void PickUp::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
     //RigidBody* otherBody = static_cast<RigidBody*>(eventData[P_OTHERBODY].GetPtr());
     //MemoryBuffer contacts(eventData[P_CONTACTS].GetBuffer());
 
-    Actor* actor = static_cast<Actor*>(otherNode->GetComponent<Character>());
+    Actor* actor = static_cast<Actor*>(otherNode->GetComponent<Character>());//    !!!!!!!  I NEED TO REMOVE THE NEED TO KNOW ABOUT CHARACTER CLASS
     //Actor* actor = otherNode->GetComponent<Actor>();
     if(actor != NULL)
     {
