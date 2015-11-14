@@ -5,7 +5,7 @@
 
 #include "StateCharacterJumping.h"
 
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 #include <Urho3D/DebugNew.h>
@@ -19,7 +19,7 @@ StateCharacterGrounded::StateCharacterGrounded(Context* context):
 }
 StateCharacterGrounded::~StateCharacterGrounded(){}
 
-State* StateCharacterGrounded::HandleInput(Controls& ctrl, Input* input)
+State* StateCharacterGrounded::HandleInput(Controls& ctrl)
 {
 	//get the move direction
 	moveDir_ = Vector3::ZERO;

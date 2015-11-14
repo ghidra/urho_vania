@@ -35,7 +35,7 @@ Weapon::Weapon(Context* context) :
     lefthand_off_(Vector3(-0.4f,0.8f,1.1f))
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization
-    SetUpdateEventMask(USE_FIXEDUPDATE);
+    //SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN_gun.mdl");
     //collision_layer_ = 4;
     //collision_mask_ = 33;
@@ -43,17 +43,30 @@ Weapon::Weapon(Context* context) :
 }
 Weapon::~Weapon(){}
 
-void Weapon::FixedUpdate(float timeStep)
+/*void Weapon::FixedUpdate(float timeStep)
 {
     Actor::FixedUpdate(timeStep);
     //something
     //SetLeftHandOffset();
+}*/
+void Weapon::Update(Controls& ctrl, float timeStep)
+{
+    //node_->SetPosition(Vector3(0.2f, 0.2f, 0.2f));//objectNode
+    //this is called from the pawn controlling it, fron thier fixed update, like a state
+    if (ctrl.IsDown(CTRL_FIRE))
+        Fire(timeStep);
+    else
+        ReleaseFire();
+
+    //something
+    //SetLeftHandOffset();
 }
+
 void Weapon::Setup()
 {
 	ResourceCache* cache = GetSubsystem<ResourceCache>();
 
-    //node_->SetPosition(Vector3(4.0f, 1.0f, 0.0f));//objectNode
+    node_->SetPosition(Vector3(0.2f, 0.2f, 0.2f));//objectNode
 
     // Create the rendering component + animation controller
     //AnimatedModel* object = node_->CreateComponent<AnimatedModel>();
@@ -61,6 +74,12 @@ void Weapon::Setup()
     object->SetModel(cache->GetResource<Model>("Models/"+mesh_));
     object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
     object->SetCastShadows(true);
+
+    lefthand_grip_ = node_->CreateChild("lefthand_grip");
+    lefthand_grip_->SetPosition(lefthand_off_); 
+    /*StaticModel* lo = lefthand_grip_->CreateComponent<StaticModel>();
+    lo->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+    lo->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));*/
     //node_->CreateComponent<AnimationController>();
 
     // Set the head bone for manual control
@@ -165,9 +184,12 @@ void Weapon::SpawnProjectile()
     kick_rot_ = Quaternion(Random(4.0f),rotaxis);
     //node_->Rotate(kick_rot_,TS_WORLD);
     kick_off_ = Vector3(Random(0.1f),Random(0.1f),Random(0.1f));
+    //kick_off_+=Vector3(1.2,1.2,1.2);
     //node_->Translate(kick_off_,TS_WORLD);
 
     node_->SetTransform(kick_off_,kick_rot_);
+
+    //lefthand_target_=lefthand_grip_->GetWorldPosition();
 
     //SetLeftHandOffset();
 
@@ -188,7 +210,8 @@ void Weapon::SpawnProjectile()
 Vector3 Weapon::GetLeftHandTarget()
 {
     //get the updated world position to update target positions for IK
-    Matrix3x4 updated_trans = node_->GetWorldTransform();
+    //Matrix3x4 updated_trans = node_->GetWorldTransform();
     //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", updated_trans*lefthand_off_ );
-    return updated_trans * lefthand_off_ ;
+    //return updated_trans * lefthand_off_ ;
+    return lefthand_grip_->GetWorldPosition();
 }

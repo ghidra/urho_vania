@@ -7,7 +7,7 @@
 #include "StateCharacterFalling.h"
 #include "StateCharacterIdle.h"
 
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 #include <Urho3D/DebugNew.h>
@@ -29,7 +29,7 @@ void StateCharacterFalling::Enter(Pawn* pawn)
 	//GetSubsystem<DebugHud>()->SetAppStats("init distance:", result.distance_ );
 }
 
-State* StateCharacterFalling::HandleInput(Controls& ctrl, Input* input)
+State* StateCharacterFalling::HandleInput(Controls& ctrl)
 {
     return NULL;
     //return new StateCharacterRunning(context_);

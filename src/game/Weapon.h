@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <Urho3D/Input/Controls.h>
 #include "../game/Actor.h"
 
 using namespace Urho3D;
@@ -27,7 +28,8 @@ public:
     Weapon(Context* context);
     ~Weapon();
 
-    virtual void FixedUpdate(float timeStep);
+    //virtual void FixedUpdate(float timeStep);
+    virtual void Update(Controls& ctrl, float timeStep);
     virtual void Setup();
     //virtual void Attach(Node* bone);
     virtual void Fire(float timestep);
@@ -62,6 +64,9 @@ protected:
 
     Vector3 lefthand_off_;//the constant offset of the IK position
 
+private:
+    SharedPtr<Node> lefthand_grip_;//node that is the grip of the weapons for the left had
+    //Vector3 lefthand_target_;
     //Vector3 lefthand_target_;//the updated target position for IK
 };
 #endif

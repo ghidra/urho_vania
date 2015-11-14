@@ -9,7 +9,7 @@
 
 //#include <Urho3D/Graphics/AnimationController.h>
 
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 StateCharacterRunning::StateCharacterRunning(Context* context):
@@ -19,9 +19,9 @@ StateCharacterRunning::StateCharacterRunning(Context* context):
 }
 StateCharacterRunning::~StateCharacterRunning(){}
 
-State* StateCharacterRunning::HandleInput(Controls& ctrl, Input* input)
+State* StateCharacterRunning::HandleInput(Controls& ctrl)
 {
-	State* state = StateCharacterGrounded::HandleInput(ctrl,input);
+	State* state = StateCharacterGrounded::HandleInput(ctrl);
     if(state != NULL)
     {
         return state;

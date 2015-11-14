@@ -6,7 +6,7 @@
 #include "../../game/State.h"
 #include <Urho3D/Input/Controls.h>
 #include "../../core/ApplicationInput.h"
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 #include <Urho3D/Physics/PhysicsWorld.h>//for the raycasting
@@ -29,7 +29,7 @@ public:
     StateCharacterFalling(Context* context);
     ~StateCharacterFalling();
 
-    virtual State* HandleInput(Controls& ctrl, Input* input);
+    virtual State* HandleInput(Controls& ctrl);
     virtual void Enter(Pawn* pawn);
     virtual void Update();
 

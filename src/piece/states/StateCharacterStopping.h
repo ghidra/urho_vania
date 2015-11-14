@@ -6,7 +6,7 @@
 #include "StateCharacterGrounded.h"
 #include <Urho3D/Input/Controls.h>
 #include "../../core/ApplicationInput.h"
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 //using namespace Urho3D;
@@ -27,7 +27,7 @@ public:
     StateCharacterStopping(Context* context);
     ~StateCharacterStopping();
 
-    virtual State* HandleInput(Controls& ctrl, Input* input);
+    virtual State* HandleInput(Controls& ctrl);
     virtual void Enter(Pawn* pawn);
     virtual void Update();
 

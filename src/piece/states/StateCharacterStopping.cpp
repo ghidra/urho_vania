@@ -6,7 +6,7 @@
 #include "StateCharacterIdle.h"
 #include "StateCharacterRunning.h"
 
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 StateCharacterStopping::StateCharacterStopping(Context* context):
@@ -23,9 +23,9 @@ void StateCharacterStopping::Enter(Pawn* pawn)
 }
 
 
-State* StateCharacterStopping::HandleInput(Controls& ctrl, Input* input)
+State* StateCharacterStopping::HandleInput(Controls& ctrl)
 {
-	State* state = StateCharacterGrounded::HandleInput(ctrl,input);
+	State* state = StateCharacterGrounded::HandleInput(ctrl);
 	if(state != NULL)
 	{
 		return state;

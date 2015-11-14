@@ -87,14 +87,14 @@ void Character::FixedUpdate(float timeStep)
             //we are possessed by the application controller
             Controls& ctrl = applicationInput_->controls_;
             //AnimationController* animCtrl = GetComponent<AnimationController>();
-            Input* input = GetSubsystem<Input>();
+            //Input* input = GetSubsystem<Input>();
 
             //--------------------------------------------------
             //--------------------------------------------------
             ///state stuff
             if(state_ != NULL)
             {
-                State* state = state_->HandleInput(ctrl, input);
+                State* state = state_->HandleInput(ctrl);
                 if (state != NULL)
                 {
                     //do exit state before removing state
@@ -105,23 +105,12 @@ void Character::FixedUpdate(float timeStep)
                     state_->Enter(static_cast<Pawn*>(this));
                 }
                 state_->Update();
-                state_->Debug();
+                //state_->Debug();
+            }
 
-                /*if(stateArms_ != NULL)
-                {
-                    State* stateArms = stateArms_->HandleInput(ctrl, input);
-                    if (stateArms != NULL)
-                    {
-                        //do exit state before removing state
-                        stateArms_->Exit();
-                        delete stateArms_;
-                        stateArms_ = stateArms;
-                        //we are entering the new state
-                        stateArms_->Enter(static_cast<Pawn*>(this));
-                    }
-                    stateArms_->Update();
-                    stateArms_->Debug();
-                }*/
+            if(weapon_ != NULL)
+            {
+                weapon_->Update(ctrl,timeStep);
             }
             
             // Reset grounded flag for next frame
@@ -142,7 +131,6 @@ void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantM
     {
         //i need to put the target position in local space relative to the character
         //leftArmIK_->SetTarget(node_->WorldToLocal(weapon_->GetLeftHandTarget()));
-        //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", node_->WorldToLocal(weapon_->GetLeftHandTarget()) );
         
         //turn these off for the moment
         //rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition());

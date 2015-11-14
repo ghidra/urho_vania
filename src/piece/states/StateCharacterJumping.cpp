@@ -6,7 +6,7 @@
 
 #include "StateCharacterFalling.h"
 
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 #include <Urho3D/DebugNew.h>
@@ -28,7 +28,7 @@ void StateCharacterJumping::Enter(Pawn* pawn)
 	body->ApplyImpulse(Vector3::UP * pawn_->GetJumpForce() );
 }
 
-State* StateCharacterJumping::HandleInput(Controls& ctrl, Input* input)
+State* StateCharacterJumping::HandleInput(Controls& ctrl)
 {
     return NULL;
     //return new StateCharacterRunning(context_);

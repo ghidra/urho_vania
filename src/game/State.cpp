@@ -14,7 +14,7 @@ State::State(Context* context):
 }
 State::~State(){}
 
-State* State::HandleInput(Controls& ctrl, Input* input)
+State* State::HandleInput(Controls& ctrl)
 {
     return NULL;
 }

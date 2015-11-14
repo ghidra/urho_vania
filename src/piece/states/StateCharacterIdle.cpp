@@ -21,7 +21,7 @@ class StateCharacterIdle : public State
 #include "StateCharacterJumping.h"
 #include "StateCharacterTurning.h"
 
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 #include <Urho3D/DebugNew.h>
@@ -29,7 +29,8 @@ class StateCharacterIdle : public State
 #include <Urho3D/Engine/DebugHud.h>
 
 StateCharacterIdle::StateCharacterIdle(Context* context):
-    StateCharacterGrounded(context)
+    StateCharacterGrounded(context),
+    firing_(false)
 {
     name_=String("idle");
 }
@@ -42,9 +43,9 @@ void StateCharacterIdle::Enter(Pawn* pawn)
     //GetSubsystem<DebugHud>()->SetAppStats("init distance:", result.distance_ );
 }
 
-State* StateCharacterIdle::HandleInput(Controls& ctrl, Input* input)
+State* StateCharacterIdle::HandleInput(Controls& ctrl)
 {
-    State* state = StateCharacterGrounded::HandleInput(ctrl,input);
+    State* state = StateCharacterGrounded::HandleInput(ctrl);
     
     if(state != NULL)
     {
@@ -61,15 +62,27 @@ State* StateCharacterIdle::HandleInput(Controls& ctrl, Input* input)
         }
         else
         {
-            return NULL;
+            if(ctrl.IsDown(CTRL_FIRE))
+            {
+                firing_=true;
+            }
+            else
+            {
+                firing_=false;
+                return NULL;
+            }
         }
     }
 }
 void StateCharacterIdle::Update()
 {
     StateCharacterGrounded::Update();//apply brake force
-    AnimationController* animCtrl = pawn_->GetAnimationController(); 
-    animCtrl->PlayExclusive("Models/Man/MAN_StandingIdleGun.ani", 0,true, 0.5f);
+    AnimationController* animCtrl = pawn_->GetAnimationController();
+    String ani = String("Models/Man/MAN_StandingIdleGun.ani");
+    if(firing_)
+        ani=String("Models/Man/MAN_StandingShooting.ani");
+
+    animCtrl->PlayExclusive(ani, 0,true, 0.5f);
 }
 void StateCharacterIdle::Exit()
 {

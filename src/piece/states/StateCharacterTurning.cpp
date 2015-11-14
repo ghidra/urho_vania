@@ -6,7 +6,7 @@
 #include "StateCharacterRunning.h"
 #include "StateCharacterStopping.h"
 
-#include <Urho3D/Input/Input.h>
+//#include <Urho3D/Input/Input.h>
 #include "../../game/Pawn.h"
 
 StateCharacterTurning::StateCharacterTurning(Context* context):
@@ -24,9 +24,9 @@ void StateCharacterTurning::Enter(Pawn* pawn)
     //GetSubsystem<DebugHud>()->SetAppStats("init distance:", result.distance_ );
 }
 
-State* StateCharacterTurning::HandleInput(Controls& ctrl, Input* input)
+State* StateCharacterTurning::HandleInput(Controls& ctrl)
 {
-	State* state = StateCharacterGrounded::HandleInput(ctrl,input);
+	State* state = StateCharacterGrounded::HandleInput(ctrl);
     if(state != NULL)
     {
         return state;
