@@ -135,10 +135,14 @@ bool IK::Solve(Vector3 targetPos)
     //knee->SetWorldRotation(knee->GetWorldRotation() * Quaternion(kneeAngle,kneeAxis) );
 	//hip->SetWorldRotation(hip->GetWorldRotation() * Quaternion(hipAngle,hipAxis) );
 	//do top level first, then get new angle for lower level, since it might mangle it
-	Quaternion hipRot = Quaternion(tdn,ntdn);
-	hip->Rotate(hipRot,TS_WORLD );
-	knee->Rotate(Quaternion(cdn,ncdn)*hipRot.Inverse(),TS_WORLD );
-	
+	bool success = d > 0.0f && d < A;
+
+	if(success)
+	{
+		Quaternion hipRot = Quaternion(tdn,ntdn);
+		hip->Rotate(hipRot,TS_WORLD );
+		knee->Rotate(Quaternion(cdn,ncdn)*hipRot.Inverse(),TS_WORLD );
+	}
 
     if(drawDebug_)
     {
@@ -169,7 +173,7 @@ bool IK::Solve(Vector3 targetPos)
 		dbg->AddLine(worldQ,targetPos,Color(1.0f,0.0f,0.0f),false);
 	}
 
-    return d > 0.0f && d < A;
+    return success;
 
 	
 }

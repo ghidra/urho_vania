@@ -186,10 +186,11 @@ void Weapon::SpawnProjectile()
     kick_off_ = Vector3(Random(0.1f),Random(0.1f),Random(0.1f));
     //kick_off_+=Vector3(1.2,1.2,1.2);
     //node_->Translate(kick_off_,TS_WORLD);
+    GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", String(node_->GetTransform()) );
 
     node_->SetTransform(kick_off_,kick_rot_);
 
-    //lefthand_target_=lefthand_grip_->GetWorldPosition();
+    lefthand_target_=lefthand_grip_->GetWorldPosition();
 
     //SetLeftHandOffset();
 
@@ -207,11 +208,11 @@ void Weapon::SpawnProjectile()
     //i need to get the position and the rotation of the weapon to determine the location and roation to spawn at
 }
 
-Vector3 Weapon::GetLeftHandTarget()
+/*Vector3 Weapon::GetLeftHandTarget()
 {
     //get the updated world position to update target positions for IK
     //Matrix3x4 updated_trans = node_->GetWorldTransform();
     //GetSubsystem<DebugHud>()->SetAppStats("gun_pos:", updated_trans*lefthand_off_ );
     //return updated_trans * lefthand_off_ ;
     return lefthand_grip_->GetWorldPosition();
-}
+}*/

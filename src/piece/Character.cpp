@@ -133,8 +133,8 @@ void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantM
         //leftArmIK_->SetTarget(node_->WorldToLocal(weapon_->GetLeftHandTarget()));
         
         //turn these off for the moment
-        //rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition());
-        //leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
+        rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition());
+        leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
 
     }
 }

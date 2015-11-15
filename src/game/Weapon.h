@@ -37,8 +37,8 @@ public:
     virtual void SetFireRate(float fireRate);
     //virtual unsigned GetFiring(){return firing_;};
     //virtual Vector3 GetFireOffset(return fire_offset_);
-    virtual Vector3 GetLeftHandTarget();
-    //virtual Vector3 GetLeftHandTarget(){return lefthand_target_;};
+    //virtual Vector3 GetLeftHandTarget();
+    virtual Vector3 GetLeftHandTarget(){return lefthand_target_;};
 
 protected:
 
@@ -66,7 +66,6 @@ protected:
 
 private:
     SharedPtr<Node> lefthand_grip_;//node that is the grip of the weapons for the left had
-    //Vector3 lefthand_target_;
-    //Vector3 lefthand_target_;//the updated target position for IK
+    Vector3 lefthand_target_;
 };
 #endif
