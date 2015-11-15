@@ -52,6 +52,8 @@ private:
 
     IK* leftArmIK_;
     IK* rightArmIK_;
+
+    SharedPtr<Node> temp_;
    
 };
 #endif

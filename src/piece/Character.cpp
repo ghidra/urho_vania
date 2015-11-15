@@ -18,6 +18,13 @@
 #include "states/StateCharacterIdle.h"
 #include "states/StateCharacterFalling.h"//force it into falling first
 
+
+//for debugging
+/*#include <Urho3D/IO/FileSystem.h>
+#include <Urho3D/Resource/ResourceCache.h>
+#include <Urho3D/Graphics/Material.h>
+#include <Urho3D/Graphics/StaticModel.h>
+*/
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Engine/DebugHud.h>
@@ -54,6 +61,15 @@ void Character::Start()
 void Character::Setup()
 {
     Pawn::Setup();//do the basic set up with stored and set values
+
+    //DEBUG
+    /*ResourceCache* cache = GetSubsystem<ResourceCache>();
+    temp_ = node_->GetScene()->CreateChild("temp");
+    StaticModel* object = temp_->CreateComponent<StaticModel>();
+    object->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+    object->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
+    */
+    //----
 
     AnimatedModel* model = GetComponent<AnimatedModel>();
     Skeleton& skeleton = model->GetSkeleton();
@@ -136,5 +152,6 @@ void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantM
         rightArmIK_->SetTarget(weapon_->GetNode()->GetWorldPosition());
         leftArmIK_->SetTarget(weapon_->GetLeftHandTarget());
 
+        //temp_->SetPosition(weapon_->GetLeftHandTarget());
     }
 }

@@ -51,6 +51,7 @@ Weapon::~Weapon(){}
 }*/
 void Weapon::Update(Controls& ctrl, float timeStep)
 {
+    lefthand_target_=node_->GetWorldTransform()*lefthand_off_;
     //node_->SetPosition(Vector3(0.2f, 0.2f, 0.2f));//objectNode
     //this is called from the pawn controlling it, fron thier fixed update, like a state
     if (ctrl.IsDown(CTRL_FIRE))
@@ -166,6 +167,9 @@ void Weapon::ReleaseFire()
     node_->SetTransform(Vector3(),Quaternion());
     //kick_rot_ = Quaternion();
     //node_->SetRotation(Quaternion());
+    //lefthand_target_=lefthand_off_;
+    //temporaily put this here, since its being called all the time if we are not firing.. and the target value needs to be set
+    //lefthand_target_=node_->GetWorldTransform()*lefthand_off_;
 }
 void Weapon::SpawnProjectile()
 {
