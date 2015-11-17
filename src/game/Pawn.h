@@ -5,7 +5,8 @@
 
 #include "Actor.h"
 #include "../core/ApplicationInput.h"
-#include "../game/Weapon.h"
+#include "Weapon.h"
+//#include "RagDoll.h"
 
 #include <Urho3D/Graphics/AnimationController.h>
 
@@ -20,6 +21,7 @@ class Scene;
 }
 
 class State;
+class RagDoll;
 
 class Pawn : public Actor
 {
@@ -93,6 +95,9 @@ protected:
     
     State* state_ = NULL;
     //State* stateArms_ = NULL;
+
+    //ragdoll
+    RagDoll* ragdoll_ =NULL;
 
     //now I can maybe have an array or something to hold the required animation paths?
    

@@ -82,14 +82,19 @@ void Character::Setup()
     rightArmIK_->CreateChain(String("wrist.R"));
     //rightArmIK_->ToggleDebug();
 
+    //this is the controller rigidbody
     shape_ = node_->CreateComponent<CollisionShape>();
     shape_->SetCapsule(3.0f, 10.0f, Vector3(0.0f, 5.0f, 0.0f));
     body_->SetMass(1.0f);
+    ///
 
     //set initial state
     SetState( new StateCharacterFalling(context_) );
     //state_= new StateCharacterIdle(context_);
     //state_->Enter(static_cast<Pawn*>(this));
+
+    //build the ragdoll rigid bodies that this thing will need
+    
 }
 //--------
 void Character::FixedUpdate(float timeStep)
