@@ -1,13 +1,14 @@
 cmake_install.cmake
 CMakeCache*
 Makefile
-bin/CoreData
-bin/Data
-bin/urhovania
 CMake
 CMakeFiles/
 launch.sh
 editor.sh
+bin/CoreData
+bin/Data
+bin/urhovania
+bin/Resources
 bin/Resources/Models/States/*
 bin/Resources/Models/Man/*
 bin/Resources/Models/StageForest/*
