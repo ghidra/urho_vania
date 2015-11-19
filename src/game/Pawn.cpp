@@ -21,6 +21,7 @@
 #include "../core/ApplicationInput.h"
 #include "../game/Weapon.h"
 #include "State.h"
+#include "RagDoll.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -112,6 +113,9 @@ void Pawn::Setup()
     body_->SetCollisionEventMode(COLLISION_ALWAYS);
 
     //we still need to setup the collisionshape in the child class
+    //here we are setting the ragdoll object waiting to accept some commands to build out
+    ragdoll_ = new RagDoll(context_);
+    ragdoll_->Setup(this);
 }
 
 void Pawn::HandleNodeCollision(StringHash eventType, VariantMap& eventData)

@@ -14,6 +14,7 @@
 #include "Character.h"
 #include "../core/ApplicationInput.h"//i need this for the control constants
 #include "../core/IK.h"
+#include "../game/RagDoll.h"
 //#include "../game/State.h"
 #include "states/StateCharacterIdle.h"
 #include "states/StateCharacterFalling.h"//force it into falling first
@@ -94,7 +95,16 @@ void Character::Setup()
     //state_->Enter(static_cast<Pawn*>(this));
 
     //build the ragdoll rigid bodies that this thing will need
-    
+    ragdoll_->Bone(String("abs"),String("neck"), 1, Vector3(2.0f,0.0f,0.85f) );
+    ragdoll_->Bone(String("neck"),1.5f, 0, Vector3(1.0f,0.0f,0.0f) );
+    ragdoll_->Bone(String("armupper.R"),String("armlower.R"), 1, Vector3(0.35f,0.0f,0.0f) );
+    ragdoll_->Bone(String("armlower.R"),String("wrist.R"), 1, Vector3(0.25f,0.0f,0.0f) );
+    ragdoll_->Bone(String("legupper.R"),String("leglower.R"), 1, Vector3(0.5f,0.0f,0.0f) );
+    ragdoll_->Bone(String("leglower.R"),String("foot.R"), 1, Vector3(0.5f,0.0f,0.0f) );
+    ragdoll_->Bone(String("armupper.L"),String("armlower.L"), 1, Vector3(0.35f,0.0f,0.0f) );
+    ragdoll_->Bone(String("armlower.L"),String("wrist.L"), 1, Vector3(0.25f,0.0f,0.0f) );
+    ragdoll_->Bone(String("legupper.L"),String("leglower.L"), 1, Vector3(0.5f,0.0f,0.0f) );
+    ragdoll_->Bone(String("leglower.L"),String("foot.L"), 1, Vector3(0.5f,0.0f,0.0f) );
 }
 //--------
 void Character::FixedUpdate(float timeStep)
