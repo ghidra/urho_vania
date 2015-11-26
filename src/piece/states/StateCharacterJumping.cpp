@@ -3,11 +3,7 @@
 #include <Urho3D/Physics/RigidBody.h>
 
 #include "StateCharacterJumping.h"
-
 #include "StateCharacterFalling.h"
-
-//#include <Urho3D/Input/Input.h>
-#include "../../game/Pawn.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>

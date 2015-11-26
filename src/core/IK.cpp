@@ -18,7 +18,6 @@
 //#include <Urho3D/Graphics/AnimationController.h>
 
 #include "IK.h"
-//#include "../core/ApplicationInput.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>

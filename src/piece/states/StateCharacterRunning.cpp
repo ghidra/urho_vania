@@ -3,14 +3,9 @@
 #include <Urho3D/Physics/RigidBody.h>
 
 #include "StateCharacterRunning.h"
-
 #include "StateCharacterStopping.h"
 #include "StateCharacterTurning.h"
 
-//#include <Urho3D/Graphics/AnimationController.h>
-
-//#include <Urho3D/Input/Input.h>
-#include "../../game/Pawn.h"
 
 StateCharacterRunning::StateCharacterRunning(Context* context):
     StateCharacterGrounded(context)

@@ -1,25 +1,13 @@
 #include <Urho3D/Urho3D.h>
-#include <Urho3D/Core/Context.h>
 #include <Urho3D/Scene/Scene.h>
 
-#include <Urho3D/IO/MemoryBuffer.h>
-#include <Urho3D/Physics/PhysicsEvents.h>
-#include <Urho3D/Physics/PhysicsWorld.h>
-#include <Urho3D/Physics/RigidBody.h>
-#include <Urho3D/Scene/SceneEvents.h>
-
 #include <Urho3D/Graphics/AnimatedModel.h>
-#include <Urho3D/Graphics/AnimationController.h>
-
-#include <Urho3D/IO/FileSystem.h>
 #include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Graphics/Material.h>
-
-#include <Urho3D/Input/Controls.h>
 
 #include "Pawn.h"
-#include "../core/ApplicationInput.h"
-#include "../game/Weapon.h"
+//#include "../core/ApplicationInput.h"
+#include "../core/Controller.h"
+
 #include "State.h"
 #include "RagDoll.h"
 
@@ -49,27 +37,23 @@ Pawn::~Pawn(){}
 //    context->RegisterFactory<Actor>();
 //}
 
-void Pawn::Possess(ApplicationInput* applicationInput)
+/*void Pawn::Possess(ApplicationInput* applicationInput)
 {
     applicationInput_ = applicationInput;
+}*/
+void Pawn::Possess(Controller* controller)
+{
+    controller_ = controller;
 }
 void Pawn::EquipWeapon(Weapon* weapon)
 {
     weapon_ = weapon;
 }
-//to be able to manually set the state from another state
 void Pawn::SetState(State* state)
 {
     state_ = state;
-    //state_->Enter(static_cast<Pawn*>(this));
     state_->Enter(this);
 }
-/*void Pawn::SetArmsState(State* state)
-{
-    stateArms_ = state;
-    //stateArms_->Enter(static_cast<Pawn*>(this));
-    stateArms_->Enter(this);
-}*/
 
 void Pawn::FixedUpdate(float timeStep)
 {
@@ -94,23 +78,9 @@ void Pawn::Setup()
 
     animationController_ = node_->CreateComponent<AnimationController>();
 
-    // Set the head bone for manual control
-    //object->GetSkeleton().GetBone("Bip01_Head")->animated_ = false;
-
-    // Create rigidbody, and set non-zero mass so that the body becomes dynamic
-    //RigidBody* body = node_->CreateComponent<RigidBody>();
-    body_ = node_->CreateComponent<RigidBody>();
-    body_->SetCollisionLayer(collision_layer_);
-    body_->SetCollisionMask(collision_mask_);
-    body_->SetMass(1.0f);
-    body_->SetFriction(1.0f);
-
-    // Set zero angular factor so that physics doesn't turn the character on its own.
-    // Instead we will control the character yaw manually
+    SetRigidBody();
     body_->SetAngularFactor(Vector3::ZERO);
-
-    // Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
-    body_->SetCollisionEventMode(COLLISION_ALWAYS);
+    body_->SetCollisionEventMode(COLLISION_ALWAYS);// Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
 
     //we still need to setup the collisionshape in the child class
     //here we are setting the ragdoll object waiting to accept some commands to build out

@@ -6,6 +6,7 @@
 #include <Urho3D/Input/Controls.h>
 #include <Urho3D/Core/Object.h>
 
+#include "Controller.h"
 #include "CameraLogic.h"
 
 //#include "Actor.h"
@@ -20,7 +21,7 @@ namespace Urho3D
     class Node;
 }
 
-const int CTRL_UP = 1;
+/*const int CTRL_UP = 1;
 const int CTRL_DOWN = 2;
 const int CTRL_LEFT = 4;
 const int CTRL_RIGHT = 8;
@@ -32,6 +33,10 @@ const int CTRL_ALL = 63;
 class ApplicationInput : public Object
 {
     URHO3D_OBJECT(ApplicationInput,Object);
+*/
+class ApplicationInput : public Controller
+{
+    URHO3D_OBJECT(ApplicationInput,Controller);
 
 public:
     /// Construct.

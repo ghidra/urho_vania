@@ -2,11 +2,7 @@
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 
 #include "StateCharacterGrounded.h"
-
 #include "StateCharacterJumping.h"
-
-//#include <Urho3D/Input/Input.h>
-#include "../../game/Pawn.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>

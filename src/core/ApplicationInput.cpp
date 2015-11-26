@@ -28,6 +28,7 @@
 //#include <Urho3D/Core/StringHash.h>
 //#include <Urho3D/Core/Variant.h>
 
+#include "Controller.h"
 #include "ApplicationInput.h"
 #include "CameraLogic.h"
 //#include "ApplicationHandler.h"
@@ -36,7 +37,7 @@
 #include <Urho3D/IO/Log.h>
 
 ApplicationInput::ApplicationInput(Context* context):
-    Object(context),
+    Controller(context),
     touchSensitivity_(2.0f),
     paused_(false),
     quit_(false),

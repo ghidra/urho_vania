@@ -12,7 +12,8 @@
 #include <Urho3D/Scene/SceneEvents.h>
 
 #include "Character.h"
-#include "../core/ApplicationInput.h"//i need this for the control constants
+//#include "../core/ApplicationInput.h"//i need this for the control constants
+#include "../core/Controller.h"
 #include "../core/IK.h"
 #include "../game/RagDoll.h"
 //#include "../game/State.h"
@@ -20,12 +21,6 @@
 #include "states/StateCharacterFalling.h"//force it into falling first
 
 
-//for debugging
-/*#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Graphics/Material.h>
-#include <Urho3D/Graphics/StaticModel.h>
-*/
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
 #include <Urho3D/Engine/DebugHud.h>
@@ -111,12 +106,13 @@ void Character::FixedUpdate(float timeStep)
 {
     Pawn::FixedUpdate(timeStep);
 
-    if(applicationInput_)
+    if(controller_)
     {
-        if(!applicationInput_->IsDebugCamera())//if we are not in debug camera mode
-        {
+            GetSubsystem<DebugHud>()->SetAppStats("we have a controller:", String("yes") );
+        //if(!controller_->IsDebugCamera())//if we are not in debug camera mode
+        //{
             //we are possessed by the application controller
-            Controls& ctrl = applicationInput_->controls_;
+            Controls& ctrl = controller_->controls_;
             //AnimationController* animCtrl = GetComponent<AnimationController>();
             //Input* input = GetSubsystem<Input>();
 
@@ -149,7 +145,7 @@ void Character::FixedUpdate(float timeStep)
             //onGround_ = true;
             
 
-        }
+        //}
     }
     
     //body->ApplyImpulse(Vector3::FORWARD);

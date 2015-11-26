@@ -2,12 +2,9 @@
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 
 #include "StateCharacterTurning.h"
-
 #include "StateCharacterRunning.h"
 #include "StateCharacterStopping.h"
 
-//#include <Urho3D/Input/Input.h>
-#include "../../game/Pawn.h"
 
 StateCharacterTurning::StateCharacterTurning(Context* context):
     StateCharacterGrounded(context),

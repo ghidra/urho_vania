@@ -4,7 +4,9 @@
 #pragma once
 
 #include "Actor.h"
-#include "../core/ApplicationInput.h"
+//#include "../core/ApplicationInput.h"
+#include "../core/Controller.h"
+
 #include "Weapon.h"
 //#include "RagDoll.h"
 
@@ -37,7 +39,8 @@ public:
     //virtual void Start();
 
     virtual void FixedUpdate(float timeStep);
-    virtual void Possess(ApplicationInput* applicationInput);
+    //virtual void Possess(ApplicationInput* applicationInput);
+    virtual void Possess(Controller* controller);
     virtual void EquipWeapon(Weapon* weapon);
     //virtual void Setup(SharedPtr<Scene> scene, SharedPtr<Node> cameraNode);
 
@@ -64,6 +67,8 @@ protected:
     virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
 
     //ApplicationInput* applicationInput_ = NULL;
+    Controller* controller_ = NULL;
+
     Weapon* weapon_ = NULL;
   
     float health_;

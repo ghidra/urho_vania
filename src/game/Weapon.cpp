@@ -18,6 +18,7 @@
 
 #include "Weapon.h"
 #include "Projectile.h"
+#include "../core/Controller.h"//for the constants
 //#include "../piece/Character.h"
 
 #include <Urho3D/DebugNew.h>

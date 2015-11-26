@@ -1,28 +1,10 @@
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 
-//#include <Urho3D/Physics/RigidBody.h>
-/*
-#include "../../game/State.h"
-
-Potentially remove the need for a h file
-class StateCharacterIdle : public State
-{
-        public:
-                void HandleInput(Pawn& pawn, Input* input);
-                //float someNewProperty;
-}
-
-*/
-
 #include "StateCharacterIdle.h"
-
 #include "StateCharacterRunning.h"
 #include "StateCharacterJumping.h"
 #include "StateCharacterTurning.h"
-
-//#include <Urho3D/Input/Input.h>
-#include "../../game/Pawn.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>

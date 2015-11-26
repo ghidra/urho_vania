@@ -1,6 +1,5 @@
 #include <Urho3D/Urho3D.h>
 
-//#include <Urho3D/Core/Context.h>
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Graphics/Camera.h>
 #include <Urho3D/Physics/PhysicsWorld.h>
@@ -24,12 +23,9 @@
 
 
 #include <Urho3D/Core/CoreEvents.h>
-//#include <Urho3D/Engine/Engine.h>
 #include <Urho3D/UI/Font.h>
-//#include <Urho3D/Input/Input.h>
 #include <Urho3D/Core/ProcessUtils.h>
 #include <Urho3D/UI/Text.h>
-//#include <Urho3D/UI/UI.h>
 
 #include "Main.h"
 #include "core/CameraLogic.h" 
@@ -40,7 +36,6 @@
 #include "piece/PU_Gun01.h"
 #include "piece/Gun01.h"
 #include "piece/Projectile01.h"
-//#include "core/ApplicationInput.h"
 
 
 #include <Urho3D/DebugNew.h>
@@ -53,12 +48,6 @@ URHO3D_DEFINE_APPLICATION_MAIN(Main)
 
 Main::Main(Context* context) :
     ApplicationHandler(context)
-    //yaw_(0.0f),
-    //pitch_(0.0f),
-    //touchEnabled_(false),
-    //screenJoystickIndex_(M_MAX_UNSIGNED),
-    //screenJoystickSettingsIndex_(M_MAX_UNSIGNED),
-    //paused_(false)
 {
     CameraLogic::RegisterObject(context);
     Character::RegisterObject(context);
@@ -70,8 +59,6 @@ Main::Main(Context* context) :
 }
 Main::~Main(){}
 
-//-------------------
-//-------------------
 void Main::Start()
 {
     // Execute base class startup

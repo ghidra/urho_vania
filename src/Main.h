@@ -6,7 +6,7 @@
 #include "core/ApplicationHandler.h"
 #include "stages/StageForest.h"
 #include "stages/VaniaDebugEnv.h"
-//#include "core/ApplicationInput.h"
+
 namespace Urho3D
 {
 
@@ -23,7 +23,6 @@ class Main : public ApplicationHandler
     URHO3D_OBJECT(Main,ApplicationHandler);
 
 public:
-    /// Construct.
     Main(Context* context);
     ~Main();
 
@@ -37,7 +36,6 @@ private:
     /// Handle the logic update event.
     //void HandleUpdate(StringHash eventType, VariantMap& eventData);
 
-    //ApplicationInput * applicationInput_ = NULL;
     StageForest* stage_ = NULL;
     //VaniaDebugEnv* stage_ = NULL;
 
