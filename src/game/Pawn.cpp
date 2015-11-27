@@ -41,10 +41,12 @@ Pawn::~Pawn(){}
 {
     applicationInput_ = applicationInput;
 }*/
+
 void Pawn::Possess(Controller* controller)
 {
     controller_ = controller;
 }
+
 void Pawn::EquipWeapon(Weapon* weapon)
 {
     weapon_ = weapon;

@@ -28,7 +28,7 @@
 #include <Urho3D/UI/Text.h>
 
 #include "Main.h"
-#include "core/CameraLogic.h" 
+#include "core/CameraLogic.h"
 #include "core/IK.h"
 #include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
@@ -42,6 +42,8 @@
 #include <Urho3D/IO/Log.h>
 
 #include <iostream>
+
+//class Controller;
 
 // Expands to this example's entry-point
 URHO3D_DEFINE_APPLICATION_MAIN(Main)
@@ -92,6 +94,7 @@ void Main::Start()
     //character_ = new Character(context_);
     character_->Setup();
     character_->Possess(applicationInput_);
+    //character_->Possess(static_cast<Controller*>(applicationInput_));
 
     applicationInput_->SetCameraTarget(characterNode_);
 

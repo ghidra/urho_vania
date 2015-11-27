@@ -1,5 +1,3 @@
-//
-
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Engine/Application.h>
 #include <Urho3D/Graphics/Camera.h>
@@ -20,9 +18,7 @@
 #include <Urho3D/Core/Timer.h>
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Resource/XMLFile.h>
-
 #include <Urho3D/Physics/PhysicsWorld.h>
-
 #include <Urho3D/Graphics/Animation.h>
 #include <Urho3D/Graphics/AnimatedModel.h>
 #include <Urho3D/Graphics/AnimationState.h>
@@ -36,17 +32,13 @@
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Graphics/Zone.h>
 
-//#include "CameraLogic.h"
 #include "ApplicationInput.h"
 #include "ApplicationHandler.h"
-//#include "CameraLogic.h"
 
 #include <Urho3D/IO/Log.h>
 
 ApplicationHandler::ApplicationHandler(Context* context) :
     Application(context),
-    //yaw_(0.0f),
-    //pitch_(0.0f),
     touchEnabled_(false),
     screenJoystickIndex_(M_MAX_UNSIGNED),
     screenJoystickSettingsIndex_(M_MAX_UNSIGNED),

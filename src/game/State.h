@@ -6,17 +6,8 @@
 #include <Urho3D/Core/Object.h>
 #include <Urho3D/Input/Controls.h>
 #include "../core/Controller.h"//for the control constants
-//#include <Urho3D/Input/Input.h>
+
 #include "Pawn.h"
-
-//using namespace Urho3D;
-namespace Urho3D
-{
-
-class Node;
-class Scene;
-
-}
 
 class Pawn;
 

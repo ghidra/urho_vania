@@ -16,8 +16,8 @@
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Scene/Scene.h>
 #include <Urho3D/Scene/SceneEvents.h>
-#include <Urho3D/UI/Sprite.h>
-#include <Urho3D/Graphics/Texture2D.h>
+//#include <Urho3D/UI/Sprite.h>
+//#include <Urho3D/Graphics/Texture2D.h>
 #include <Urho3D/Core/Timer.h>
 #include <Urho3D/UI/UI.h>
 #include <Urho3D/Resource/XMLFile.h>
@@ -25,13 +25,9 @@
 #include <Urho3D/Core/CoreEvents.h>
 #include <Urho3D/Graphics/DebugRenderer.h>
 
-//#include <Urho3D/Core/StringHash.h>
-//#include <Urho3D/Core/Variant.h>
-
 #include "Controller.h"
 #include "ApplicationInput.h"
 #include "CameraLogic.h"
-//#include "ApplicationHandler.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
@@ -114,11 +110,13 @@ void ApplicationInput::InitTouchInput()
 
 void ApplicationInput::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
+    Controller::HandleUpdate(eventType, eventData);
+
     using namespace Update;
 
     Input* input = GetSubsystem<Input>();
 
-    controls_.Set(CTRL_UP | CTRL_DOWN | CTRL_LEFT | CTRL_RIGHT | CTRL_FIRE |CTRL_JUMP, false);
+    //controls_.Set(CTRL_UP | CTRL_DOWN | CTRL_LEFT | CTRL_RIGHT | CTRL_FIRE |CTRL_JUMP, false);
 
     //LOGINFO("hi");
 

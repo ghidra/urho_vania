@@ -8,19 +8,10 @@
 #include "../core/Controller.h"
 
 #include "Weapon.h"
-//#include "RagDoll.h"
+#include "State.h"
+#include "RagDoll.h"
 
 #include <Urho3D/Graphics/AnimationController.h>
-
-using namespace Urho3D;
-
-namespace Urho3D
-{
-
-class Node;
-class Scene;
-
-}
 
 class State;
 class RagDoll;

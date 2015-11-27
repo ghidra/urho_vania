@@ -6,15 +6,6 @@
 #include <Urho3D/Core/Object.h>
 #include "Pawn.h"
 
-//using namespace Urho3D;
-namespace Urho3D
-{
-
-class Node;
-class Scene;
-
-}
-
 class Pawn;
 
 class RagDoll : public Object
