@@ -70,16 +70,29 @@ void Character::Setup()
     //state_->Enter(static_cast<Pawn*>(this));
 
     //build the ragdoll rigid bodies that this thing will need
-    ragdoll_->Bone(String("abs"),String("neck"), 1, Vector3(2.0f,0.0f,0.85f) );
-    ragdoll_->Bone(String("neck"),1.5f, 0, Vector3(1.0f,0.0f,0.0f) );
-    ragdoll_->Bone(String("armupper.R"),String("armlower.R"), 1, Vector3(0.35f,0.0f,0.0f) );
-    ragdoll_->Bone(String("armlower.R"),String("wrist.R"), 1, Vector3(0.25f,0.0f,0.0f) );
-    ragdoll_->Bone(String("legupper.R"),String("leglower.R"), 1, Vector3(0.5f,0.0f,0.0f) );
-    ragdoll_->Bone(String("leglower.R"),String("foot.R"), 1, Vector3(0.5f,0.0f,0.0f) );
-    ragdoll_->Bone(String("armupper.L"),String("armlower.L"), 1, Vector3(0.35f,0.0f,0.0f) );
-    ragdoll_->Bone(String("armlower.L"),String("wrist.L"), 1, Vector3(0.25f,0.0f,0.0f) );
-    ragdoll_->Bone(String("legupper.L"),String("leglower.L"), 1, Vector3(0.5f,0.0f,0.0f) );
-    ragdoll_->Bone(String("leglower.L"),String("foot.L"), 1, Vector3(0.5f,0.0f,0.0f) );
+    ragdoll_->Bone("abs","neck", SHAPE_BOX, Vector3(2.0f,0.0f,0.85f) );
+    ragdoll_->Bone("neck",1.5f, SHAPE_CAPSULE, Vector3(1.0f,0.0f,0.0f) );
+    ragdoll_->Bone("armupper.R","armlower.R", SHAPE_BOX, Vector3(0.35f,0.0f,0.0f) );
+    ragdoll_->Bone("armlower.R","wrist.R", SHAPE_BOX, Vector3(0.25f,0.0f,0.0f) );
+    ragdoll_->Bone("legupper.R","leglower.R", SHAPE_BOX, Vector3(0.5f,0.0f,0.0f) );
+    ragdoll_->Bone("leglower.R","foot.R", SHAPE_BOX, Vector3(0.5f,0.0f,0.0f) );
+    ragdoll_->Bone("armupper.L","armlower.L", SHAPE_BOX, Vector3(0.35f,0.0f,0.0f) );
+    ragdoll_->Bone("armlower.L","wrist.L", SHAPE_BOX, Vector3(0.25f,0.0f,0.0f) );
+    ragdoll_->Bone("legupper.L","leglower.L", SHAPE_BOX, Vector3(0.5f,0.0f,0.0f) );
+    ragdoll_->Bone("leglower.L","foot.L", SHAPE_BOX, Vector3(0.5f,0.0f,0.0f) );
+
+    //contraint info
+    //http://urho3d.github.io/documentation/HEAD/_physics.html
+    ragdoll_->Constrain("abs", "root", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("neck", "chest", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("armupper.R", "chest", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("armlower.R", "armupper.R", CONSTRAINT_HINGE, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("legupper.R", "abs", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("leglower.R", "legupper.R", CONSTRAINT_HINGE, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("armupper.L", "chest", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("armlower.L", "armupper.L", CONSTRAINT_HINGE, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("legupper.L", "abs", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    ragdoll_->Constrain("leglower.L", "legupper.L", CONSTRAINT_HINGE, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
 }
 //--------
 void Character::FixedUpdate(float timeStep)

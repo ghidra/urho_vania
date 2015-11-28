@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Urho3D/Core/Object.h>
+#include <Urho3D/Physics/Constraint.h>
 #include "Pawn.h"
 
 class Pawn;
@@ -16,10 +17,14 @@ public:
     RagDoll(Context* context);
     ~RagDoll();
 
-    virtual void Setup(Pawn* pawn);//maybe also pass in the number of "bones" to hold for memory allocation
+    void Setup(Pawn* pawn);//maybe also pass in the number of "bones" to hold for memory allocation
 
-    virtual void Bone(const String start, const String stop, const unsigned type, Vector3 size);
-    virtual void Bone(const String start, const float length, const unsigned type, Vector3 size);
+    void Bone(const String& start, const String& stop, ShapeType type, const Vector3& size);
+    void Bone(const String& start, const float length, ShapeType type, const Vector3& size);
+
+    void Constrain(const String& boneName, const String& parentName, ConstraintType type, const Vector3& axis, const Vector3& parentAxis, const Vector2& highLimit, const Vector2& lowLimit, bool disableCollision = true);
+
+    void Activate();//just turn it all on
 
 private:
     void SetShape(CollisionShape* cs, const unsigned type, const Vector3 size);

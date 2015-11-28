@@ -70,7 +70,7 @@ void Pawn::Setup()
 {
     ResourceCache* cache = GetSubsystem<ResourceCache>();
 
-    node_->SetPosition(Vector3(0.0f, 1.0f, 0.0f));//objectNode
+    //node_->SetPosition(Vector3(0.0f, 1.0f, 0.0f));//objectNode
 
     // Create the rendering component + animation controller
     AnimatedModel* object = node_->CreateComponent<AnimatedModel>();

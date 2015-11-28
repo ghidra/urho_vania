@@ -50,6 +50,7 @@ public:
 
     void SetState(State* state);
     //void SetArmsState(State* state);
+    RagDoll* GetRagDoll(){return ragdoll_;};
 
 protected:
 

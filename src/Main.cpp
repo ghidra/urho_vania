@@ -28,6 +28,7 @@
 #include <Urho3D/UI/Text.h>
 
 #include "Main.h"
+#include "core/Controller.h"
 #include "core/CameraLogic.h"
 #include "core/IK.h"
 #include "piece/Character.h"
@@ -93,7 +94,24 @@ void Main::Start()
 
     //character_ = new Character(context_);
     character_->Setup();
+    character_->GetNode()->SetPosition(Vector3(0.0f, 1.0f, 0.0f));
     character_->Possess(applicationInput_);
+
+    //----my first enemy
+    enemyNode_ = scene_->CreateChild("Jack");
+    Character* enemy_ = enemyNode_->CreateComponent<Character>();
+
+    //character_ = new Character(context_);
+    enemy_->Setup();
+    enemy_->GetNode()->SetPosition(Vector3(-10.0f, 1.0f, 0.0f));
+    Controller* aicon_ = new Controller(context_);
+    enemy_->Possess(aicon_);
+    //enemy_->SetState( new State(context_) );
+
+    enemy_->GetRagDoll()->Activate();
+    
+    //------
+    
     //character_->Possess(static_cast<Controller*>(applicationInput_));
 
     applicationInput_->SetCameraTarget(characterNode_);

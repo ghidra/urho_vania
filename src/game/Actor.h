@@ -25,6 +25,7 @@ public:
     virtual void FixedUpdate(float timeStep);
     Node* GetNode(){return node_;};
     RigidBody* GetBody(){return body_;};
+    CollisionShape* GetShape(){return shape_;};
     
 protected:
 

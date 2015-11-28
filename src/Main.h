@@ -40,6 +40,8 @@ private:
     //VaniaDebugEnv* stage_ = NULL;
 
     SharedPtr<Node> characterNode_;
+
+    SharedPtr<Node> enemyNode_;
     //Character* character_;
 
 };
