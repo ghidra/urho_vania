@@ -29,6 +29,7 @@
 
 #include "Main.h"
 #include "core/Controller.h"
+#include "game/State.h"
 #include "core/CameraLogic.h"
 #include "core/IK.h"
 #include "piece/Character.h"
@@ -106,9 +107,9 @@ void Main::Start()
     enemy_->GetNode()->SetPosition(Vector3(-10.0f, 1.0f, 0.0f));
     Controller* aicon_ = new Controller(context_);
     enemy_->Possess(aicon_);
-    //enemy_->SetState( new State(context_) );
+    enemy_->SetState( new State(context_) );
 
-    enemy_->GetRagDoll()->Activate();
+    //enemy_->GetRagDoll()->Activate();
     
     //------
     

@@ -18,10 +18,12 @@
 
 #include "PickUp.h"
 //i need to remove this dependency from here... it should not have to know about character class
+//#include "../game/Pawn.h"
 #include "../piece/Character.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/Engine/DebugHud.h>
 
 
 PickUp::PickUp(Context* context) :
@@ -83,8 +85,10 @@ void PickUp::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
     //RigidBody* otherBody = static_cast<RigidBody*>(eventData[P_OTHERBODY].GetPtr());
     //MemoryBuffer contacts(eventData[P_CONTACTS].GetBuffer());
 
-    Actor* actor = static_cast<Actor*>(otherNode->GetComponent<Character>());//    !!!!!!!  I NEED TO REMOVE THE NEED TO KNOW ABOUT CHARACTER CLASS
+    //Actor* actor = static_cast<Actor*>(otherNode->GetComponent<Character>());//    !!!!!!!  I NEED TO REMOVE THE NEED TO KNOW ABOUT CHARACTER CLASS
+    Character* actor = otherNode->GetComponent<Character>();//actually only give this to a character
     //Actor* actor = otherNode->GetComponent<Actor>();
+    //GetSubsystem<DebugHud>()->SetAppStats("pickup:", String( otherNode->GetNumComponents() ) );
     if(actor != NULL)
     {
         Actor::HandleNodeCollision(eventType,eventData);

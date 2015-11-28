@@ -83,6 +83,7 @@ void Character::Setup()
 
     //contraint info
     //http://urho3d.github.io/documentation/HEAD/_physics.html
+    /*
     ragdoll_->Constrain("abs", "root", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
     ragdoll_->Constrain("neck", "chest", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
     ragdoll_->Constrain("armupper.R", "chest", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
@@ -93,6 +94,7 @@ void Character::Setup()
     ragdoll_->Constrain("armlower.L", "armupper.L", CONSTRAINT_HINGE, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
     ragdoll_->Constrain("legupper.L", "abs", CONSTRAINT_CONETWIST, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
     ragdoll_->Constrain("leglower.L", "legupper.L", CONSTRAINT_HINGE, Vector3::BACK, Vector3::FORWARD, Vector2(45.0f, 45.0f), Vector2::ZERO);
+    */
 }
 //--------
 void Character::FixedUpdate(float timeStep)
