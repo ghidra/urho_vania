@@ -1,5 +1,6 @@
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
+#include <Urho3D/Core/Context.h>
 
 #include "RagDoll.h"
 
@@ -12,34 +13,53 @@
 #include <Urho3D/Engine/DebugHud.h>
 
 RagDoll::RagDoll(Context* context):
-    Object(context)
+    Component(context)
 {
 }
 RagDoll::~RagDoll(){}
 
-void RagDoll::Setup(Pawn* pawn)
+void RagDoll::RegisterObject(Context* context)
 {
-	pawn_ = pawn;
+    context->RegisterFactory<RagDoll>();
 }
+
 void RagDoll::Activate()
 {
 	//turn the whole thing on
-	pawn_->GetNode()->RemoveComponent<RigidBody>();
-	//we are crashing if I set this below
+	//pawn_->GetNode()->RemoveComponent<RigidBody>();
     //pawn_->GetNode()->RemoveComponent<CollisionShape>();
 	//pawn_->GetNode()->RemoveComponent(pawn_->GetBody());//remove the main components
     //pawn_->GetNode()->RemoveComponent(pawn_->GetShape());//remove the main components
+    //if(node_->HasComponent<RigidBody>())
+    //{
+    
+    //GetSubsystem<DebugHud>()->SetAppStats("state:", name_ );
+    node_->RemoveComponent<RigidBody>();
+    node_->RemoveComponent<CollisionShape>();
+    
+    //}
 
-    /*AnimatedModel* model = pawn_->GetNode()->GetComponent<AnimatedModel>();
+    AnimatedModel* model = node_->GetComponent<AnimatedModel>();
     Skeleton& skeleton = model->GetSkeleton();
     for (unsigned i = 0; i < skeleton.GetNumBones(); ++i)
-    	skeleton.GetBone(i)->animated_ = false;*/
+    	skeleton.GetBone(i)->animated_ = false;
+
+   	for (unsigned i = 0; i < boneNode_.Size(); ++i)
+   	{
+        //URHO3D_LOGINFO(String(i));
+   		RigidBody* rb = boneNode_[i]->GetComponent<RigidBody>();
+   		rb->SetTrigger(false);
+        rb->SetMass(1.0f);
+   	}
 }
 void RagDoll::Bone(const String& start, const String& stop, ShapeType type, const Vector3& size)
 {
 
-	Node* joint = pawn_->GetNode()->GetChild(start,true);
-	Node* jointend = pawn_->GetNode()->GetChild(stop,true);
+
+	//Node* joint = pawn_->GetNode()->GetChild(start,true);
+	//Node* jointend = pawn_->GetNode()->GetChild(stop,true);
+    Node* joint = node_->GetChild(start,true);
+    Node* jointend = node_->GetChild(stop,true);
 
 	Vector3 begin = joint->GetWorldPosition();
 	Vector3 end = jointend->GetWorldPosition();
@@ -58,7 +78,8 @@ void RagDoll::Bone(const String& start, const String& stop, ShapeType type, cons
 }
 void RagDoll::Bone(const String& start, const float length, ShapeType type, const Vector3& size)
 {
-	Node* joint = pawn_->GetNode()->GetChild(start,true);
+	//Node* joint = pawn_->GetNode()->GetChild(start,true);
+    Node* joint = node_->GetChild(start,true);
 	Vector3 nsize = size + Vector3(0.0f,length,0.0f);
 	//----make the components
 	RigidBody* rb = joint->CreateComponent<RigidBody>();
@@ -85,8 +106,10 @@ void RagDoll::SetShape(CollisionShape* cs, const unsigned type, const Vector3 si
 //constraint
 void RagDoll::Constrain(const String& boneName, const String& parentName, ConstraintType type, const Vector3& axis, const Vector3& parentAxis, const Vector2& highLimit, const Vector2& lowLimit, bool disableCollision)
 {
-    Node* boneNode = pawn_->GetNode()->GetChild(boneName, true);
-    Node* parentNode = pawn_->GetNode()->GetChild(parentName, true);
+    //Node* boneNode = pawn_->GetNode()->GetChild(boneName, true);
+    //Node* parentNode = pawn_->GetNode()->GetChild(parentName, true);
+    Node* boneNode = node_->GetChild(boneName, true);
+    Node* parentNode = node_->GetChild(parentName, true);
     if (!boneNode)
     {
         //URHO3D_LOGWARNING("Could not find bone " + boneName + " for creating ragdoll constraint");

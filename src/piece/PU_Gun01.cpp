@@ -91,7 +91,7 @@ void PU_Gun01::FixedUpdate(float timeStep)
     
     if(collected_)
     {
-        //LOGINFO("collected");
+        //URHO3D_LOGINFO("collected");
         Node* otherNode = static_cast<Node*>(eventData[P_OTHERNODE].GetPtr());
         Node* boneNode = otherNode->GetChild(String("gun"), true);//get the bone that holds the gun
 
@@ -116,6 +116,7 @@ void PU_Gun01::FixedUpdate(float timeStep)
                 //GetSubsystem<DebugHud>()->SetAppStats("pickup:", String("we have a character") );
             }
         }
+        //URHO3D_LOGINFO("made it this far");
         //now I need to equip the pickup
         
         //weapon_->Setup();

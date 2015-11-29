@@ -9,13 +9,15 @@
 
 class Pawn;
 
-class RagDoll : public Object
+class RagDoll : public Component
 {
-    URHO3D_OBJECT(RagDoll,Object);
+    URHO3D_OBJECT(RagDoll,Component);
     
 public:
     RagDoll(Context* context);
     ~RagDoll();
+
+    static void RegisterObject(Context* context);
 
     void Setup(Pawn* pawn);//maybe also pass in the number of "bones" to hold for memory allocation
 
@@ -29,7 +31,7 @@ public:
 private:
     void SetShape(CollisionShape* cs, const unsigned type, const Vector3 size);
     //const String states_[50];
-    SharedPtr<Pawn> pawn_; 
+    //SharedPtr<Pawn> pawn_; 
     Vector< SharedPtr<Node> > boneNode_;//the root node of the rigid components .Push() and .Size()
 };
 #endif

@@ -37,10 +37,10 @@ private:
     
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);
 
-    IK* leftArmIK_;
-    IK* rightArmIK_;
+    WeakPtr<IK> leftArmIK_;
+    WeakPtr<IK> rightArmIK_;
 
-    SharedPtr<Node> temp_;
+    //SharedPtr<Node> temp_;
    
 };
 #endif

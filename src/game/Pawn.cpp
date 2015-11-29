@@ -22,6 +22,7 @@ Pawn::Pawn(Context* context) :
     brakeForce_(0.1f),
     jumpForce_(20.0f),
     //jumpDownForce_(0.5f),
+    velocity_(Vector3()),
     yawSensitivity_(0.1f),
     inAirThresholdTime_(0.1f),
     okToJump_(true),
@@ -61,7 +62,10 @@ void Pawn::FixedUpdate(float timeStep)
 {
     Actor::FixedUpdate(timeStep);
     //rigid body data
-    velocity_ = body_->GetLinearVelocity();
+    if(node_->HasComponent<RigidBody>())
+    {
+        velocity_ = body_->GetLinearVelocity();
+    }
     planeVelocity_ = Vector3(velocity_.x_, 0.0f, velocity_.z_);
     jumpVelocity_ = Vector3(0.0f, velocity_.y_, 0.0f);
 }
@@ -85,9 +89,10 @@ void Pawn::Setup()
     body_->SetCollisionEventMode(COLLISION_ALWAYS);// Set the rigidbody to signal collision also when in rest, so that we get ground collisions properly
 
     //we still need to setup the collisionshape in the child class
+    
     //here we are setting the ragdoll object waiting to accept some commands to build out
-    ragdoll_ = new RagDoll(context_);
-    ragdoll_->Setup(this);
+    ragdoll_ = node_->CreateComponent<RagDoll>();//
+
 }
 
 void Pawn::HandleNodeCollision(StringHash eventType, VariantMap& eventData)

@@ -32,6 +32,7 @@
 #include "game/State.h"
 #include "core/CameraLogic.h"
 #include "core/IK.h"
+#include "game/RagDoll.h"
 #include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
 #include "stages/StageForest.h"
@@ -42,6 +43,7 @@
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>
+#include <Urho3D/Engine/DebugHud.h>
 
 #include <iostream>
 
@@ -56,6 +58,7 @@ Main::Main(Context* context) :
     CameraLogic::RegisterObject(context);
     Character::RegisterObject(context);
     IK::RegisterObject(context);
+    RagDoll::RegisterObject(context);
     PU_Gun01::RegisterObject(context);
     Gun01::RegisterObject(context);
     Projectile::RegisterObject(context);
@@ -107,9 +110,10 @@ void Main::Start()
     enemy_->GetNode()->SetPosition(Vector3(-10.0f, 1.0f, 0.0f));
     Controller* aicon_ = new Controller(context_);
     enemy_->Possess(aicon_);
-    enemy_->SetState( new State(context_) );
+    enemy_->SetState( new State(context_) );//get it into a clean state, so now segfaults occur
 
-    //enemy_->GetRagDoll()->Activate();
+    enemy_->GetRagDoll()->Activate();
+
     
     //------
     
@@ -124,7 +128,7 @@ void Main::Start()
     // Finally subscribe to the update event. Note that by subscribing events at this point we have already missed some events
     // like the ScreenMode event sent by the Graphics subsystem when opening the application window. To catch those as well we
     // could subscribe in the constructor instead.
-    //SubscribeToEvents();
+    SubscribeToEvents();
 }
 
 
@@ -159,10 +163,12 @@ void Main::Start()
 {
     // Subscribe HandleUpdate() function for processing update events
     SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Main, HandleUpdate));
-}*/
+}
 
-/*void Main::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Main::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
     //applicationInput_->HandleUpdate(eventType, eventData);
     // Do nothing for now, could be extended to eg. animate the display
+    //Character* en = enemyNode_->GetComponent<Character>();
+    //GetSubsystem<DebugHud>()->SetAppStats("enemybodu:", String(en->GetBody()!=NULL) );
 }*/

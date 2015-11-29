@@ -90,11 +90,11 @@ protected:
     String rootName_;//the name of the root node, to grab for world transforms
     bool facingDirection_;//the direction I am facing. left=0 or right=1;
     
-    State* state_ = NULL;
+    WeakPtr<State> state_;
     //State* stateArms_ = NULL;
 
     //ragdoll
-    RagDoll* ragdoll_ =NULL;
+    WeakPtr<RagDoll> ragdoll_;
 
     //now I can maybe have an array or something to hold the required animation paths?
    

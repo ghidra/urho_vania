@@ -21,8 +21,16 @@ StateCharacterFalling::~StateCharacterFalling(){}
 void StateCharacterFalling::Enter(Pawn* pawn)
 {
 	State::Enter(pawn);
-	PhysicsRaycastResult result = FindBottom();
-	distanceBottom_=result.distance_;
+	//if(pawn_->GetBody()!=NULL)
+	if(pawn_->GetNode()->HasComponent<RigidBody>())
+	{
+		PhysicsRaycastResult result = FindBottom();
+		distanceBottom_=result.distance_;
+	}
+	else
+	{
+		distanceBottom_=0.1f;//we dont have a rigidbody
+	}
 	//GetSubsystem<DebugHud>()->SetAppStats("init distance:", result.distance_ );
 }
 
@@ -33,11 +41,18 @@ State* StateCharacterFalling::HandleInput(Controls& ctrl)
 }
 void StateCharacterFalling::Update()
 {
-	//get the pawn rigidbody for ray direction and position
-	PhysicsRaycastResult result = FindBottom();
-	//if we hit the bottom, resume state based on velocity I suppose, right now just go to idle
-	if(result.distance_<0.1)
+	if(pawn_->GetNode()->HasComponent<RigidBody>())
+	{
+		//get the pawn rigidbody for ray direction and position
+		PhysicsRaycastResult result = FindBottom();
+		//if we hit the bottom, resume state based on velocity I suppose, right now just go to idle
+		if(result.distance_<0.1)
+			pawn_->SetState(new StateCharacterIdle(context_));
+	}
+	else
+	{
 		pawn_->SetState(new StateCharacterIdle(context_));
+	}
 	
 	//now we can set the animation
 

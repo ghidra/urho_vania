@@ -59,8 +59,8 @@ protected:
 
     float timeIncrement_;
 
-    RigidBody* body_;
-    CollisionShape* shape_;
+    WeakPtr<RigidBody> body_;
+    WeakPtr<CollisionShape> shape_;
 
     //character collision masks as default
     uint collision_layer_;//=1;
