@@ -9,7 +9,7 @@
 //legupper.R - leglower.R (right thigh)
 //leglower.R - foot.R (right calf)
 
-uint shapes_ = 10;//number of rbds to make
+uint shapes_ = 12;//number of rbds to make
 float margin_ = 0.0f;
 
 Array<String> bones_ = {
@@ -19,20 +19,26 @@ Array<String> bones_ = {
 	String("armlower.R"), String("wrist.R"),
 	String("legupper.R"), String("leglower.R"),
 	String("leglower.R"), String("foot.R"),
+	String("foot.R"), String("MANUAL"),
 	String("armupper.L"), String("armlower.L"),
 	String("armlower.L"), String("wrist.L"),
 	String("legupper.L"), String("leglower.L"),
-	String("leglower.L"), String("foot.L")
+	String("leglower.L"), String("foot.L"),
+	String("foot.L"), String("MANUAL"),
 };
 
 Array<float> manual_length_ = {
-	1.5f
+	1.5f,
+	0.75,
+	0.75
 };
 
 //0 capsule
 //1 box
 Array<uint> type_ = {
-	1,
+	0,
+	0,
+	0,
 	0,
 	0,
 	0,
@@ -52,8 +58,10 @@ Array<Vector3> size_ = {
 	Vector3(0.25f,0.0f,0.0f),
 	Vector3(0.5f,0.0f,0.0f),
 	Vector3(0.5f,0.0f,0.0f),
+	Vector3(0.5f,0.0f,0.0f),
 	Vector3(0.35f,0.0f,0.0f),
 	Vector3(0.25f,0.0f,0.0f),
+	Vector3(0.5f,0.0f,0.0f),
 	Vector3(0.5f,0.0f,0.0f),
 	Vector3(0.5f,0.0f,0.0f)
 };
