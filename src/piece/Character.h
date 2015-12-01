@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "../game/Pawn.h"
-#include "../core/IK.h"
+#include "../framework/src/Pawn.h"
+#include "../framework/src/IK.h"
 
 using namespace Urho3D;
 

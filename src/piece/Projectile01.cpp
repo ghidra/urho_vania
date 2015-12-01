@@ -20,7 +20,7 @@
 
 #include "Projectile01.h"
 
-#include "../game/Projectile.h"
+#include "../framework/src/Projectile.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../game/PickUp.h"
+#include "../framework/src/PickUp.h"
 
 using namespace Urho3D;
 

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../game/Weapon.h"
+#include "../framework/src/Weapon.h"
 
 using namespace Urho3D;
 

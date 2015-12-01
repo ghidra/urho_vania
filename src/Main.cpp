@@ -28,11 +28,11 @@
 #include <Urho3D/UI/Text.h>
 
 #include "Main.h"
-#include "core/Controller.h"
-#include "game/State.h"
-#include "core/CameraLogic.h"
-#include "core/IK.h"
-#include "game/RagDoll.h"
+#include "framework/src/Controller.h"
+#include "framework/src/State.h"
+#include "framework/src/CameraLogic.h"
+#include "framework/src/IK.h"
+#include "framework/src/RagDoll.h"
 #include "piece/Character.h"
 #include "stages/VaniaDebugEnv.h"
 #include "stages/StageForest.h"

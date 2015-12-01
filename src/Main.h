@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "core/ApplicationHandler.h"
+#include "framework/src/ApplicationHandler.h"
 #include "stages/StageForest.h"
 #include "stages/VaniaDebugEnv.h"
 

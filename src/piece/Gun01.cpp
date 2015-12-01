@@ -20,7 +20,7 @@
 
 #include "Gun01.h"
 
-#include "../game/Weapon.h"
+#include "../framework/src/Weapon.h"
 
 #include <Urho3D/DebugNew.h>
 #include <Urho3D/IO/Log.h>

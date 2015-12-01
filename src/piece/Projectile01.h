@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../game/Projectile.h"
+#include "../framework/src/Projectile.h"
 
 using namespace Urho3D;
 
