@@ -5,6 +5,8 @@ CMake
 CMakeFiles/
 launch.sh
 editor.sh
+link.sh
+link.bat
 bin/CoreData
 bin/Data
 bin/urhovania
