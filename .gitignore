@@ -4,6 +4,7 @@ Makefile
 CMake
 CMakeFiles/
 editor.sh
+editor.bat
 link.sh
 link.bat
 bin/CoreData
