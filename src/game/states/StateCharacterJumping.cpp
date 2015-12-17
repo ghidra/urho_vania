@@ -5,10 +5,6 @@
 #include "StateCharacterJumping.h"
 #include "StateCharacterFalling.h"
 
-#include <Urho3D/DebugNew.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Engine/DebugHud.h>
-
 StateCharacterJumping::StateCharacterJumping(Context* context):
     State(context),
     jumping_(false)

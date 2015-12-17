@@ -7,10 +7,6 @@
 #include "StateCharacterFalling.h"
 #include "StateCharacterIdle.h"
 
-#include <Urho3D/DebugNew.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Engine/DebugHud.h>
-
 StateCharacterFalling::StateCharacterFalling(Context* context):
     State(context)
 {

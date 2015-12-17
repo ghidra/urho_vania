@@ -4,10 +4,6 @@
 #include "StateCharacterGrounded.h"
 #include "StateCharacterJumping.h"
 
-#include <Urho3D/DebugNew.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Engine/DebugHud.h>
-
 StateCharacterGrounded::StateCharacterGrounded(Context* context):
     State(context)
 {
@@ -27,8 +23,8 @@ State* StateCharacterGrounded::HandleInput(Controls& ctrl)
         moveDir_ += Vector3::LEFT;
     if (ctrl.IsDown(CTRL_RIGHT))
         moveDir_ += Vector3::RIGHT;
-    
-    GetSubsystem<DebugHud>()->SetAppStats("direction:", String(moveDir_) );
+
+    Debug("direction", String(moveDir_));
 
     // Normalize move vector so that diagonal strafing is not faster
     if (moveDir_.LengthSquared() > 0.0f)

@@ -33,12 +33,12 @@
 #include "framework/src/CameraLogic.h"
 #include "framework/src/IK.h"
 #include "framework/src/RagDoll.h"
-#include "piece/Character.h"
-#include "stages/VaniaDebugEnv.h"
-#include "stages/StageForest.h"
-#include "piece/PU_Gun01.h"
-#include "piece/Gun01.h"
-#include "piece/Projectile01.h"
+#include "game/Character.h"
+#include "levels/VaniaDebugEnv.h"
+#include "levels/StageForest.h"
+#include "game/PU_Gun01.h"
+#include "game/Gun01.h"
+#include "game/Projectile01.h"
 
 
 #include <Urho3D/DebugNew.h>

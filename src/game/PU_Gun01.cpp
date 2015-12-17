@@ -1,7 +1,7 @@
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Core/Context.h>
 
-#include <Urho3D/Graphics/AnimatedModel.h>
+//#include <Urho3D/Graphics/AnimatedModel.h>
 
 #include <Urho3D/Physics/CollisionShape.h>
 
@@ -9,24 +9,20 @@
 #include <Urho3D/Resource/ResourceCache.h>
 #include <Urho3D/Graphics/Material.h>
 
-#include <Urho3D/Graphics/AnimationController.h>
-#include <Urho3D/Core/Context.h>
+//#include <Urho3D/Graphics/AnimationController.h>
+//#include <Urho3D/Core/Context.h>
 #include <Urho3D/IO/MemoryBuffer.h>
 #include <Urho3D/Physics/PhysicsEvents.h>
 #include <Urho3D/Physics/PhysicsWorld.h>
 #include <Urho3D/Physics/RigidBody.h>
 #include <Urho3D/Scene/Scene.h>
-#include <Urho3D/Scene/SceneEvents.h>
+//#include <Urho3D/Scene/SceneEvents.h>
 
 #include "PU_Gun01.h"
 
 #include "Gun01.h"
 
 #include "Character.h"
-
-#include <Urho3D/DebugNew.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Engine/DebugHud.h>
 
 PU_Gun01::PU_Gun01(Context* context) :
     PickUp(context)
@@ -101,8 +97,7 @@ void PU_Gun01::FixedUpdate(float timeStep)
         }
         else
         {
-            String debugHover = String( boneNode->GetName() );
-            GetSubsystem<DebugHud>()->SetAppStats("boneNode:", debugHover);
+            //if( debug_!=NULL ) debug_->Hud("boneNode",boneNode->GetName());
 
             Node* gunNode = boneNode->CreateChild("gun_01");
             Gun01* weapon = gunNode->CreateComponent<Gun01>();

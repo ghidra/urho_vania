@@ -6,10 +6,6 @@
 #include "StateCharacterJumping.h"
 #include "StateCharacterTurning.h"
 
-#include <Urho3D/DebugNew.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Engine/DebugHud.h>
-
 StateCharacterIdle::StateCharacterIdle(Context* context):
     StateCharacterGrounded(context),
     firing_(false)

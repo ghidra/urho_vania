@@ -4,8 +4,8 @@
 #pragma once
 
 #include "framework/src/ApplicationHandler.h"
-#include "stages/StageForest.h"
-#include "stages/VaniaDebugEnv.h"
+#include "levels/StageForest.h"
+#include "levels/VaniaDebugEnv.h"
 
 namespace Urho3D
 {
