@@ -34,7 +34,7 @@ public:
     virtual void Setup();
 
 protected:
-    virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
+    //virtual void HandleNodeCollision(StringHash eventType, VariantMap& eventData);
     virtual void SpawnProjectile();
    
 };

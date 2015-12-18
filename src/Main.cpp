@@ -102,17 +102,18 @@ void Main::Start()
     character_->Possess(applicationInput_);
 
     //----my first enemy
-    enemyNode_ = scene_->CreateChild("Jack");
+    enemyNode_ = scene_->CreateChild("BadJack");
     Character* enemy_ = enemyNode_->CreateComponent<Character>();
 
     //character_ = new Character(context_);
     enemy_->Setup();
+    enemy_->SetCollisionLayers(16,35);
     enemy_->GetNode()->SetPosition(Vector3(-10.0f, 1.0f, 0.0f));
     Controller* aicon_ = new Controller(context_);
     enemy_->Possess(aicon_);
     enemy_->SetState( new State(context_) );//get it into a clean state, so now segfaults occur
 
-    enemy_->GetRagDoll()->Activate();
+    //enemy_->GetRagDoll()->Activate();
 
     
     //------
