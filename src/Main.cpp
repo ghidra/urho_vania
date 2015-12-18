@@ -29,7 +29,7 @@
 
 #include "Main.h"
 #include "framework/src/Controller.h"
-#include "framework/src/State.h"
+//#include "framework/src/State.h"
 #include "framework/src/CameraLogic.h"
 #include "framework/src/IK.h"
 #include "framework/src/RagDoll.h"
@@ -111,7 +111,7 @@ void Main::Start()
     enemy_->GetNode()->SetPosition(Vector3(-10.0f, 1.0f, 0.0f));
     Controller* aicon_ = new Controller(context_);
     enemy_->Possess(aicon_);
-    enemy_->SetState( new State(context_) );//get it into a clean state, so now segfaults occur
+    //enemy_->SetState( new State(context_) );//get it into a clean state, so now segfaults occur
 
     //enemy_->GetRagDoll()->Activate();
 
