@@ -1,6 +1,8 @@
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 
+#include "../../framework/src/PawnAnimated.h"
+
 #include "StateCharacterIdle.h"
 #include "StateCharacterRunning.h"
 #include "StateCharacterJumping.h"
@@ -55,7 +57,7 @@ State* StateCharacterIdle::HandleInput(Controls& ctrl)
 void StateCharacterIdle::Update()
 {
     StateCharacterGrounded::Update();//apply brake force
-    AnimationController* animCtrl = pawn_->GetAnimationController();
+    AnimationController* animCtrl = static_cast<PawnAnimated*>(pawn_)->GetAnimationController();
     String ani = String("Models/Man/MAN_StandingIdleGun.ani");
     if(firing_)
         ani=String("Models/Man/MAN_StandingShooting.ani");

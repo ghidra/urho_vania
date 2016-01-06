@@ -1,6 +1,8 @@
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 
+#include "../../framework/src/PawnAnimated.h"
+
 #include "StateCharacterTurning.h"
 #include "StateCharacterRunning.h"
 #include "StateCharacterStopping.h"
@@ -46,7 +48,7 @@ void StateCharacterTurning::Update()
 	StateCharacterGrounded::Update();
 	
 	RigidBody* body = pawn_->GetBody();
-	AnimationController* animCtrl = pawn_->GetAnimationController();
+	AnimationController* animCtrl = static_cast<PawnAnimated*>(pawn_)->GetAnimationController();
 
 	//apply a force to slow it down further, since we are changing direction
 	body->ApplyImpulse(moveDir_ * pawn_->GetMoveForce() *0.25);//0.25 to dampen it

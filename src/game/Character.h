@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../framework/src/Pawn.h"
+#include "../framework/src/PawnAnimated.h"
 #include "../framework/src/IK.h"
 
 using namespace Urho3D;
@@ -18,10 +18,10 @@ class Scene;
 
 using namespace Urho3D;
 
-class Character : public Pawn
+class Character : public PawnAnimated
 {
 
-    URHO3D_OBJECT(Character,Pawn);
+    URHO3D_OBJECT(Character,PawnAnimated);
 
 public:
 

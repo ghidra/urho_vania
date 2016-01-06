@@ -2,6 +2,8 @@
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 #include <Urho3D/Physics/RigidBody.h>
 
+#include "../../framework/src/PawnAnimated.h"
+
 #include "StateCharacterJumping.h"
 #include "StateCharacterFalling.h"
 
@@ -37,7 +39,7 @@ void StateCharacterJumping::Update()
 		pawn_->SetState(new StateCharacterFalling(context_));
 
 	//now carry on with the animation
-	AnimationController* animCtrl = pawn_->GetAnimationController();
+	AnimationController* animCtrl = static_cast<PawnAnimated*>(pawn_)->GetAnimationController();
 	/*float jumpTime = 0.0f;
     if(jumpVector.y_>0.0f)
         jumpTime = Fit(jumpVector.y_,pawn_->GetJumpForce(),0.0f,0.0f,0.5f);

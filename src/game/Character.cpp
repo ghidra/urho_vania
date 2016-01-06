@@ -14,7 +14,7 @@
 #include <Urho3D/Engine/DebugHud.h>
 
 Character::Character(Context* context) :
-    Pawn(context)
+    PawnAnimated(context)
 {
     SetUpdateEventMask(USE_FIXEDUPDATE);
     mesh_ = String("Man/MAN.mdl");
@@ -37,7 +37,7 @@ void Character::Start()
 
 void Character::Setup()
 {
-    Pawn::Setup();//do the basic set up with stored and set values
+    PawnAnimated::Setup();//do the basic set up with stored and set values
 
     //DEBUG
     /*ResourceCache* cache = GetSubsystem<ResourceCache>();
@@ -104,7 +104,7 @@ void Character::Setup()
 //--------
 void Character::FixedUpdate(float timeStep)
 {
-    Pawn::FixedUpdate(timeStep);
+    PawnAnimated::FixedUpdate(timeStep);
 
     if(controller_)
     {
@@ -135,6 +135,7 @@ void Character::FixedUpdate(float timeStep)
         
         // Reset grounded flag for next frame //might be obsolete
         onGround_ = false;//i might not really need this anymore
+        
     }
 }
 

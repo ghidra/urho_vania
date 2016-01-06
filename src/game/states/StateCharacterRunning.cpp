@@ -2,6 +2,8 @@
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 #include <Urho3D/Physics/RigidBody.h>
 
+#include "../../framework/src/PawnAnimated.h"
+
 #include "StateCharacterRunning.h"
 #include "StateCharacterStopping.h"
 #include "StateCharacterTurning.h"
@@ -45,7 +47,7 @@ void StateCharacterRunning::Update()
 	//const Quaternion& rot = pawn_->GetNode()->GetRotation();
 	//pawn_->GetBody()->ApplyImpulse(rot * moveDir_ * pawn_->GetMoveForce() );
 	RigidBody* body = pawn_->GetBody();
-	AnimationController* animCtrl = pawn_->GetAnimationController(); 
+	AnimationController* animCtrl = static_cast<PawnAnimated*>(pawn_)->GetAnimationController(); 
 	
 	body->ApplyImpulse(moveDir_ * pawn_->GetMoveForce() );
 

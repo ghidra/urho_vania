@@ -1,6 +1,8 @@
 #include <Urho3D/Urho3D.h>
 #include <Urho3D/Scene/Scene.h>//will not complie without this?
 
+#include "../../framework/src/PawnAnimated.h"
+
 #include "StateCharacterStopping.h"
 #include "StateCharacterIdle.h"
 #include "StateCharacterRunning.h"
@@ -47,7 +49,7 @@ void StateCharacterStopping::Update()
 	StateCharacterGrounded::Update();//apply the brake force
 
 	RigidBody* body = pawn_->GetBody();
-	AnimationController* animCtrl = pawn_->GetAnimationController();
+	AnimationController* animCtrl = static_cast<PawnAnimated*>(pawn_)->GetAnimationController();
 
 	//animation
 

@@ -4,6 +4,8 @@
 #include <Urho3D/Physics/RigidBody.h>
 #include <Urho3D/Graphics/Octree.h>//lets me use ray
 
+#include "../../framework/src/PawnAnimated.h"
+
 #include "StateCharacterFalling.h"
 #include "StateCharacterIdle.h"
 
@@ -52,7 +54,7 @@ void StateCharacterFalling::Update()
 	
 	//now we can set the animation
 
-	AnimationController* animCtrl = pawn_->GetAnimationController();
+	AnimationController* animCtrl = static_cast<PawnAnimated*>(pawn_)->GetAnimationController();
     //Vector3 jumpVector = pawn_->GetJumpVelocity();
     //float jumpTime = Fit(jumpVector.y_,0.0f,-pawn_->GetJumpForce(),0.5f,1.0f);//force based
     //float jumpTime = Fit(result.distance_,distanceBottom_,0.1f,0.5f,1.0f);
