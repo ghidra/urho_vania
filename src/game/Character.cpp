@@ -134,7 +134,7 @@ void Character::FixedUpdate(float timeStep)
         }
         
         // Reset grounded flag for next frame //might be obsolete
-        onGround_ = false;//i might not really need this anymore
+        //onGround_ = false;//i might not really need this anymore
         
     }
 }

@@ -100,6 +100,7 @@ void Main::Start()
     character_->Setup();
     character_->GetNode()->SetPosition(Vector3(0.0f, 1.0f, 0.0f));
     character_->Possess(applicationInput_);
+    character_->canCollect_=true;//need this so that I can pick up the weapon
 
     //----my first enemy
     enemyNode_ = scene_->CreateChild("BadJack");
