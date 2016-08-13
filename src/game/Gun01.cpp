@@ -41,9 +41,9 @@ void Gun01::SpawnProjectile()
     Weapon::SpawnProjectile();
 
     Node* projectileNode_ = node_->GetScene()->CreateChild("projectile");
-    projectileNode_->SetPosition(ProjectileSpawnPosition_);
+    projectileNode_->SetPosition(projectile_spawn_position_);
 
     Projectile01* projectile_ = projectileNode_->CreateComponent<Projectile01>();
-    projectile_->Setup(ProjectileSpawnDirection_);
+    projectile_->Setup(projectile_spawn_direction_);
 }
 
