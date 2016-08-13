@@ -41,7 +41,7 @@ State* StateCharacterRunning::HandleInput(Controls& ctrl)
 		}
 	}
 }
-void StateCharacterRunning::Update()
+void StateCharacterRunning::Update(float timeStep)
 {
 	StateCharacterGrounded::Update();//apply brake force
 	//const Quaternion& rot = pawn_->GetNode()->GetRotation();

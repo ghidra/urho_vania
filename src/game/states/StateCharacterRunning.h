@@ -15,7 +15,7 @@ public:
     ~StateCharacterRunning();
 
     virtual State* HandleInput(Controls& ctrl);
-    virtual void Update();
+    virtual void Update(float timeStep = 0.0);
 
 };
 #endif

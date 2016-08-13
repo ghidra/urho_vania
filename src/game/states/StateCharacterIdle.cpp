@@ -54,7 +54,7 @@ State* StateCharacterIdle::HandleInput(Controls& ctrl)
         }
     }
 }
-void StateCharacterIdle::Update()
+void StateCharacterIdle::Update(float timeStep)
 {
     StateCharacterGrounded::Update();//apply brake force
     AnimationController* animCtrl = static_cast<PawnAnimated*>(pawn_)->GetAnimationController();

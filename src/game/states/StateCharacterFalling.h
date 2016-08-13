@@ -17,7 +17,7 @@ public:
 
     virtual State* HandleInput(Controls& ctrl);
     virtual void Enter(Pawn* pawn);
-    virtual void Update();
+    virtual void Update(float timeStep = 0.0);
 
 private:
 

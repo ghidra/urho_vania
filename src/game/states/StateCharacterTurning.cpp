@@ -43,7 +43,7 @@ State* StateCharacterTurning::HandleInput(Controls& ctrl)
 		}
 	}
 }
-void StateCharacterTurning::Update()
+void StateCharacterTurning::Update(float timeStep)
 {
 	StateCharacterGrounded::Update();
 	

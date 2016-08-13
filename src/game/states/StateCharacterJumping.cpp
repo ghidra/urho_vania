@@ -27,7 +27,7 @@ State* StateCharacterJumping::HandleInput(Controls& ctrl)
     return NULL;
     //return new StateCharacterRunning(context_);
 }
-void StateCharacterJumping::Update()
+void StateCharacterJumping::Update(float timeStep)
 {
 	Vector3 jumpVector = pawn_->GetJumpVelocity();
 	//first we need to set that we are jumping before we check that we are falling.

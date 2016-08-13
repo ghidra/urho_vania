@@ -37,7 +37,7 @@ State* StateCharacterFalling::HandleInput(Controls& ctrl)
     return NULL;
     //return new StateCharacterRunning(context_);
 }
-void StateCharacterFalling::Update()
+void StateCharacterFalling::Update(float timeStep)
 {
 	if(pawn_->GetNode()->HasComponent<RigidBody>())
 	{

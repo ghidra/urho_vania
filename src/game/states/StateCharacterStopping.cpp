@@ -44,7 +44,7 @@ State* StateCharacterStopping::HandleInput(Controls& ctrl)
 		}
 	}
 }
-void StateCharacterStopping::Update()
+void StateCharacterStopping::Update(float timeStep)
 {
 	StateCharacterGrounded::Update();//apply the brake force
 

@@ -15,7 +15,7 @@ public:
     ~StateCharacterGrounded();
 
     virtual State* HandleInput(Controls& ctrl);
-    virtual void Update();
+    virtual void Update(float timeStep = 0.0);
 
 protected:
 	bool TestTurn();//check if we need to turn around

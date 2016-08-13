@@ -42,7 +42,7 @@ State* StateCharacterGrounded::HandleInput(Controls& ctrl)
 		return NULL;
 	}
 }
-void StateCharacterGrounded::Update()
+void StateCharacterGrounded::Update(float timeStep)
 {
     RigidBody* body = pawn_->GetBody();
     body->ApplyImpulse(-pawn_->GetPlaneVelocity() * pawn_->GetBrakeForce());//this is the brake force
