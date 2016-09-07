@@ -33,6 +33,8 @@ public:
     virtual void FixedUpdate(float timeStep);
     virtual void Setup();
 
+    virtual void Possess(Controller* controller);//i have to override the pawn posses... so that I can set the state on posession
+
 private:
     
     void HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData);

@@ -99,6 +99,11 @@ void Character::Setup()
     
 
     //set initial state
+    //SetState( new StateCharacterFalling(context_) );
+}
+void Character::Possess(Controller* controller)
+{
+    Pawn::Possess(controller);
     SetState( new StateCharacterFalling(context_) );
 }
 //--------
@@ -106,7 +111,17 @@ void Character::FixedUpdate(float timeStep)
 {
     PawnAnimated::FixedUpdate(timeStep);
 
-    if(controller_)
+    Controls& ctrl = controller_->controls_;
+    //--------------------------------------------------
+    //--------------------------------------------------
+    ///state stuff
+    state_machine_->Update(timeStep);
+    
+    if(weapon_ != NULL)
+    {
+        weapon_->Update(ctrl,timeStep);
+    }
+    /*if(controller_)
     {
         Controls& ctrl = controller_->controls_;
         //--------------------------------------------------
@@ -137,6 +152,7 @@ void Character::FixedUpdate(float timeStep)
         //onGround_ = false;//i might not really need this anymore
         
     }
+    */
 }
 
 void Character::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData)
