@@ -27,6 +27,8 @@
 #include <Urho3D/Core/ProcessUtils.h>
 #include <Urho3D/UI/Text.h>
 
+#include <Urho3D/AngelScript/ScriptFile.h>
+
 #include "Main.h"
 #include "framework/src/Controller.h"
 //#include "framework/src/State.h"

@@ -1,10 +1,12 @@
 cmake_install.cmake
 CMakeCache*
 Makefile
+cmake.sh
 CMake
 CMakeFiles/
 editor.sh
 editor.bat
+launch.sh
 link.sh
 link.bat
 bin/CoreData
